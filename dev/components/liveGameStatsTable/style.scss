@@ -1,0 +1,114 @@
+@import 'skin';
+.live-game-stats-table{
+  float: left;
+  width: 100%;
+  background: $skin-palette-10;
+  padding: 0;
+  margin: 0 0 1px;
+}
+.game-list-statistics{
+  float: left;
+  width: 100%;
+  font-size: 10px;
+  line-height: 12px;
+  table-layout: fixed;
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+.game-list-statistics tr th{
+  font-weight: normal;
+  vertical-align: middle;
+  padding: 4px 2px 4px;
+  text-align: center;
+  background: $skin-palette-10;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  border-left: 1px solid transparent;
+  position: relative;
+}
+.game-list-statistics tr td{
+  vertical-align: middle;
+  padding: 5px 2px;
+  text-align: center;
+  box-shadow: 0 1px 0 rgba($text-palette-1, 0.06) inset;
+  border-left: 1px solid rgba($text-palette-1, 0.06);
+  background: darken( desaturate( adjust-hue( $skin-palette-7, 5deg ), 2 ), 12 );
+}
+.game-list-statistics tr td b{font-weight: normal;}
+.game-list-statistics tr td:first-child{border-left: none;}
+.game-list-statistics tr td:first-child,
+.game-list-statistics tr th:first-child{
+  width: 30%;
+  text-align: left;
+  padding-left: 5px;
+}
+.game-list-statistics tr th i{
+  font-style: normal;
+}
+.y-card, .r-card{
+  display: inline-block;
+  vertical-align: top;
+  width: 9px;
+  height: 11px;
+}
+.y-card > i, .r-card > i, .corner > i, .penalty > i, .icon-offside > i, .icon-substitution > i{
+  position: absolute;
+  left: -9999em;
+  top: 0;
+}
+.y-card:before{
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #ffff00;
+}
+.r-card:before{
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #ff0000;
+}
+.corner{
+  display: inline-block;
+  vertical-align: top;
+  width: 11px;
+  height: 11px;
+}
+.penalty{
+  display: inline-block;
+  vertical-align: top;
+  width: 12px;
+  height: 12px;
+}
+.corner:before{
+  content: "\e90e";
+  font: 11px/11px icomoon;
+  color: $text-palette-1;
+}
+.penalty:before{
+  content: "\7d";
+  font: 12px/12px icomoon;
+  color: $text-palette-1;
+}
+.icon-offside{
+  display: inline-block;
+  vertical-align: top;
+  width: 11px;
+  height: 11px;
+}
+.icon-offside:before{
+  font: 11px/11px icomoon;
+  color: $text-palette-1;
+  content: "\e943";
+}
+.icon-substitution{
+  display: inline-block;
+  vertical-align: top;
+  width: 12px;
+  height: 12px;
+}
+.icon-substitution:before{
+  font: 12px/12px icomoon;
+  color: $text-palette-1;
+  content: "\7c";
+}

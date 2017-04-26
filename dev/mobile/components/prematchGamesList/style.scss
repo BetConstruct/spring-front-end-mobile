@@ -1,0 +1,73 @@
+@import 'skin';
+.bread-crumbs-view-m{
+  float: left;
+  width: 100%;
+  height: 38px;
+  background: #1a7051;
+  position: relative;
+  text-align: left;
+  padding: 0 10px 0 38px;
+  box-shadow: 0 1px 0 rgba(123, 129, 145, 0.15) inset;
+}
+.bread-crumbs-view-m > a{
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 38px;
+  height: 38px;
+  text-decoration: none;
+}
+.back-arrow-crumbs{
+  float: left;
+  display: block;
+  width: 100%;
+  height: 100%;
+  font: 20px/38px icomoon;
+  text-align: center;
+  color: $skin-palette-3;
+  background: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 0 rgba(123, 129, 145, 0.15) inset;
+}
+.bread-crumbs-view-m.favorites{
+  background: $favorite-color;
+}
+.back-arrow-crumbs:before{
+  content: "\e66f";
+}
+.bread-crumbs-view-m > p{
+  float: left;
+  width: 100%;
+  padding: 0 10px 0 12px;
+  color: $skin-palette-3;
+  font-size: 14px;
+  line-height: 38px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bread-crumbs-view-m.favorites .back-arrow-crumbs,
+.bread-crumbs-view-m.favorites > p{
+  color: $text-palette-1;
+}
+.league-name-view-m{
+  float: left;
+  width: 100%;
+  margin: 0 0 5px;
+  box-shadow: 0 1px 0 rgba(123, 129, 145, 0.15) inset;
+  height: 35px;
+  background: darken( saturate( $skin-color, 4 ), 4 );
+  padding: 0 10px;
+  text-align: left;
+}
+.league-name-view-m > h3{
+  float: left;
+  width: 100%;
+  font-weight: normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  line-height: 35px;
+  color: $text-palette-6;
+}

@@ -1,0 +1,7 @@
+{
+  "host": "mobile01-lx.betconstruct.int",
+  "port": "22",
+  "key": "mobilestaging",
+  "cacheFile": "vbet_mobile_staging_cache.json",
+  "remotePath": "/var/www/html/react/stagingmobile"
+}

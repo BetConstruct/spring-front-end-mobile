@@ -1,0 +1,233 @@
+@import 'skin';
+//region menu
+.select-game-nav-list{
+	float: left;
+	width: 100%;
+}
+.select-game-nav-list > ul{
+	float: left;
+	width: 100%;
+}
+.select-game-nav-list > ul > li{
+	float: left;
+	width: 100%;
+	margin: 0 0 2px;
+}
+.sport-region-info-m{
+	float: left;
+	width: 100%;
+	background: $skin-palette-11;
+	height: 40px;
+	position: relative;
+	padding: 0 40px;
+	box-shadow: 0 1px 0 rgba(123, 129, 145, 0.15) inset;
+}
+.sport-region-info-m.active{
+	background: $skin-palette-9;
+}
+.country-games-info-m{
+	float: left;
+	width: 100%;
+	display: table;
+	height: 40px;
+}
+.country-games-info-m > p{
+	display: table-cell;
+	vertical-align: top;
+	padding: 0;
+	position: relative;
+	font-size: 14px;
+	line-height: 40px;
+	width: 100%;
+	height: 40px;
+	color: $text-palette-6;
+	text-align: left;
+}
+.sport-region-info-m.active > .country-games-info-m > p{
+	color: $text-palette-3;
+}
+.country-games-info-m > p > i{
+	font-style: normal;
+	padding: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.country-games-info-m > span{
+	display: table-cell;
+	text-align: right;
+	font-size: 14px;
+	line-height: 40px;
+	padding: 0 0 0 10px;
+	height: 100%;
+	color: $text-palette-6;
+	white-space: nowrap;
+}
+.country-games-info-m > span > b{
+	font-weight: normal;
+}
+.sport-region-info-m.active > .country-games-info-m > span{color: $text-palette-4;}
+
+.arrow-view-m{
+	position: absolute;
+	right: 0;
+	width: 40px;
+	height: 40px;
+	font: 20px/40px icomoon;
+	text-align: center;
+	color: $text-palette-6;
+}
+.arrow-view-m:before{
+	content: "\e670";
+}
+.sport-region-info-m.active > .arrow-view-m:before{
+	content: "\e671";
+}
+//Single sport navigation END
+
+//competition
+.competition-naw-wrapper-m{
+	float: left;
+	width: 100%;
+	overflow: hidden;
+	max-height: 0;
+	height: auto;
+	//transition: max-height 200ms;
+	transform: translate3d(0,0,0);
+}
+.sport-region-info-m.active + .competition-naw-wrapper-m{
+	max-height: 99999px;
+}
+.competition-list-view-m{
+	float: left;
+	width: 100%;
+	box-shadow: 0 0 0 2px transparent inset;
+	padding: 0 7px;
+	background: $skin-palette-12;
+	height: auto;
+	//transition: padding-top 200ms, padding-bottom 180ms, box-shadow 180ms;
+	//animation: closed-animate-menu 160ms ease;
+	max-height: 0;
+	transform: translate3d(0,0,0);
+	display: none;
+}
+.sport-region-info-m.active + .competition-naw-wrapper-m > .competition-list-view-m{
+	max-height: 99999px;
+	//animation: open-animate-menu 400ms ease-in-out;
+	padding: 2px 7px;
+	box-shadow: 0 0 0 2px $skin-palette-9 inset;
+	display: block;
+}
+@keyframes open-animate-menu{
+	0% {max-height: 0;}
+	100% {max-height: 500px;}
+}
+@keyframes closed-animate-menu{
+	0% {max-height: 500px;}
+	100% {max-height: 0;}
+}
+.competition-list-view-m > ul{
+	float: left;
+	width: 100%;
+	margin: 0 0 5px;
+}
+.competition-list-view-m > ul:first-child{
+	margin-top: 5px;
+}
+.competition-list-view-m > ul > li{
+	float: left;
+	width: 100%;
+	border-bottom: 1px solid $skin-palette-12;
+	background: $skin-palette-9;
+	height: 35px;
+	text-align: left;
+	padding: 0 0 0 34px;
+	position: relative;
+}
+.competition-list-view-m > ul > li > a{
+	text-decoration: none;
+	display: block;
+	float: left;
+	padding: 0;
+	width: 100%;
+	color: $text-palette-6;
+}
+.competition-list-view-m > ul > li > a.active{
+	background: lighten( desaturate( adjust-hue( $skin-color, 3deg ), 5 ), 5 );
+}
+.competition-list-view-m > ul > li:first-child > a{
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+.competition-list-view-m > ul > li:last-child > a{
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+.fav-star-m{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 34px;
+	height: 34px;
+	box-shadow: -1px 0 0 $skin-palette-12 inset;
+	font: 16px/34px icomoon;
+	text-align: center;
+	color: #131724;
+    transform: translate3d(0,0,0);
+	//transition: background 240ms, color 240ms;
+}
+.fav-star-m.active{
+	background: $favorite-color;
+	color: lighten( desaturate( adjust-hue( $favorite-color, 200deg ), 44 ), 46 );
+}
+.fav-star-m:before{
+	content: "\f005";
+}
+.competition-list-view-m > ul > li:first-child > a > .fav-star-m{
+	border-top-left-radius: 3px;
+}
+.competition-list-view-m > ul > li:last-child > a > .fav-star-m{
+	border-bottom-left-radius: 3px;
+}
+.games-count-view-m{
+	position: absolute;
+	font-size: 8px;
+	top: 2px;
+	left: 26px;
+	line-height: 12px;
+	font-style: normal;
+	color: $text-palette-4;
+}
+.competition-list-view-m > ul > li > a > p{
+	float: left;
+	width: 100%;
+	padding: 0 38px 0 8px;
+	font-size: 12px;
+	line-height: 34px;
+	color: $text-palette-6;
+    position: relative;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-decoration: none;
+	transform: translate3d(0,0,0);
+}
+.competition-list-view-m > ul > li > a > p > i{
+  font-style: normal;
+  display: block;
+  vertical-align: top;
+  position: absolute;
+  right: 8px;
+  top: 0;
+  text-align: right;
+}
+.competition-list-view-m > ul > li > a.active > p{
+	color: $text-palette-3;
+}
+//competition END

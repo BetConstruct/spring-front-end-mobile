@@ -1,0 +1,171 @@
+@import 'skin';
+//user name
+.user-name-contain-m{
+  float: left;
+  width: 100%;
+  background: darken( saturate( adjust-hue( $skin-palette-7, 3deg ), 9 ), 21 );
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  height: 44px;
+  margin: 0 0 1px;
+  padding: 0 10px 0 44px;
+  position: relative;
+}
+.user-icon-m{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 44px;
+  height: 44px;
+  text-align: center;
+  font: 24px/44px icomoon;
+  color: $text-palette-3;
+}
+.user-icon-m:before{
+  content: "\E905";
+}
+.user-name-title-m{
+  float: left;
+  width: 100%;
+  font-size: 12px;
+  line-height: 14px;
+  color: $text-palette-1;
+  margin: 8px 0 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.user-id-m{
+  float: left;
+  width: 100%;
+  display: block;
+  color: #c3953c;
+  font-size: 10px;
+  line-height: 12px;
+  margin: 2px 0 0;
+}
+//user name END
+
+//balance view
+.user-balance-info-contain{
+  float: left;
+  width: 100%;
+}
+.balance-user-view-m{
+  float: left;
+  width: 100%;
+  background: darken( saturate( adjust-hue( $skin-palette-7, 3deg ), 9 ), 21 );
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  margin: 0 0 1px;
+  padding: 10px 12px;
+}
+.deposit-b-total-b{
+  float: left;
+  width: 100%;
+  margin: 0 0 10px;
+}
+.deposit-b-total-b > ul{
+  float: left;
+  width: 100%;
+  display: table;
+  height: 36px;
+}
+.deposit-b-total-b > ul > li{
+  display: table-cell;
+  vertical-align: top;
+  position: relative;
+}
+.deposit-b-total-b > ul > li:first-child{
+  width: 100%;
+}
+.deposit-b-total-b > ul > li > p{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 5px 0 0;
+}
+.total-balance-m{
+  float: left;
+  width: 100%;
+  color: $text-palette-3;
+  font-size: 13px;
+  line-height: 18px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.deposit-b-total-b > ul > li > a{
+  float: left;
+  display: block;
+}
+.deposit-b-total-b > ul > li .button-view-normal-m{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.balance-c-m{
+  float: left;
+  width: 100%;
+  color: $text-palette-3;
+  font-size: 13px;
+  line-height: 18px;
+}
+.balance-c-m > i{
+  font-style: normal;
+}
+.bonus-view-m{
+  float: left;
+  width: 100%;
+  margin: 5px 0 0;
+}
+.bonus-view-m > ul{
+  float: left;
+  width: 100%;
+  display: table;
+}
+.bonus-view-m > ul > li{
+  display: table-cell;
+  vertical-align: top;
+  position: relative;
+}
+.bonus-view-m > ul > li:first-child{
+  width: 100%;
+}
+.bonus-title-m{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 0 5px 0 0;
+  height: 100%;
+}
+.bonus-title-m > i{
+  float: left;
+  display: block;
+  width: 100%;
+  font-style: normal;
+  color: #c3953c;
+  font-size: 12px;
+  line-height: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.bonus-count-m{
+  float: right;
+  display: block;
+  vertical-align: top;
+  color: #c3953c;
+  font-size: 12px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+.bonus-count-m > i{
+  font-style: normal;
+}
+.bonus-view-m.withdraw-m .bonus-title-m > i,
+.bonus-view-m.withdraw-m .bonus-count-m{
+  color: $brand-color-1;
+}
+//balance view END

@@ -1,0 +1,54 @@
+@import 'skin';
+.date-list-games-m {
+  float: left;
+  width: 100%;
+  margin: 0 0 4px;
+}
+.list-games-m{
+  float: left;
+  width: 100%;
+}
+.game-date-view-m{
+  float: left;
+  width: 100%;
+  height: 25px;
+  background: darken( desaturate( adjust-hue( $skin-palette-7, 6deg ), 1 ), 12 );
+  box-shadow: 0 1px 0 rgba(123, 129, 145, 0.15) inset;
+}
+.game-date-view-m > ul{
+  float: left;
+  width: 100%;
+  display: table;
+}
+.game-date-view-m > ul > li{
+  display: table-cell;
+  padding: 1px 0 0;
+  width: 56px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 24px;
+  color: $text-palette-6;
+}
+.game-date-view-m > ul > li:first-child{
+  width: calc(100% - 180px);
+  text-align: left;
+  color: $text-palette-6;
+  padding: 0;
+  position: relative;
+}
+.game-date-view-m > ul > li:first-child > p{
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 1px 10px 0;
+  position: absolute;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.game-date-view-m > ul > li:first-child > p.live-game-competition-m{
+  padding-left: 40px;
+}
+.live-game-competition-m > .flag-view-m{
+  top: 2px;
+}

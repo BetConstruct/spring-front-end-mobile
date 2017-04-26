@@ -1,0 +1,218 @@
+@import 'skin';
+//dashboard live game list
+.dashboard-wrapper-m .coefficient-game-view{
+  animation: inherit;
+  max-height: inherit;
+  transform: translate3d(0,0,0);
+}
+.dashboard-live-game-list-m{
+  float: left;
+  width: 100%;
+}
+.dashboard-upcoming-game-list-m{
+  float: left;
+  width: 100%;
+}
+.dashboard-column-title{
+  float: left;
+  width: 100%;
+  margin: 0 0 1px;
+  background: darken( saturate( adjust-hue( $skin-palette-7, 5deg ), 14 ), 23 );
+  height: 35px;
+  padding: 0 34px;
+  position: relative;
+}
+.dashboard-column-title:before{
+  font: 18px/35px icomoon;
+  position: absolute;
+  left: 10px;
+  top: 0;
+}
+.dashboard-column-title > h3{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 35px;
+  color: $text-palette-6;
+  text-transform: uppercase;
+  padding: 0;
+}
+.live-view-m:before{
+  content: "\e936";
+  color: $hero-color;
+}
+.upcoming-view-m:before{
+  content: "\e6e2";
+  color: $text-palette-6;
+}
+.collapse-arrow-view{
+  font: 16px/35px icomoon;
+  width: 34px;
+  height: 35px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: $text-palette-6;
+  text-align: center;
+  transform: translate3d(0,0,0);
+}
+.collapse-arrow-view:before{
+  content: "\e937";
+}
+.dashboard-column-title.active > .collapse-arrow-view:before{
+  content: "\e938";
+}
+.games-list-view-dashboard{
+  float: left;
+  width: 100%;
+  transform: translate3d(0,0,0);
+}
+.single-sport-game-list-d{
+  float: left;
+  width: 100%;
+  margin: 0 0 4px;
+  overflow: hidden;
+  height: auto;
+  max-height: 0;
+  animation: closed-animate-menu 180ms ease;
+  transform: translate3d(0,0,0);
+}
+//competition
+.single-sport-title-dashboard-m.active + .single-sport-game-list-d{
+  max-height: 99999px;
+  animation: open-animate-menu 500ms ease-in-out;
+}
+@keyframes open-animate-menu{
+  0% {max-height: 0;}
+  100% {max-height: 1000px;}
+}
+@keyframes closed-animate-menu{
+  0% {max-height: 500px;}
+  100% {max-height: 0;}
+}
+.single-sport-game-list-d > ul{
+  float: left;
+  width: 100%;
+}
+.single-sport-game-list-d > ul > li{
+  float: left;
+  width: 100%;
+  margin: 2px 0 0;
+}
+.live-game-info-m{
+  float: left;
+  width: 100%;
+  display: block;
+  position: relative;
+  padding: 0 30px 0 60px;
+  height: 50px;
+  background: $skin-palette-11;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  transform: translate3d(0,0,0);
+}
+.date-game-icons-m{
+  position: absolute;
+  width: 62px;
+  padding: 0 4px 0 10px;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+.team-name-dashboard-b{
+  float: left;
+  width: 100%;
+  height: 32px;
+  padding: 7px 0 0;
+  color: $text-palette-6;
+  font-size: 10px;
+  line-height: 12px;
+  display: block;
+}
+.icons-game-info-m{
+  display: inline-block;
+  vertical-align: top;
+}
+.icon-separator-m{
+  float: left;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  font: 10px/12px icomoon;
+  color: $text-palette-4;
+  font-style: normal;
+  display: inline-block;
+  vertical-align: top;
+}
+.tv-icon:before{
+  content: "\e907";
+}
+.video-icon:before{
+  content: "\e901";
+}
+.icon-arrow-single-game{
+  position: absolute;
+  right: 0;
+  width: 30px;
+  height: 100%;
+  top: 0;
+  text-align: right;
+  font: 20px/50px icomoon;
+  color: $text-palette-7;
+  padding: 0 6px 0 0;
+}
+.icon-arrow-single-game:before{
+  content: "\e672";
+}
+.game-teams-name-contain-m{
+  float: left;
+  width: 100%;
+  height: 50px;
+  padding: 8px 0 0;
+}
+.mini-contain-name-separator{
+  float: left;
+  width: 100%;
+  height: 16px;
+  display: table;
+}
+.team-names-mini-w{
+  display: table-cell;
+  vertical-align: top;
+  padding: 0;
+  position: relative;
+  font-size: 12px;
+  line-height: 16px;
+  width: 100%;
+  height: 16px;
+  color: $text-palette-3;
+}
+.team-names-mini-w > b{
+  font-weight: normal;
+  position: absolute;
+  padding: 0 5px 0 10px;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.game-count-b-m{
+  display: table-cell;
+  text-align: right;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 0 10px 0 0;
+  height: 100%;
+  color: #b6862e;
+  white-space: nowrap;
+}
+.game-count-b-m > i{
+  font-style: normal;
+}
+//dashboard live game list END
+

@@ -1,0 +1,619 @@
+//desktop - version
+@media screen and (min-width: 980px) {
+  .left-navigate-list-view-m,
+  .right-navigate-list-view-m,
+  .betslip-events-container,
+  .popup-content-view-m,
+  .search-result-box,
+  .content-m > .import-view-container,
+  .profile-view-wrapper,
+  .deposit-view-wrapper,
+  .loyalty-page-wrapper,
+  .content-m > .game-view-wrapper{
+    @include scroll;
+    overflow-y: auto;
+  }
+  body {
+    height: 100%;
+    overflow-y: auto;
+  }
+  .wrapper-m {
+    padding-top: 100px;
+  }
+  .full-container-m{
+    float: left;
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+  }
+  .logo-wrapper-m > a{
+    width: 200px;
+    background-position: 0 100%;
+  }
+  .header-separator-m{
+    padding: 0 70px 0 10px;
+  }
+  .nav-bar-contain-m{
+    text-align: center;
+  }
+  .left-top-nav{
+    display: none;
+  }
+  .left-nav-container-m {
+    position: static;
+    display: table-cell;
+    vertical-align: top;
+    left: 0;
+    width: 260px;
+    padding: 0 5px 0 0;
+  }
+  .left-nav-container-m .closed-nav-icon,
+  .right-trans-box-m,
+  .left-nav-container-m:before,
+  .navigation-container-m.site-navigate-m {
+    display: none;
+  }
+  .left-navigate-list-view-m {
+    height: calc(100vh - 145px);
+  }
+  .content-m {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+  }
+  .content-m > .import-view-container{
+    transform: translate3d(0,0,0);
+  }
+  .content-m > .import-view-container,
+  .profile-view-wrapper,
+  .deposit-view-wrapper,
+  .loyalty-page-wrapper,
+  .content-m > .game-view-wrapper{
+    float: left;
+    width: calc(100% - 325px);
+    margin-right: 5px;
+    padding-right: 3px;
+    position: relative;
+    height: calc(100vh - 100px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+  .casino .loyalty-page-wrapper,
+  .casino .profile-view-wrapper,
+  .casino .deposit-view-wrapper,
+  .casino .content-m > .game-view-wrapper{
+    width: 100%;
+  }
+  .single-game-list-item-m {
+    overflow: hidden;
+  }
+  .wrapper-v-a-view {
+    text-align: center;
+  }
+  .game-control{
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .loyalty-points-j{
+    padding: 4px 0 5px;
+  }
+  .align-wrapper{
+    text-align: center;
+  }
+  .ver-center-view-b{
+    max-width: 400px;
+    text-align: left;
+  }
+  .registration-form-b{
+    padding-bottom: 0;
+  }
+  .competition-naw-wrapper-m{
+    transition: max-height 180ms;
+  }
+  .competition-list-view-m{
+    transition: padding-top 180ms, padding-bottom 180ms, box-shadow 180ms;
+    animation: closed-animate-menu 160ms ease;
+    display: block;
+  }
+  .sport-region-info-m.active + .competition-naw-wrapper-m > .competition-list-view-m{
+    animation: open-animate-menu 400ms ease-in-out;
+  }
+  .flag-view-m{image-rendering: pixelated;}
+  .sport-nav-container-m::-webkit-scrollbar {
+    display: block;
+  }
+  //.sports-navigation{
+  //  transform: translate3d(0,0,0);
+  //  overflow: hidden;
+  //}
+  .sport-nav-container-m{
+    box-shadow: none;
+  }
+  .select-sport-contain-m{
+    transform: translate3d(0,0,0);
+  }
+  .sport-nav-container-m > ul > li > a > p{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .game-video{
+    float: left;
+    width: 100%;
+  }
+  .search-result-wrapper-m{
+    width: 400px;
+  }
+  //betslip
+  .betslip-m {
+    position: static;
+    float: right;
+    width: 320px;
+  }
+  .betslip-balance-view-m{
+    position: static;
+    float: left;
+  }
+  .betslip-events-container{
+    height: calc(100vh - 235px);
+  }
+  .betslip-full-view, .betslip-full-view.active{
+    position: static;
+    height: 100%;
+    float: left;
+    width: 100%;
+    top: 0;
+    padding-top: 88px;
+  }
+  .quick > .betslip-full-view{
+    height: auto;
+    padding: 48px 0 0;
+    overflow: inherit;
+  }
+  .quick > .betslip-full-view > .betslip-header-m{
+    height: 48px;
+  }
+  .closed-betslip-icon{
+    display: none;
+  }
+  .betslip-settings{
+    right: 10px;
+  }
+  .betslip-m.loading{
+    filter: inherit;
+    transform: translate3d(0,0,0);
+  }
+  .quick-bet-settings-view{
+    padding-right: 44px;
+  }
+  .provider-menu{display: none;}
+  .single-casino-game-view {
+    width: calc(100% / 6);
+  }
+  .right-nav-container-m{
+    left: auto;
+    right: -150%;
+    transition: right 300ms;
+    width: 360px;
+  }
+  .right-nav-container-m.open{
+    left: auto;
+    right: 0;
+  }
+  .game-not-found{
+    float: left;
+    width: calc(100% - 320px);
+  }
+  .footer-m{display: none;}
+}
+@media screen and (min-width: 1620px){
+  .single-casino-game-view {
+    width: calc(100% / 8);
+  }
+}
+@media screen and (min-width: 1340px){
+  .all-markets-view-m, .select-game-nav-list > ul{
+    -moz-columns: 2;
+    -moz-column-gap: 6px;
+    column-count: 2;
+    column-gap: 6px;
+  }
+  .singe-market-view-m, .select-game-nav-list > ul > li{
+    float: none;
+    display: inline-block;
+    vertical-align: top;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .competition-naw-wrapper-m,
+  .competition-list-view-m{
+    transform: inherit;
+  }
+  .singe-market-view-m:first-child,
+  .singe-market-view-m:last-child{
+    border-radius: 0;
+  }
+  .singe-market-view-m:first-child:nth-last-child(1){
+    width: calc(200% + 6px);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+  .select-game-nav-list > ul > li:first-child:nth-last-child(1) {
+    width: calc(200% + 6px);
+    display: inline-block;
+    vertical-align: top;
+    float: none;
+  }
+}
+//desktop - version END
+
+
+
+//.rtl {
+//  //start text move to right
+//  .team-names-mini-w,
+//  .name-sub-u-m-title,
+//  .single-universal-menu-contain,
+//  .event-text-v-b,
+//  .name-market-contain-cell-m > i,
+//  .single-team-info-m > p,
+//  .league-name-view-m > h3,
+//  .game-date-view-m > ul > li:first-child > p,
+//  .info-menu-contain-m > ul > li > a
+//  {
+//    text-align: right;
+//  }
+//  .game-info-mini-m > p,
+//  .game-date-view-m > ul > li:first-child > p.live-game-competition-m,
+//  .competition-list-view-m > ul > li > a > p,
+//  .country-games-info-m > p > i,
+//  .name-sub-u-m-title p span,
+//  .details-form-item-m,
+//  .single-form-item > input[type=text], .single-form-item > input[type=password],
+//  .single-form-item > input[type=email], .single-form-item > input[type=number],
+//  .single-form-item > input[type=tel], .single-form-item > .react-tel-input > input[type=tel],
+//  .title-view-match-day > h2,
+//  .deposit-b-total-b > ul > li > p,
+//  .bonus-view-m > ul > li,
+//  .name-d-method > i,
+//  .promo-text-box,
+//  .infoText,
+//  .single-team-info-m
+//  {
+//    text-align: right;
+//  }
+//  //end  text move to right
+//
+//  //start rotate styles
+//  .date-game-icons-m{
+//    right: 0;
+//    left:inherit;
+//  }
+//  .icon-arrow-single-game{
+//    left: 0;
+//    right: inherit;
+//  }
+//  .mini-contain-name-separator{
+//    direction: rtl;
+//  }
+//  .live-game-info-m{
+//    padding: 0 60px 0 30px;
+//  }
+//  .collapse-arrow-view{
+//    left: 0;
+//    right: inherit;
+//  }
+//  .dashboard-column-title:before{
+//    right: 10px;
+//  }
+//  .dashboard-column-title,
+//  .single-sport-title-dashboard-m.active
+//  {
+//    direction: rtl;
+//  }
+//  .closed-open-arrow-m{
+//    left: 0;
+//    right: inherit;
+//  }
+//  .dashboard-sport-icon-m{
+//    right: 0;
+//    padding: 0 10px 0 0;
+//  }
+//  .dashboard-sport-icon-m {
+//    box-shadow: -3px 0 0 $skin-palette-6 inset;
+//  }
+//  .left-t > .single-team-info-m {
+//    padding: 0 60px 0 10px;
+//  }
+//  .teams-name-info-m > ul > li {
+//    float: left;
+//    direction: rtl;
+//  }
+//  .single-coefficient-m{
+//    direction: rtl;
+//  }
+//  .single-coefficient-m > p > b{
+//    padding: 0 10px 0 0;
+//  }
+//  .games-list-view-dashboard{
+//    direction: rtl;
+//  }
+//  .single-sport-title-dashboard-m{
+//    padding: 0 34px 0 30px;
+//  }
+//  .game-date-view-m > ul > li:first-child > p.live-game-competition-m{
+//    padding-left: 10px;
+//    padding-right: 40px;
+//  }
+//  .live-game-competition-m > .flag-view-m{
+//    left: auto;
+//    right: 10px;
+//  }
+//  .arrow-game-view-m{
+//    left: 0;
+//    right: inherit;
+//  }
+//  .game-title-info-row-m > ul > li.time-column-m{
+//    right: 0;
+//    left: inherit;
+//  }
+//  .game-title-info-row-m > ul > li.market-count-view-m{
+//    left: 0;
+//    right: inherit;
+//  }
+//  .names-mini-row-m > ul > li{
+//    float: right;
+//  }
+//  .single-coefficient-m{
+//    box-shadow: 1px 0 0 rgba(123, 129, 145, 0.15) inset, 1px 0 0 darken( saturate( adjust-hue( $skin-palette-11, -16deg ), 10 ), 8 ) inset;
+//  }
+//  .select-sport-title-m.Soccer{
+//    direction: rtl;
+//  }
+//  .select-sport-title-m > h2 > b{
+//    text-align: right;
+//    padding: 0 10px 0 0;
+//  }
+//  .competition-list-view-m > ul > li > a > p{
+//    padding: 0 8px 0 38px;
+//  }
+//  .competition-list-view-m > ul > li > a > p > i{
+//    left: 8px;
+//    right: inherit;
+//  }
+//  .bread-crumbs-view-m > p{
+//    text-align: right;
+//    padding: 0 30px 0 12px;
+//  }
+//  .bread-crumbs-view-m > a{
+//    right: 0;
+//    left: inherit;
+//  }
+//  .game-date-view-m > ul{
+//    direction: rtl;
+//  }
+//  .single-game-list-item-m{
+//    white-space: nowrap;
+//    direction: rtl;
+//  }
+//  .game-information-m > ul{
+//    float: none;
+//    display: inline-block;
+//    vertical-align: top;
+//  }
+//  .game-information-m > ul > li{
+//    float: none;
+//    display: inline-block;
+//    vertical-align: top;
+//    box-shadow: 0 1px 0 rgba(123, 129, 145, 0.15) inset, -1px 0 0 darken( saturate( adjust-hue( $skin-color, -15deg ), 13 ), 11 ) inset;
+//  }
+//  .game-information-m > ul > li.fav-game-icon-m{
+//    box-shadow: 0 1px 0 rgba(123, 129, 145, 0.15) inset, -1px 0 0 darken( saturate( adjust-hue( $skin-color, -15deg ), 13 ), 11 ) inset;
+//  }
+//  .game-information-m > ul > li.factor-m > .single-coefficient-m{
+//    box-shadow: 0 1px 0 rgba(123, 129, 145, 0.15) inset, -1px 0 0 darken( saturate( adjust-hue( $skin-palette-11, -16deg ), 10 ), 8 ) inset;
+//  }
+//  .markets-count-view-m{
+//    float: left;
+//  }
+//  .time-view-game-m{
+//    float: right;
+//  }
+//  .time-markets-count-m > .icons-game-info-m{
+//    float: right;
+//  }
+//  //end rotate styles
+//
+//  //start of menu stypes
+//  .mini-sport-nav-box > .single-sport-title-dashboard-m{
+//    direction: rtl;
+//  }
+//  .title-row-u-m{
+//    direction: rtl;
+//  }
+//  .icon-view-u-m{
+//    right: 0;
+//    left: inherit;
+//  }
+//  .arrow-u-m{
+//    left: 0;
+//    right: inherit;
+//  }
+//  .language-container-m > ul{
+//    direction: rtl;
+//  }
+//  .nav-bar-contain-m, .sport-nav-container-m{
+//    direction: rtl;
+//  }
+//  .balance-h-row-b > h5.green,.balance-h-row-b > h6, .balance-h-row-b > h5{
+//    float: right;
+//  }
+//  .balance-h-row-b > span, .balance-h-row-b > p{
+//    float: left;
+//  }
+//  //end of menu styles
+//
+//  //start of betslip part
+//  .all-bets-settings-row-m > ul > li{
+//    float: right;
+//  }
+//  .betslip-events-container{
+//    direction: rtl;
+//  }
+//  .event-remove-b-m{
+//    left: 0;
+//    right: inherit;
+//  }
+//  .icon-status-view-m{
+//    margin: 0 0 3px 8px;
+//  }
+//  .team-name-view-b-m{
+//    padding: 0 0 10px 25px;
+//  }
+//  .market-full-info-m > ul > li > span{
+//    float: left;
+//  }
+//  .kind-of-bet{
+//    right: 0;
+//    left: inherit;
+//  }
+//  .info-i-switcher-b{
+//    left: 0;
+//    right: inherit;
+//  }
+//  .bet-kind-container{
+//    padding: 2px 46px 0 91px;
+//  }
+//  .sub-error-info:before{
+//    right: 4px;
+//    left: inherit;
+//  }
+//  .ew-total-odd > ul > li > p{
+//    float: left;
+//  }
+//  .possible-win-container > ul > li > span{
+//    float:  left;
+//  }
+//  .possible-win-container > ul > li > p{
+//    float: right;
+//  }
+//  .betslip-settings.open+.b-settings-view-b{
+//    direction: rtl;
+//  }
+//  .radio-form-item>label:before{
+//    right: 0;
+//    left: inherit;
+//  }
+//  .radio-form-item{
+//    text-align: right;
+//  }
+//  .radio-form-item>label>input:checked+span:before{
+//    right: 5px;
+//    left: inherit;
+//  }
+//  .radio-form-item > label{
+//    padding: 5px 20px 5px 0;
+//  }
+//  .max-bet-b-m{
+//    border-right: none;
+//    border-left: 1px solid $skin-palette-6;
+//  }
+//  //end of betslip part
+//
+//  //start of login user part
+//  .user-name-contain-m{
+//    direction: rtl;
+//  }
+//  .user-icon-m{
+//    right: 0;
+//    left: inherit;
+//  }
+//  .user-name-contain-m{
+//    padding: 0 44px 0 10px;
+//  }
+//  .deposit-b-total-b,.bonus-view-m{
+//   direction: rtl;
+//  }
+//  .title-row-u-m > p > span{
+//    padding: 0 0 0 28px;
+//  }
+//  .single-method-deposit > ul > li:first-child{
+//   float: right;
+//  }
+////.single-method-deposit > ul > li:first-child{
+// //   float: left;
+// // }
+//  .deposit-method-b{
+//    float: left;
+//  }
+//  .bonus-title-view > h3{
+//    text-align: right;
+//  }
+//  .bonus-info-contain{
+//    direction: rtl;
+//  }
+//  .bonus-info-contain > ul > li > p{
+//    padding: 0 10px 5px 0;
+//  }
+//  .more-bonus-info{
+//    padding: 10px 10px 0 0;
+//  }
+//  .bonus-more-view-wrapper{
+//    direction: rtl;
+//  }
+//  .bonus-claim-button-w > span{
+//    text-align: right;
+//  }
+//  .profile-info-contain-m{
+//    direction: rtl;
+//  }
+//  .inputfile + label > span{
+//    box-shadow: -1px 0 0 $text-palette-6 inset, 0 1px 0 $text-palette-6 inset, 0 -1px 0 $text-palette-6 inset;
+//  }
+//  .self-exclusion-container-m > p{
+//    text-align: right;
+//  }
+//  .change-password-container-m, .page-menu-contain{
+//    direction: rtl;
+//  }
+//  .promo-text-box table, .page-container{
+//    direction: rtl;
+//  }
+//  .page-section:after{
+//    left: 0;
+//    right:  inherit;
+//  }
+//  .page-section{
+//    padding: 0 12px 0 38px;
+//  }
+//  .deposits-wrapper{
+//    direction: rtl;
+//  }
+//  //end of login user part
+//
+//  //start casino part
+//  .provider-menu{
+//    direction: rtl;
+//  }
+//  .casino-game-title > b{
+//    direction: rtl;
+//    text-align: right;
+//  }
+//  .single-game-type-list{
+//    direction: rtl;
+//  }
+//  .arrow-view-open-box{
+//    left: 0;
+//    right: inherit;
+//  }
+//  .title-game-type-box{
+//    padding: 0 10px 0 34px;
+//  }
+//  .title-single-game{
+//    direction: rtl;
+//    text-align: right;
+//  }
+//  //end of casino part
+//}

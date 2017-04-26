@@ -1,0 +1,28 @@
+@import 'skin';
+.payment-text-container{
+  float: left;
+  width: 100%;
+  padding: 0 0 5px 10px;
+  font-size: 12px;
+  line-height: 16px;
+  color: $text-palette-4;
+}
+.betshop-list-v-m{
+  float: left;
+  width: 100%;
+  padding: 10px;
+}
+.deposit-form-container .betshop-list-v-m{
+  padding: 0;
+}
+.betshop-list-v-m > label{
+  float: left;
+  width: 100%;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 0 0 10px;
+  margin: 0 0 10px;
+  border-bottom: 1px solid $text-palette-8;
+  text-transform: uppercase;
+  color: $text-palette-3;
+}

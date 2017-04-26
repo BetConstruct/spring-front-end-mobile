@@ -1,0 +1,39 @@
+@import 'skin';
+.balances-wrapper{
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+.amount-container{
+  float: left;
+  width: 100%;
+}
+.balance-view-t{
+  float: left;
+  width: 100%;
+  margin: 0 0 10px;
+  display: table;
+  table-layout: fixed;
+  font-weight: normal;
+}
+.balance-view-t > span{
+  display: table-cell;
+  vertical-align: top;
+  font-size: 13px;
+  line-height: 14px;
+  text-transform: uppercase;
+  color: $text-palette-3;
+}
+.balance-view-t > i{
+  display: table-cell;
+  vertical-align: top;
+  font-style: normal;
+  text-align: right;
+  font-size: 13px;
+  line-height: 14px;
+  color: $brand-color-1;
+}
+.filter-view-b.transfer-view-m{
+  padding: 10px 0 0;
+  background: none;
+}

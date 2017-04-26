@@ -1,0 +1,63 @@
+@import 'skin';
+.profile-view-wrapper{
+  float: left;
+  width: 100%;
+}
+//title
+.title-separator-contain-b{
+  float: left;
+  width: 100%;
+  height: 40px;
+  background: $skin-palette-10;
+  margin: 0 0 1px;
+}
+.title-separator-contain-b > h1{
+  float: left;
+  width: 100%;
+  text-align: center;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 40px;
+  text-transform: uppercase;
+  color: $text-palette-4;
+}
+//title END
+
+//tab menu
+.page-menu-contain{
+  float: left;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  text-align: center;
+  background: $skin-palette-11;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  height: 36px;
+  margin: 0 0 4px;
+}
+.page-menu-contain::-webkit-scrollbar{
+  display: none;
+  width: 0;
+}
+.page-menu-contain > ul{
+  padding: 0;
+}
+.page-menu-contain > ul > li{
+  display: inline-block;
+  vertical-align: top;
+  font-size: 14px;
+  line-height: 36px;
+  margin: 0 7px;
+}
+.page-menu-contain > ul > li > a{
+  display: block;
+  text-decoration: none;
+  padding: 0 8px;
+  color: $text-palette-6;
+}
+.page-menu-contain > ul > li > a.active{
+  box-shadow: 0 -2px 0 $hero-color inset;
+  color: $text-palette-1;
+}
+//tab menu END

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head data-rd="<%= htmlWebpackPlugin.options.releaseDate %>">
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8"/>
+    <%= htmlWebpackPlugin.options.iosAppMetaContent ? "<meta name='apple-itunes-app' content='"+ htmlWebpackPlugin.options.iosAppMetaContent +"' >" : "" %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"/>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>

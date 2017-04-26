@@ -1,0 +1,36 @@
+@import 'skin';
+.footer-m {
+  float: left;
+  width: 100%;
+  padding: 10px 10px 60px;
+}
+.back-top-top-m{
+  float: left;
+  width: 100%;
+  padding: 0 10px;
+}
+.back-top-top-m > a{
+  display: block;
+  width: 100%;
+  height: 40px;
+  border: 1px solid $text-palette-6;
+  padding: 0 10px;
+  font-size: 13px;
+  line-height: 40px;
+  color: $text-palette-4;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+}
+//.logo-f{
+//  float: left;
+//  width: 100%;
+//  text-indent: -9999em;
+//  margin: 8px 0 0;
+//}
+//.logo-f > a{
+//  display: block;
+//  width: 100%;
+//  height: 40px;
+//  background: $logo-footer;
+//}

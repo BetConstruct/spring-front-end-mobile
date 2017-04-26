@@ -1,0 +1,290 @@
+@import 'skin';
+@font-face {
+  font-family: 'Sport-icons';
+  src:url('../../../../fonts/sport-icons/icomoon.eot?ggnxcmd');
+  src:url('../../../../fonts/sport-icons/icomoon.eot?#iefixggnxdcm') format('embedded-opentype'),
+  url('../../../../fonts/sport-icons/icomoon.woff?ggnxdcm') format('woff'),
+  url('../../../../fonts/sport-icons/icomoon.ttf?ggnxcdm') format('truetype'),
+  url('../../../../fonts/sport-icons/icomoon.svg?ggndxcm#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/*sport icons font*/
+.AlpineSkiing:before {content: "\e64e";}
+.AustralianFootball:before {content: "\e605";}
+.AmericanFootball:before {content: "\e602";}
+.Angling:before {content: "\e603";}
+.Archery:before {content: "\e604";}
+.Badminton:before {content: "\e606";}
+.Balls:before {content: "\e607";}
+.Baseball:before {content: "\e608";}
+.Basketball:before {content: "\e609";}
+.BeachHandball:before {content: "\e60a";}
+.BeachSoccer:before, .BeachFootball:before{content: "\e60b";}
+.BeachVolleyball:before {content: "\e60c";}
+.Biathlon:before {content: "\e60d";}
+.Bobsleigh:before {content: "\e60e";}
+.BallHockey:before, .Bandy:before {content: "\e628";}
+.Boxing:before {content: "\e60f";}
+.Bridge:before {content: "\e610";}
+.Canoe:before, .Canoeing:before {content: "\e611";}
+.Chess:before {content: "\e612";}
+.Cricket:before {content: "\e613";}
+.Curling:before {content: "\e614";}
+.Cycling:before {content: "\e615";}
+.Cyclo-Cross:before {content: "\e616";}
+.CrossFire:before {content: "\e90e";}
+.Bowls:before {content: "\e800";}
+.Darts:before {content: "\e617";}
+.Diving:before {content: "\e618";}
+.EBasketball:before {content: "\e900";}
+.Electronic:before, .ElectronicSports:before {content: "\e619";}
+.Eurovision:before {content: "\e61a";}
+.Fencing:before {content: "\e61c";}
+.FigureSkating:before {content: "\e61d";}
+.Floorball:before {content: "\e61e";}
+.Formula1:before {content: "\e61f";}
+.Futsal:before {content: "\2e";}
+.financials:before {content: "\e902";}
+.Freestyle:before, .FreestyleWrestling:before {content: "\e620";}
+.GaelicFootball:before {content: "\e621";}
+.Golf:before {content: "\e622";}
+.GrassHockey:before {content: "\e623";}
+.Greyhounds:before,
+.VirtualGreyhoundRacing:before {content: "\e624";}
+.Gymnastics:before {content: "\e625";}
+.Halo:before {content: "\e90d";}
+.Handball:before {content: "\e626";}
+.HardAthletics:before, .Weightlifting:before {content: "\e627";}
+.Hockey:before {content: "\e629";}
+.HorseRacing:before {content: "\e62a";}
+.Hurling:before {content: "\e62b";}
+.IceHockey:before {content: "\e62c";}
+.Judo:before {content: "\e62d";}
+.LeagueofLegends:before, .LeagueOfLegends:before {content: "\22";}
+.Lacross:before {content: "\e62e";}
+.LightAthletics:before, .Athletics:before {content: "\e62f";}
+.Lottery:before {content: "\e631";}
+.Luge:before {content: "\e632";}
+.Mafia:before {content: "\e633";}
+.MiniSoccer:before {content: "\e634";}
+.ModernPentathlon:before {content: "\e635";}
+.Motorbikes:before {content: "\e636";}
+.Motorsport:before {content: "\e637";}
+.Nascar:before {content: "\e638";}
+.Netball:before {content: "\e639";}
+.NordicCombined:before {content: "\e63a";}
+.Olimpic:before, .Olympics:before {content: "\e63b";}
+.Oscar:before {content: "\e63c";}
+.Overwatch:before {content: "\2a";}
+.outright:before {content: "\e903";}
+.Padel:before {content: "\e63d";}
+.Padel-Tennis:before {content: "\e669";}
+.Pesapallo:before {content: "\e63e";}
+.PokerLive:before {content: "\e63f";}
+.Poker:before {content: "\e640";}
+.Politics:before {content: "\e641";}
+.Pool:before {content: "\e642";}
+.Rally:before, .AutoRacing:before {content: "\e643";}
+.RinkHockey:before {content: "\e644";}
+.Rowing:before {content: "\e645";}
+.Rugby:before, .RugbyLeague:before, .RugbyUnion:before, .RugbySevens:before {content: "\e646";}
+.Schwingen:before {content: "\e649";}
+.Shooting:before {content: "\e64a";}
+.Shorttrackspeedskating:before {content: "\e64b";}
+.Skeleton:before {content: "\e64c";}
+.SkiJump:before, .SkiJumping:before {content: "\e64d";}
+.Skis:before{content: "\e64e";}
+.CrossCountrySkiing:before {content: "\e601";}
+.Snooker:before {content: "\e64f";}
+.Snowboard:before {content: "\e650";}
+.Smite:before {content: "\2b";}
+.Soccer:before, .Football:before, .MixedFootball:before {/*content: "\e651";*/ content: "\e66f";}
+.CyberFootball:before {content: "\e901";}
+.SoccerWC2014:before {content: "\e652";}
+.Softball:before {content: "\e653";}
+.SpecialBets:before {content: "\e654";}
+.Speedskating:before {content: "\e655";}
+.Speedway:before {content: "\e656";}
+.SportAndFun:before {content: "\e657";}
+.SportFight:before {content: "\e658";}
+.Squash:before {content: "\e659";}
+.Sumo:before {content: "\e65a";}
+.Surfing:before {content: "\e65b";}
+.SummerOlympics:before {content: "\e63b";}
+.Swimming:before {content: "\e65c";}
+.SynchronizedSwimming:before, .SynchronisedSwimming:before {content: "\e65d";}
+.Tablehockey:before {content: "\e65e";}
+.TableTennis:before {content: "\e65f";}
+.Taekwondo:before {content: "\e660";}
+.Equestrian:before {content: "\e62a";}
+.Tankbiathlon:before {content: "\e661";}
+.Telecasts:before, .TVShowsAndMovies:before {content: "\e662";}
+.Tennis:before {content: "\e663";}
+.Triathlon:before {content: "\e664";}
+.UFS:before,.Mma:before {content: "\e665";}
+.UltimateFighting:before {content: "\e666";}
+.virtualsports:before {content: "\e667";}
+.virtualdogs:before {content: "\e667";}
+.virtualhorses:before {content: "\e668";}
+.VirtualCarRacing:before {content: "\e905";}
+.virtualtennis:before, .VirtualTennis:before {content: "\e669";}
+.Volleyball:before {content: "\e66a";}
+.WaterPolo:before {content: "\e66b";}
+.WhatWhereWhen:before {content: "\e66c";}
+.WinterOlympics:before {content: "\e63b";}
+.Wrestling:before, .WWE:before, .GrecoRomanWrestling:before {content: "\e66d";}
+.Yachting:before {content: "\e66e";}
+.X-Sports:before {content: "\e61b";}
+.Vainglory:before {content: "\e90c";}
+.VirtualFootball:before {content: "\e651";}
+.VirtualHorses:before,
+.VirtualHorseRacing:before{content: "\e668";}
+.VirtualDogs:before {content: "\e624";}
+.Global.Offensive:before, .CounterStrike:before {content: "\21"}
+.Dota:before, .Dota2:before {content: "\24"}
+.Heroes.of.the.Storm:before, .HeroesoftheStorm:before,.HeroesOfTheStorm:before {content: "\25"}
+.WorldofTanks:before, .WorldOfTanks:before {content: "\28"}
+.Hearthstone:before {content: "\26"}
+.StarCraft:before, .StarCraft2:before {content: "\2d"}
+.WorldOfWarcraft:before {content: "\29";}
+.CallofDuty:before, .CallOfDuty:before {content: "\e904";}
+.Livemonitor:before {content: "\e630";}
+.Confederations:before,
+.icon-sport-asia.All:before{content: "\e600";}
+
+//sport icon colors
+
+@mixin sport-icons-coloring($name, $color, $second-color: $color) {
+  .#{$name}:before {
+    color: #{$color};
+  }
+  .dashboard-sport-icon-m.#{$name} {
+    box-shadow: 3px 0 0 #{$second-color} inset;
+  }
+  .rtl .dashboard-sport-icon-m.#{$name} {
+    box-shadow: -3px 0 0 #{$second-color} inset;
+  }
+  .single-sport-title-dashboard-m.#{$name}.active {
+    border-color: #{$second-color};
+  }
+  .select-sport-title-m.#{$name} {
+    background:  #{$second-color}; color: set-color($second-color);
+  }
+  .sport-nav-container-m > ul > li > a.active > span.#{$name}:after {
+    border-color: transparent transparent #{$second-color} transparent;
+  }
+  .sport-title-result-m.#{$name} {
+    background: #{$second-color};color: set-color($second-color);
+  }
+}
+
+@include sport-icons-coloring(favorites, #c3953c);
+@include sport-icons-coloring(AlpineSkiing, #93c6e5);
+@include sport-icons-coloring(AustralianFootball, #119a18);
+@include sport-icons-coloring(AmericanFootball, #e7685c);
+@include sport-icons-coloring(Badminton, #70c2a7);
+@include sport-icons-coloring(Baseball, #60aca9);
+@include sport-icons-coloring(Basketball, #d76732);
+@include sport-icons-coloring(BeachHandball, #ccbb87);
+@include sport-icons-coloring(BeachSoccer, #bfaf7e);
+@include sport-icons-coloring(BeachFootball, #bfaf7e);
+@include sport-icons-coloring(BeachVolleyball, #d9c68f);
+@include sport-icons-coloring(Biathlon, #bedbed);
+@include sport-icons-coloring(BallHockey, #168763);
+@include sport-icons-coloring(Bandy, #5da167);
+@include sport-icons-coloring(Boxing, #0e7acc);
+@include sport-icons-coloring(Canoe, #0d72bf);
+@include sport-icons-coloring(Chess, #edbd6f);
+@include sport-icons-coloring(Cricket, #1bab7d);
+@include sport-icons-coloring(Curling, #76bbef);
+@include sport-icons-coloring(Cycling, #d9c68f);
+@include sport-icons-coloring(Cyclo-Cross, #d9c68f);
+@include sport-icons-coloring(Bowls, #2a8c4c);
+@include sport-icons-coloring(Darts, #d32939);
+@include sport-icons-coloring(Diving, #118be9);
+@include sport-icons-coloring(EBasketball, #d96c23);
+@include sport-icons-coloring(Electronic, #5e55a1);
+@include sport-icons-coloring(FigureSkating, #b1cdde);
+@include sport-icons-coloring(Floorball, #72cddb);
+@include sport-icons-coloring(Formula1, #b8292b);
+@include sport-icons-coloring(Futsal, #65b5c2);
+@include sport-icons-coloring(Football, $text-palette-1, #1a7051);
+@include sport-icons-coloring(Freestyle, #edbe13);
+@include sport-icons-coloring(FreestyleWrestling, #edbe13);
+@include sport-icons-coloring(GaelicFootball, #358014);
+@include sport-icons-coloring(Golf, #189946);
+@include sport-icons-coloring(GrassHockey, #189443);
+@include sport-icons-coloring(Gymnastics, #03b5a5);
+@include sport-icons-coloring(Handball, #42777f);
+@include sport-icons-coloring(HardAthletics, #0b5b99);
+@include sport-icons-coloring(Hockey, #168763);
+@include sport-icons-coloring(HorseRacing, #6d5e4d);
+@include sport-icons-coloring(Hurling, #189946);
+@include sport-icons-coloring(IceHockey, #50a2c6);
+@include sport-icons-coloring(Judo, #0b5b99);
+@include sport-icons-coloring(LeagueofLegends , #2d2d2d);
+@include sport-icons-coloring(Lacross, #168763 );
+@include sport-icons-coloring(LightAthletics, #0b5b99);
+@include sport-icons-coloring(Athletics, #0b5b99);
+@include sport-icons-coloring(Luge, #99c4de);
+@include sport-icons-coloring(MixedFootball, #f94d4b);
+@include sport-icons-coloring(Motorbikes, #8d612e);
+@include sport-icons-coloring(Motorsport, #8d612e);
+@include sport-icons-coloring(Nascar, #b92f93);
+@include sport-icons-coloring(Netball, #4d4d4d);
+@include sport-icons-coloring(Pesapallo, #db8e48);
+@include sport-icons-coloring(PokerLive, #116b4f);
+@include sport-icons-coloring(Poker, #116b4f);
+@include sport-icons-coloring(Pool, #a155a0);
+@include sport-icons-coloring(Rally, #c28540);
+@include sport-icons-coloring(AutoRacing, #ac9afd);
+@include sport-icons-coloring(RinkHockey, #e3bb6d);
+@include sport-icons-coloring(Rowing, #0f81d9);
+@include sport-icons-coloring(Rugby, #799755);
+@include sport-icons-coloring(RugbyLeague, #799755);
+@include sport-icons-coloring(RugbyUnion, #799755);
+@include sport-icons-coloring(RugbySevens, #799755);
+@include sport-icons-coloring(Shooting, #d5d345);
+@include sport-icons-coloring(Shorttrackspeedskating, #b1cdde);
+@include sport-icons-coloring(SkiJump, #c4dae8);
+@include sport-icons-coloring(SkiJumping, #c4dae8);
+@include sport-icons-coloring(CrossCountrySkiing, #bedbed);
+@include sport-icons-coloring(Snooker, #37b764);
+@include sport-icons-coloring(Snowboard, #9dd3f5);
+@include sport-icons-coloring(Soccer, $text-palette-1, #1a7051);
+@include sport-icons-coloring(VirtualFootball, #8555a1);
+@include sport-icons-coloring(CyberFootball, #2d8134);
+@include sport-icons-coloring(Speedway, #aca696);
+@include sport-icons-coloring(Squash, #e1b93f);
+@include sport-icons-coloring(Sumo, #b0a174);
+@include sport-icons-coloring(Surfing, #3598e4);
+@include sport-icons-coloring(Swimming, #118be9);
+@include sport-icons-coloring(Tablehockey, #168763);
+@include sport-icons-coloring(TableTennis, #0C82B3);
+@include sport-icons-coloring(Tennis, #8c893a);
+@include sport-icons-coloring(Triathlon, #a1c4c6);
+@include sport-icons-coloring(Mma, #868686);
+@include sport-icons-coloring(virtualsports, #8555a1);
+@include sport-icons-coloring(virtualdogs, #8555a1);
+@include sport-icons-coloring(virtualhorses, #8555a1);
+@include sport-icons-coloring(VirtualTennis, #8555a1);
+@include sport-icons-coloring(Volleyball, #e5e795);
+@include sport-icons-coloring(WaterPolo, #338fd6);
+@include sport-icons-coloring(Wrestling, #b80f20);
+@include sport-icons-coloring(X-Sports, #a61f2d);
+@include sport-icons-coloring(GlobalOffensive, #c28503);
+@include sport-icons-coloring(CounterStrike, #5e55a1);
+@include sport-icons-coloring(Dota, #5e55a1);
+@include sport-icons-coloring(Dota2, #a93844);
+@include sport-icons-coloring(HeroesoftheStorm, #5e55a1);
+@include sport-icons-coloring(WorldOfTanks, #5e55a1);
+@include sport-icons-coloring(Hearthstone, #d8bf56);
+@include sport-icons-coloring(StarCraft, #5e55a1);
+@include sport-icons-coloring(StarCraft2, #5e55a1);
+@include sport-icons-coloring(WorldOfWarcraft, #5e55a1);
+@include sport-icons-coloring(CallofDuty, #000000);
+
+//sport icon colors END

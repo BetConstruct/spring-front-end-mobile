@@ -1,0 +1,93 @@
+@import 'skin';
+//language
+.language-container-m{
+  float: left;
+  width: 100%;
+  border-top: 1px solid $skin-palette-10;
+  border-bottom: 1px solid $skin-palette-10;
+  padding: 10px 0;
+}
+.language-container-m > ul{
+  float: left;
+  width: 100%;
+  padding: 0 12px;
+  display: table;
+}
+.language-container-m > ul > li{
+  display: table-cell;
+  vertical-align: top;
+  position: relative;
+  height: 32px;
+}
+.language-container-m > ul > li:first-child{width: 100%;}
+.language-container-m > ul > li > p{
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 13px;
+  line-height: 32px;
+  color: $text-palette-5;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 0 10px 0 0;
+}
+.select-contain-m{
+  margin: 0;
+  height: 32px;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+}
+.select-contain-m:before{
+  display: block;
+  position: absolute;
+  z-index: 10;
+  font: 14px/18px icomoon;
+  content: "\e670";
+  right: 0;
+  top: 7px;
+  width: 26px;
+  height: 18px;
+  border-left: 1px solid lighten( desaturate( adjust-hue( $text-color, -6deg ), 3 ), 4 );
+  text-align: center;
+  color: $text-palette-6;
+}
+.select-contain-m > select{
+  float: left;
+  width: auto;
+  position: relative;
+  z-index: 55;
+  background: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid $text-palette-6;
+  height: 32px;
+  box-sizing: border-box;
+  color: $text-palette-5;
+  font-family: $font-f;
+  font-size: 12px;
+  padding-left: 7px;
+  padding-right: 36px;
+  text-transform: uppercase;
+  border-radius: inherit;
+  min-width: 120px;
+}
+.popup-contain-table-m .select-contain-m > select{
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+.select-contain-m > select option{
+  background: lighten( desaturate( adjust-hue( $skin-color, -1deg ), 3 ), 7 );
+  text-transform: none;
+}
+ul.language-list > li{
+  display: block;
+}
+//language END

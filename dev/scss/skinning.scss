@@ -1,0 +1,66 @@
+$font-f: 'Roboto', sans-serif !default;
+$hero-color: #a61f67 !default;
+$brand-color-1: #1a7051 !default;
+$brand-color-2: #ac8336 !default;
+$coef-color: #b6862e !default;
+$button-bg: $brand-color-1 !default;
+$button-bordered: #000000;
+$disable-hero-color-sc: false, white !default;
+$disable-brand-color-1-sc: false, white !default;
+$disable-button-bg-sc: false, white !default;
+$disable-brand-color-2-sc: false, white !default;
+$favorite-color: #c3953c !default;
+
+$skin-palette-1: #ffffff !default;                                                            //#ffffff;
+$skin-palette-2: lighten( desaturate( adjust-hue( $skin-color, 15deg ), 8 ), 77 ) !default;   //#f3f3f5;
+$skin-palette-3: lighten( desaturate( adjust-hue( $skin-color, -1deg ), 7 ), 59 ) !default;   //#c2c5cd;
+$skin-palette-4: lighten( desaturate( adjust-hue( $skin-color, 2deg ), 2 ), 50 ) !default;    //#a5aabc;
+$skin-palette-5: lighten( desaturate( adjust-hue( $skin-color, 1deg ), 6 ), 41 ) !default;    //#8d92a3;
+$skin-palette-6: lighten( desaturate( adjust-hue( $skin-color, -1deg ), 8 ), 34 ) !default;   //#7b8191;
+$skin-palette-7: lighten( desaturate( adjust-hue( $skin-color, -3deg ), 4 ), 17 ) !default;   //#505767;
+$skin-palette-8: lighten( desaturate( adjust-hue( $skin-color, -3deg ), 3 ), 10 ) !default;   //#3f4553;
+$skin-palette-9: $skin-color !default;                                                        //#282c38;
+$skin-palette-10: lighten( desaturate( $skin-color, 2 ), 2 ) !default;                        //#2e323e;
+$skin-palette-11: darken( saturate( adjust-hue( $skin-color, 1deg ), 3 ), 3 ) !default;       //#212532;
+$skin-palette-12: darken( saturate( adjust-hue( $skin-color, 1deg ), 12 ), 9 ) !default;      //#121623;
+$skin-palette-13: #000000 !default;                                                           //#000000;
+
+
+
+$text-palette-1: #ffffff !default;                                                            //#ffffff;
+$text-palette-2: lighten( desaturate( adjust-hue( $text-color, 15deg ), 8 ), 77 ) !default;   //#f3f3f5;
+$text-palette-3: lighten( desaturate( adjust-hue( $text-color, -1deg ), 7 ), 59 ) !default;   //#c2c5cd;
+$text-palette-4: lighten( desaturate( adjust-hue( $text-color, 2deg ), 2 ), 50 ) !default;    //#a5aabc;
+$text-palette-5: lighten( desaturate( adjust-hue( $text-color, 1deg ), 6 ), 41 ) !default;    //#8d92a3;
+$text-palette-6: lighten( desaturate( adjust-hue( $text-color, -1deg ), 8 ), 34 ) !default;   //#7b8191;
+$text-palette-7: lighten( desaturate( adjust-hue( $text-color, -3deg ), 4 ), 17 ) !default;   //#505767;
+$text-palette-8: lighten( desaturate( adjust-hue( $text-color, -3deg ), 3 ), 10 ) !default;   //#3f4553;
+$text-palette-9: $text-color !default;                                                        //#282c38;
+$text-palette-10: lighten( desaturate( $text-color, 2 ), 2 ) !default;                        //#2e323e;
+$text-palette-11: darken( saturate( adjust-hue( $text-color, 1deg ), 3 ), 3 ) !default;       //#212532;
+$text-palette-12: darken( saturate( adjust-hue( $text-color, 1deg ), 15 ), 9 ) !default;      //#121623;
+$text-palette-13: #000000 !default;                                                           //#000000;
+
+@if (lightness($skin-color) > 45) {
+  $text-color: #000000;
+  $text-palette-13: #000000;
+  $text-palette-12: #000000;
+  $text-palette-11: #000000;
+  $text-palette-10: #000000;
+  $text-palette-9: #000000;
+  $text-palette-7: #000000;
+  $text-palette-8: #000000;
+  $text-palette-6: #000000;
+  $text-palette-5: #000000;
+  $text-palette-4: #000000;
+  $text-palette-3: #000000;
+  $text-palette-2: #000000;
+  $text-palette-1: #000000;
+}
+$header-bg: $skin-palette-9 !default;
+$header-text-color: lighten( desaturate( adjust-hue( $text-color, 4deg ), 5 ), 47 ) !default;
+
+$scrollbar-width: 4px !default;
+$scroll-main-color: $skin-palette-8 !default;
+$scroll-main-thumb-color: $skin-palette-5 !default;
+

@@ -1,0 +1,60 @@
+@import 'skin';
+.cashout-dialog{
+  float: left;
+  width: 100%;
+  display: table;
+  background: $skin-palette-10;
+}
+.cashout-column-view{
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
+}
+.cashout-info-container{
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+}
+.cashout-info-container > p{
+  float: left;
+  width: 100%;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 0 0 10px;
+  text-align: center;
+  color: $text-palette-6;
+}
+.cashout-success{
+  float: left;
+  width: 100%;
+  padding: 5px 0;
+}
+.cashout-success > p, .cashout-failed > p, .cashout-initial-price > p{
+  float: left;
+  width: 100%;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 0 0 10px;
+  text-align: center;
+  color: $text-palette-4;
+}
+.cashout-success > p > i{
+  font-style: normal;
+  color: #1a7051;
+  font-size: 15px;
+}
+.cashout-initial-price > p > i{
+  font-style: normal;
+  color: #b6862e;
+  font-size: 15px;
+}
+.cashout-failed > p > i{
+  font-style: normal;
+  color: #b6862e;
+  font-size: 15px;
+}
+.cashout-failed{
+  float: left;
+  width: 100%;
+  padding: 5px 0;
+}

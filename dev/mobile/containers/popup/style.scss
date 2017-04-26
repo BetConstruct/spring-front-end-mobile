@@ -1,0 +1,153 @@
+@import 'skin';
+.popup-m{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+  -webkit-overflow-scrolling: touch;
+}
+@keyframes open-popup{
+  0% {transform: scale(0);}
+  100% {transform: scale(1);}
+}
+.popup-closed-b{
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 99;
+  background: none;
+  width: 40px;
+  height: 40px;
+  color: $text-palette-6;
+  text-align: center;
+  border: none;
+  font: 16px/40px icomoon;
+}
+.popup-m:before {
+  content: "";
+  display: block;
+  left: 0;
+  top: 0;
+  position: absolute;
+  height: 200%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.popup-closed-b:before{
+  content: "\E90C";
+}
+.mini-box-popup{
+  float: left;
+  width: 100%;
+  display: table;
+  height: 100%;
+  table-layout: fixed;
+}
+.align-wrapper{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+.ver-center-view-b{
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  max-width: 400px;
+  animation: open-popup 240ms ease-in-out;
+  text-align: left;
+}
+.title-popup-page-m{
+  float: left;
+  width: 100%;
+  position: relative;
+  z-index: 55;
+  height: 42px;
+  background: $skin-palette-10;
+  box-shadow: 0 -1px 0 darken( $text-color, 10 ) inset, 0 -2px 0 darken( saturate( adjust-hue( $text-color, -15deg ), 13 ), 11 ) inset;
+  padding: 0 40px;
+}
+.title-popup-page-m > h4{
+  float: left;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  line-height: 40px;
+  color: $text-palette-4;
+  text-transform: uppercase;
+  font-weight: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.popup-content-view-m{
+  float: left;
+  width: 100%;
+  position: relative;
+  max-height: calc(100vh - 42px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: $skin-palette-11;
+}
+.popup-message{
+  float: left;
+  width: 100%;
+  position: relative;
+  padding: 80px 15px 15px;
+  background: $skin-palette-10;
+  font-size: 14px;
+  line-height: 16px;
+  color: lighten( desaturate( adjust-hue( $skin-palette-10, -1deg ), 5 ), 57 );
+  text-align: center;
+}
+.popup-message:before{
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 100%;
+  height: 50px;
+  font: 48px/50px icomoon;
+  text-align: center;
+}
+.popup-message.error:before{
+  content: "\e917";
+  color: #aa8136;
+}
+.popup-message.info:before{
+  content: "\e915";
+  color: $text-palette-6;
+}
+.popup-message.warning:before{
+  content: "\e917";
+  color: #e9044a;
+}
+.popup-message.accept:before{
+  content: "\54";
+  color: $brand-color-1;
+}
+.popup-confirm-message{
+  float: left;
+  width: 100%;
+  background: $skin-palette-10;
+  padding: 15px 20px;
+}
+.popup-confirm-message > p{
+  font-size: 14px;
+  line-height: 18px;
+  color: $text-palette-6;
+}
+.button-separator-view{
+  float: left;
+  width: 100%;
+  margin: 10px 0 0;
+}
+.button-view-normal-m.warning{
+  background: #c33451;
+  box-shadow: 0 0 0 1px #c33451 inset;
+}
+.button-view-normal-m.cancel{
+  background: none;
+  box-shadow: 0 0 0 1px $skin-palette-6 inset;
+}

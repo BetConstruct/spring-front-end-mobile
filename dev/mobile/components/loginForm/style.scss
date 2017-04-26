@@ -1,0 +1,158 @@
+@import 'skin';
+.popup-contain-table-m{
+  float: left;
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+  height: 100%;
+  position: relative;
+  z-index: 66;
+}
+.login-form-m{
+  background: $skin-palette-11;
+}
+.center-view-contain-form{
+  display: table-cell;
+  vertical-align: middle;
+  height: 100%;
+  padding: 0 20px;
+}
+.form-contain-box{
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  padding: 15px 0 0;
+}
+.form-contain-box > form{
+  float: left;
+  width: 100%;
+}
+.single-form-item{
+  float: left;
+  width: 100%;
+  height: 38px;
+  position: relative;
+  margin: 0 0 15px;
+  min-width: 130px;
+}
+.single-form-item > input[type=text],
+.single-form-item > input[type=password],
+.single-form-item > input[type=email],
+.single-form-item > input[type=number],
+.single-form-item > input[type=tel],
+.single-form-item > .react-tel-input > input[type=tel]{
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid $text-palette-6;
+  background: none;
+  height: 38px;
+  padding: 6px 10px;
+  font-family: $font-f;
+  font-size: 14px;
+  color: $text-palette-6;
+  transition: border 240ms;
+  border-radius: inherit;
+  box-shadow: none;
+}
+.single-form-item > .react-tel-input > input[type=tel]{
+  padding-right: 30px;
+}
+.single-form-item > input[type=text]:focus,
+.single-form-item > input[type=password]:focus,
+.single-form-item > input[type=email]:focus,
+.single-form-item > input[type=number]:focus,
+.single-form-item > input[type=tel]:focus,
+.single-form-item > .react-tel-input > input[type=tel]:focus{
+  border: 1px solid $hero-color;
+}
+.single-form-item > input::-webkit-input-placeholder{
+  opacity: 1;
+  color: $text-palette-6;
+}
+.single-form-item > input::-moz-placeholder{
+  opacity: 1;
+  color: $text-palette-6;
+}
+.single-form-item > input:-ms-input-placeholder{
+  opacity: 1;
+  color: $text-palette-6;
+}
+.single-form-item > input:-moz-placeholder{
+  opacity: 1;
+  color: $text-palette-6;
+}
+.checkbox-wrapper-m{
+  position: relative;
+  float: left;
+  width: 100%;
+  color: $text-palette-4;
+  font-size: 14px;
+  line-height: 20px;
+  height: 20px;
+  margin: 0 0 5px;
+  padding: 0 10px 0 30px;
+}
+.checkbox-wrapper-m:before{
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background: $skin-palette-6;
+  border-radius: 3px;
+}
+.checkbox-wrapper-m > input[type=checkbox]{
+  position: absolute;
+  //left: -9999px;
+  left: inherit;
+  top: 0;
+  opacity: 0;
+}
+.checkbox-wrapper-m > span{
+  float: left;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.checkbox-wrapper-m > input[type=checkbox]:checked + span:before{
+  font: 12px/20px icomoon;
+  content: "\54";
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 20px;
+  left: 0;
+  top: 0;
+  text-align: center;
+  color: $text-palette-11;
+}
+.login-error{
+  float: left;
+  width: 100%;
+  margin: 0 0 10px;
+}
+.login-error > span{
+  font-size: 14px;
+  line-height: 16px;
+  color: #e9044a;
+}
+.forgot-password-m{
+  float: left;
+  width: 100%;
+  margin: 0 0 20px;
+}
+.forgot-password-m > p{
+  float: left;
+  width: 100%;
+  font-size: 14px;
+  line-height: 16px;
+  color: $text-palette-6;
+  text-align: center;
+}
+.forgot-password-m > p > span{
+  color: $hero-color;
+}

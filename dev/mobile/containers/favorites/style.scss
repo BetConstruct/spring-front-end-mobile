@@ -1,0 +1,63 @@
+@import 'skin';
+.favorite-games-view-m{
+  float: left;
+  width: 100%;
+  margin: 0 0 1px;
+}
+.favorite-games-view-m > .single-sport-title-dashboard-m{
+  margin: 1px 0;
+}
+.favorite-games-view-m.league-view > .single-sport-title-dashboard-m{
+  background: $skin-palette-9;
+}
+.favorite-games-view-m > .single-sport-title-dashboard-m > .dashboard-sport-icon-m{
+  box-shadow: none;
+}
+.favorite-games-view-m > .single-sport-title-dashboard-m > h5{
+  color: $text-palette-3;
+}
+.favorite-games-view-m.league-view > .single-sport-title-dashboard-m > h5{
+  color: $text-palette-6;
+}
+.favorite-games-view-m .closed-open-arrow-m{
+  padding: 0;
+  height: 38px;
+  line-height: 38px;
+}
+.favorite-games-view-m .closed-open-arrow-m:before{
+  content: "\E672";
+}
+.title-fave-container-m{
+  float:left;
+  width: 100%;
+  background: lighten( desaturate( adjust-hue( $skin-color, 3deg ), 5 ), 5 );
+  height: 25px;
+  padding: 0 10px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+.title-fave-container-m > h4{
+  font-size: 12px;
+  line-height: 25px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: $text-palette-3;
+  font-weight: normal;
+}
+.favorite-games-view-m.league-view .closed-open-arrow-m{
+  color: #2c3238;
+}
+.empty-text-wrapper-m{
+  float: left;
+  width: 100%;
+  padding: 0 10px;
+  margin: 10px 0;
+}
+.empty-text-wrapper-m > p{
+  float:left;
+  width: 100%;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: $text-palette-6;
+}

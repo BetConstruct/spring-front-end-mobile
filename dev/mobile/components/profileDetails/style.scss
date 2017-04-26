@@ -1,0 +1,78 @@
+@import 'skin';
+.my-details-container-m{
+  float: left;
+  width: 100%;
+  background: $skin-palette-10;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 15px 10px;
+  margin: 0 0 1px;
+}
+.details-form-item-m{
+  float: left;
+  width: 100%;
+}
+.details-form-item-m > label{
+  float: left;
+  width: 100%;
+  font-size: 13px;
+  line-height: 16px;
+  color: $text-palette-4;
+  margin: 0 0 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.details-form-item-m > .single-form-item{
+  margin-bottom: 10px;
+}
+.text-info-p-m{
+  float: left;
+  width: 100%;
+  margin: 0 0 10px;
+}
+.text-info-p-m > p{
+  float: left;
+  width: 100%;
+  font-size: 13px;
+  line-height: 16px;
+  color: $text-palette-6;
+}
+.error-text-contain{
+  float: left;
+  width: 100%;
+  padding: 5px 0;
+  font-size: 12px;
+  line-height: 14px;
+  color: #e9044a;
+}
+.success{
+  float: left;
+  width: 100%;
+  padding: 5px 0;
+  font-size: 12px;
+  line-height: 14px;
+  color: #1a7051;
+}
+.error-message{
+  float: left;
+  width: 100%;
+  padding: 5px 0 0;
+  font-size: 12px;
+  line-height: 14px;
+  color: #e9044a;
+}
+.form-p-i-m .error-message{
+  position: relative;
+  top: -5px;
+}
+.single-form-item > input:read-only{
+  color: #c3953c;
+  pointer-events: none;
+}
+.single-form-item > input:-moz-read-only{
+  color: #c3953c;
+  pointer-events: none;
+}
+.error > .single-form-item > input, .error > .single-form-item > input:focus{
+  border-color: #e9044a;
+}

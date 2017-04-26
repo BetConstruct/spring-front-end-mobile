@@ -1,0 +1,76 @@
+@import 'skin';
+.error-404-m{
+  float: left;
+  width: 100%;
+}
+.error-404-m > h1{
+  float: left;
+  width: 100%;
+  font-weight: normal;
+  text-align: center;
+  font-size: 48px;
+  line-height: 50px;
+  padding: 50px 0 10px;
+  color: #b31146;
+}
+.error-404-m > p{
+  float: left;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  line-height: 22px;
+  padding: 5px 0;
+  color: $text-palette-6;
+}
+.animation-error{
+  margin: 150px auto;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+}
+.error-icon-b{
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  background-color: $hero-color;
+  font-size: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 5px $text-palette-13;
+  animation: animation-bbb 1000ms infinite;
+  animation-fill-mode: forwards;
+}
+.error-icon-b:before{
+  font: 50px/50px 'Sport-icons';
+  content: "\E66F";
+  color: $text-palette-1;
+  background: $hero-color;
+  border-radius: 50%;
+  animation: error-view-p 8000ms infinite;
+  display: block;
+  animation-fill-mode: forwards;
+}
+@keyframes animation-bbb {
+  0%{
+    transform: translate3d(0,0,0);
+    animation-timing-function: ease-out;
+  }
+  50%{
+    transform: translate3d(0,50px,0) scaleX(1.2) scaleY(0.8);
+    animation-timing-function: ease-out;
+    overflow: hidden;
+    background: $skin-palette-1;
+  }
+  100% {
+    transform: translate3d(0,0,0);
+    animation-timing-function: ease-out;
+  }
+}
+
+@keyframes error-view-p {
+  0%, 100%{
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(360deg);
+  }
+}

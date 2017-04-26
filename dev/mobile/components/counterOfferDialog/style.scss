@@ -1,0 +1,82 @@
+@import 'skin';
+.counter-offer-dialog{
+  float: left;
+  width: 100%;
+  display: table;
+  background: $skin-palette-10;
+}
+.counter-offer-column-view{
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px 15px;
+}
+.counter-offer-title{
+  float: left;
+  width: 100%;
+  padding: 0 0 10px;
+}
+.counter-offer-title > h2{
+  float: left;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  line-height: 18px;
+  color: $text-palette-4;
+  font-weight: normal;
+}
+.competition-event-name-offer{
+  float: left;
+  width: 100%;
+}
+.competition-event-name-offer > p{
+  float: left;
+  width: 100%;
+  font-size: 14px;
+  line-height: 16px;
+  color: $text-palette-6;
+  padding: 0 0 2px;
+  text-align: left;
+}
+.counter-view-info{
+  float: left;
+  width: 100%;
+  text-align: left;
+  table-layout: fixed;
+  color: $text-palette-4;
+  margin: 10px 0;
+}
+.counter-view-info tr td{
+  padding: 5px 0 5px 10px;
+  vertical-align: top;
+}
+.counter-view-info tr th{
+  font-weight: normal;
+  padding: 5px 0 5px 10px;
+  vertical-align: top;
+}
+.counter-view-info tr td:first-child,
+.counter-view-info tr th:first-child{
+  padding-left: 0;
+}
+.odd-view-c-offer{
+  font-weight: normal;
+  color: #b6862e;
+}
+.counter-view-info tr td > i{
+  font-style: normal;
+  color: #1a7051;
+}
+.counter-offer-buttons-view{
+  float: left;
+  width: 100%;
+  margin: 0 0 15px;
+}
+.r-time{
+  float: left;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  line-height: 16px;
+  color: $text-palette-6;
+  padding: 10px 0 15px;
+}

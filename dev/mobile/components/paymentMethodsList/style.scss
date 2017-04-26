@@ -1,0 +1,67 @@
+@import 'skin';
+.deposits-wrapper{
+  float: left;
+  width: 100%;
+}
+.deposit-methods{
+  float: left;
+  width: 100%;
+  background: $skin-palette-11;
+}
+.single-method-deposit{
+  float: left;
+  width: 100%;
+  background: $skin-palette-9;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  margin: 0 0 1px;
+  height: 60px;
+  padding: 11px 10px 9px;
+}
+.single-method-deposit > ul{
+  float: left;
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+}
+.single-method-deposit > ul > li{
+  display: table-cell;
+  vertical-align: middle;
+}
+.single-method-deposit > ul > li:first-child{
+  width: 70px;
+}
+.deposit-m-icon{
+  float: left;
+  width: 70px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: contain;
+  margin: 0;
+}
+.single-method-deposit > ul > li > .deposit-method-b > .button-view-normal-m{
+  white-space: nowrap;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+.deposit-method-b{
+  float: right;
+}
+.name-d-method{
+  float: left;
+  font-size: 14px;
+  line-height: 16px;
+  color: $text-palette-6;
+  width: 100%;
+  padding: 0 0 0 10px;
+  text-align: left;
+}
+.name-d-method > i{
+  font-style: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+}

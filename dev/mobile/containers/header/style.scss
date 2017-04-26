@@ -1,0 +1,95 @@
+@import 'skin';
+.header-wrapper-m{
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background: darken( saturate( adjust-hue( $text-color, -15deg ), 13 ), 11 );
+}
+.header-construction{
+  float: left;
+  width: 100%;
+  margin: 0 0 1px;
+  background: $header-bg;
+  box-shadow: 0 1px 0 #343945 inset, 0 -2px 0 $hero-color inset;
+}
+.header-separator-m{
+  float: left;
+  width: 100%;
+  position: relative;
+  height: 48px;
+  padding: 0 70px;
+}
+.logo-wrapper-m{
+  float: left;
+  width: 100%;
+  height: 48px;
+  text-indent: -9999em;
+  text-align: center;
+  position: relative;
+  z-index: 12;
+}
+.logo-wrapper-m > a{
+  text-decoration: none;
+  color: $text-palette-9;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: $logo-bg;
+}
+.left-top-nav{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 70px;
+  height: 48px;
+  text-align: left;
+  padding: 0 0 0 10px;
+  white-space: nowrap;
+  display: block;
+  color: $header-text-color;
+}
+.right-top-nav{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 70px;
+  height: 48px;
+  text-align: right;
+  padding: 0 10px 0 0;
+  white-space: nowrap;
+  display: block;
+  color: $header-text-color;
+}
+.left-top-nav:before,
+.right-top-nav:after{
+  font: 16px/48px icomoon;
+  content: "\e902";
+}
+.right-top-nav:after{
+  text-align: right;
+  content: "\e903";
+}
+.left-top-nav > span{
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 48px;
+  color: $header-text-color;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 0 0 4px;
+}
+.right-top-nav > span{
+  font: 16px/48px icomoon;
+  color: $header-text-color;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 4px 0 0;
+}
+.right-top-nav > span:before{
+  content: "\e905";
+}
+.logged-in .right-top-nav > span:before{
+  color: lighten( saturate( adjust-hue( $text-color, -185deg ), 36 ), 31 );
+}

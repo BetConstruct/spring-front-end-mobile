@@ -1,0 +1,148 @@
+@import 'skin';
+//Pre-match title game view
+.game-view-title-contain-m{
+	float: left;
+	width: 100%;
+	margin: 0 0 5px;
+	background: $skin-palette-10;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+.game-date-row-m{
+	float: left;
+	width: 100%;
+	height: 27px;
+	border-bottom: 1px solid $skin-palette-9;
+	padding: 0 10px;
+	color: $text-palette-6;
+	font-size: 11px;
+	line-height: 26px;
+	position: relative;
+}
+.game-date-row-m > p{
+	float: left;
+}
+.game-date-row-m > span{
+	float: right;
+}
+.statistic-icon-view-m{
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 27px;
+	vertical-align: top;
+	width: 40px;
+	height: 21px;
+	padding: 1px 0 0;
+	background: $skin-palette-9;
+	margin: 0 0 0 -20px;
+	text-align: center;
+}
+.statistic-icon-view-m:before,
+.statistic-icon-view-m:after{
+	content: "";
+	display: block;
+	position: absolute;
+	left: -3px;
+	top: 0;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 21px 3px 0 3px;
+	border-color: $skin-palette-9 transparent transparent transparent;
+}
+.statistic-icon-view-m:after{
+	left: auto;
+	right: -3px;
+}
+.statistic-icon-m-v{
+	display: inline-block;
+	vertical-align: top;
+	font: 16px/18px icomoon;
+	color: $text-palette-3;
+}
+.statistic-icon-m-v:before{
+	content: "\e681";
+}
+.teams-name-shirt-color{
+	float: left;
+	width: 100%;
+	padding: 20px 10px 16px;
+}
+.single-team .teams-name-shirt-color{
+	padding: 10px 10px 12px;
+}
+.teams-name-shirt-color > ul{
+	float: left;
+	width: 100%;
+	display: table;
+	table-layout: fixed;
+}
+.teams-name-shirt-color > ul > li{
+	display: table-cell;
+	vertical-align: top;
+	width: 50%;
+	position: relative;
+	font-size: 14px;
+	line-height: 20px;
+	color: $text-palette-3;
+	text-align: left;
+}
+.teams-name-shirt-color > ul > li.vs-contain-m{
+	width: 40px;
+	color: $text-palette-6;
+	text-align: center;
+}
+.teams-name-shirt-color > ul > li:first-child{
+	text-align: right;
+	padding: 0 40px 0 0;
+}
+.teams-name-shirt-color > ul > li:last-child{
+	padding: 0 0 0 40px;
+}
+.single-team .teams-name-shirt-color > ul > li{
+	padding: 0;
+	width: 100%;
+	text-align: center;
+}
+.teams-name-shirt-color > ul > li.team-names-b-m > p{
+	float:left;
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.game-view-additional-info-m{
+	float: left;
+	width: 100%;
+	padding: 0;
+}
+.game-view-additional-info-m > p{
+	float: left;
+	width: 100%;
+	font-size: 12px;
+	line-height: 14px;
+	color: $text-palette-6;
+	text-align: center;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.shirt-box-m{
+	position: absolute;
+	width: 20px;
+	height: 18px;
+	right: 8px;
+	top: 0;
+	color: #b31b1b;
+	font: 16px/18px icomoon;
+	text-align: center;
+}
+.shirt-box-m:before{
+	content: "\e911";
+}
+.teams-name-shirt-color > ul > li:last-child > .shirt-box-m{
+	right: auto;
+	left: 8px;
+	color: #1c98ef;
+}
+//Pre-match title game view END

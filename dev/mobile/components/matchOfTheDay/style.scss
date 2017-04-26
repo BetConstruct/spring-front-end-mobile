@@ -1,0 +1,122 @@
+@import 'skin';
+.match-of-day-m{
+	float: left;
+	width: 100%;
+	background: $skin-palette-11;
+	margin: 0 0 4px;
+	text-align: left;
+	transform: translate3d(0,0,0);
+}
+.title-view-match-day{
+	float: left;
+	width: 100%;
+	height: 30px;
+	background: rgba($skin-palette-10, 0.7);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+	padding: 0 10px;
+}
+.title-view-match-day > h2{
+	float: left;
+	width: 100%;
+	overflow-y: hidden;
+	overflow-x: auto;
+	white-space: nowrap;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 30px;
+	color: $text-palette-3;
+}
+.match-team-name-view{
+	float: left;
+	width: 100%;
+	height: 96px;
+}
+.teams-name-info-m{
+	float: left;
+	width: 100%;
+	margin: 15px 0 0;
+}
+.teams-name-info-m > ul{
+	float: left;
+	width: 100%;
+}
+.teams-name-info-m > ul > li{float: left;}
+.vs-contain-b{
+	width: 40px;
+	text-align: center;
+}
+.vs-contain-b > span{
+	float: left;
+	width: 100%;
+	font-size: 11px;
+	line-height: 56px;
+	color: #909b99;
+	text-transform: uppercase;
+}
+.team-name-container-m{
+	width: 42%;
+	width: calc((100% - 40px) / 2);
+}
+.team-name-container-m.left-t{
+	text-align: right;
+}
+.team-name-container-m.right-t{
+	text-align: left;
+}
+.single-team-info-m{
+	float: left;
+	width: 100%;
+	height: 56px;
+	position: relative;
+	padding: 0 10px 0 60px;
+	display: block;
+	text-decoration: none;
+	color: $text-palette-6;
+}
+.left-t > .single-team-info-m{
+	padding: 0 60px 0 10px;
+}
+.single-team-info-m > p{
+	float: left;
+	width: 100%;
+	margin: 10px 0 0;
+	color: $text-palette-6;
+	font-size: 13px;
+	line-height: 20px;
+	text-transform: uppercase;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.single-team-info-m > h4{
+	float: left;
+	width: 100%;
+	font-weight: normal;
+	color: $text-palette-3;
+	font-size: 12px;
+	line-height: 20px;
+	text-transform: uppercase;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.team-logo-contain-view{
+	display: block;
+	width: 50px;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.left-t > .single-team-info-m > .team-logo-contain-view{
+	left: auto;
+	right: 0;
+}
+.team-logo-contain-view:before{
+	font: 48px/56px icomoon;
+	content: "\e912";
+	color: #c3953c;
+}
+.left-t > .single-team-info-m > .team-logo-contain-view:before{
+	color: #1a7051;
+}

@@ -1,0 +1,232 @@
+@import 'skin';
+.bet-details{
+  float: left;
+  width: 100%;
+}
+.bet-id-details{
+  float: left;
+  width: 100%;
+  background: $skin-palette-11;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 0 15px;
+  margin: 0 0 1px;
+}
+.bet-id-details > h2{
+  float: left;
+  width: 100%;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 32px;
+  color: $text-palette-3;
+}
+.bet-id-details > h2 > span{
+  color: $text-palette-6;
+  text-transform: uppercase;
+}
+.bet-id-details > h2 > i{
+  font-style: normal;
+}
+.bet-stake-odd-view{
+  float: left;
+  width: 100%;
+  background: $skin-palette-10;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 5px 15px;
+  margin: 0 0 2px;
+}
+.odd-stake-info-m{
+  float: left;
+  width: 100%;
+  border-bottom: 1px solid #131724;
+  padding:  0 0 5px;
+}
+.bet-info-text-r{
+  float: left;
+  width: 100%;
+  color: $text-palette-6;
+  font-size: 13px;
+  line-height: 16px;
+  padding: 5px 0 0;
+}
+.bet-info-text-r > i{
+  font-style: normal;
+  float: left;
+}
+.bet-info-text-r > span{
+  float: right;
+  text-transform: uppercase;
+}
+.bet-info-text-r > span > i{
+  font-style: normal;
+}
+.stake-count-m{color: $text-palette-3;}
+.odd-count-m{color: #b6862e;}
+.won-count-m{color: #1a7051;}
+.bet-won-info-m{
+  float: left;
+  width: 100%;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 5px 0;
+}
+.bet-won-info-m > .bet-info-text-r > i{
+  text-transform: uppercase;
+}
+.single-event-info-m{
+  float: left;
+  width: 100%;
+  background: $skin-palette-10;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 5px 15px;
+  margin: 0 0 4px;
+  min-height: 100px;
+}
+.team-names-info-m{
+  float: left;
+  width: 100%;
+  margin: 5px 0 0;
+  padding: 0 25px 0 0;
+  position: relative;
+}
+.team-names-info-m > a{
+  float: left;
+  width: 100%;
+  display: block;
+  text-decoration: none;
+}
+.team-names-info-m > a > ul{
+  float: left;
+  width: 100%;
+}
+.team-names-info-m > a > ul > li{
+  float: left;
+  width: 100%;
+  margin: 3px 0 0;
+}
+.team-info-name{
+  float: left;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 16px;
+  color: $text-palette-3;
+}
+.event-status-icon{
+  width: 24px;
+  height: 38px;
+  font: 20px/38px icomoon;
+  text-align: right;
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: $text-palette-6;
+}
+.won-icon:before{
+  content: "\e6ec";
+  color: #1a7051;
+}
+.lost-icon:before{
+  content: "\e6eb";
+  color: #e9044a;
+}
+.waiting-icon:before{content: "\e705";}
+.returned-icon:before{content: "\e704";}
+.sport-league-n-date{
+  float: left;
+  width: 100%;
+  position: relative;
+  border-bottom: 1px solid darken( saturate( adjust-hue( $text-color, 1deg ), 14 ), 8 );
+  padding: 8px 0 10px 22px;
+}
+.sport-league-n-date > p{
+  float: left;
+  width: 100%;
+  display: table;
+  font-size: 12px;
+  line-height: 14px;
+  color: $text-palette-6;
+}
+.single-event-info-m > .sport-league-n-date > .dashboard-sport-icon-m{
+  box-shadow: none;
+  width: 20px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  text-align: left;
+  left: 0;
+  padding: 0;
+}
+.league-name-event{
+  display: table-cell;
+  vertical-align: top;
+  position: relative;
+  text-align: left;
+  width: 100%;
+}
+.league-name-event > i{
+  font-style: normal;
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 0 10px 0 0;
+  width: 100%;
+  display: inline-block;
+  vertical-align: top;
+}
+.date-event-view{
+  display: table-cell;
+  vertical-align: top;
+  text-align: right;
+}
+.date-event-view > b{
+  font-weight: normal;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.market-n-pick-info{
+  float: left;
+  width: 100%;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 5px 0;
+}
+.market-n-pick-info > h4{
+  float: left;
+  width: 100%;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  color: $text-palette-6;
+  padding: 2px 0;
+}
+.market-n-pick-info > p{
+  float: left;
+  width: 100%;
+  display: table;
+}
+.pick-title-info-m{
+  display: table-cell;
+  vertical-align: top;
+  padding: 0 10px 0 0;
+  font-size: 13px;
+  line-height: 16px;
+  color: $text-palette-6;
+}
+.pick-title-info-m > i{
+  font-style: normal;
+  color: $text-palette-3;
+}
+.pick-title-info-m > b{
+  font-weight: normal;
+}
+.odd-info-game{
+  display: table-cell;
+  vertical-align: top;
+  text-align: right;
+  font-size: 14px;
+  line-height: 16px;
+  color: #b6862e;
+}

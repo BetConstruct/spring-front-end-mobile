@@ -1,0 +1,72 @@
+@import 'skin';
+.get-app-for{
+  float: left;
+  width: 100%;
+}
+.phone-i-view{
+  float: left;
+  width: 100%;
+  margin: 20px 0 0 0;
+  padding: 0 0 100%;
+  background:  $mobile-app;
+  display: block;
+}
+
+.info-new-version-b{
+  float: left;
+  bottom: 0;
+  width: 100%;
+  position: relative;
+}
+.info-new-version-b:before{
+  content: "";
+  display: block;
+  position: absolute;
+  left: -15px;
+  top: 0;
+  width: 100%;
+  box-sizing: content-box;
+  padding: 0 15px 15px;
+  height: 100%;
+  z-index: 10;
+  background: $skin-palette-11;
+  opacity: 0.8;
+}
+.info-new-version-b > span{
+  float: left;
+  width: 100%;
+  line-height: 22px;
+  position: relative;
+  z-index: 22;
+  font-size: 14px;
+  padding: 5px 10px;
+  color: $text-palette-1;
+  font-weight: bold;
+}
+.download-links {
+  float: left;
+  width: 100%;
+  padding: 15px 25px;
+  position: relative;
+}
+.download-links >button{
+  z-index: 22;
+  position: relative;
+}
+.download-links >button:first-child{
+  margin: 0 0 10px 0;
+}
+.download-links:before{
+  content: '';
+  display: block;
+  position: absolute;
+  left: -15px;
+  top: 15px;
+  z-index: 10;
+  background: $skin-palette-11;
+  opacity: 0.8;
+  height: 100%;
+  width: 100%;
+  box-sizing: content-box;
+  padding: 0 15px 15px;
+}

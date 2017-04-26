@@ -1,0 +1,226 @@
+@import 'skin';
+.live-game-score{
+	float: left;
+	width: 100%;
+	background-color: #262020;
+	background-repeat: no-repeat;
+	background-position: 64% 50%;
+	background-size: cover;
+}
+//.live-game-container .game-info,
+//.live-game-container .game-info .game-score.soccer-template {
+//	background-image: url(../../images/game-category/custom.jpg);
+//}
+.live-game-score.score-Soccer,
+.live-game-score.score-CyberFootball{
+	background-image: url(../../images/game-category/football-bg.jpg);
+	background-position: 0 75%;
+}
+.live-game-score.score-Tennis {
+	background-image: url(../../images/game-category/tennis.jpg);
+}
+.live-game-score.score-Basketball,
+.live-game-score.score-EBasketball{
+	background-image: url(../../images/game-category/basketball.jpg);
+}
+.live-game-score.score-Volleyball{
+	background-image: url(../../images/game-category/valleyball.jpg);
+}
+.live-game-score.score-TableTennis{
+	background-image: url(../../images/game-category/tab_tennis.jpg);
+}
+.live-game-score.score-Baseball{
+	background-image: url(../../images/game-category/baceball.jpg);
+}
+.live-game-score.score-Badminton{
+	background-image: url(../../images/game-category/badmenton.jpg);
+}
+.live-game-score.score-Boxing{
+	background-image: url(../../images/game-category/box.jpg);
+}
+.live-game-score.score-Cycling{
+	background-image: url(../../images/game-category/cycling.jpg);
+}
+.live-game-score.score-Futsal{
+	background-image: url(../../images/game-category/footsal.jpg);
+}
+.live-game-score.score-IceHockey{
+	background-image: url(../../images/game-category/ice_hockey.jpg);
+}
+.live-game-score.score-Horseracing .game-horse-racing {
+	background-image: url(../../images/game-category/horse_racing.jpg);
+	background-size: cover;
+}
+.live-game-score.score-Snooker{
+	background-image: url(../../images/game-category/snooker2.jpg);
+}
+.live-game-score.score-Cricket{
+	background-image: url(../../images/game-category/Cricket.jpg);
+}
+.live-game-score.score-Rugby{
+	background-image: url(../../images/game-category/rugby.jpg);
+}
+.live-game-score.score-Golf {
+	background-image: url(../../images/game-category/golf.jpg);
+}
+.live-game-score.score-Handball{
+	background-image: url(../../images/game-category/handball.jpg);
+}
+.live-game-score.score-BeachVolleyball{
+	background-image: url(../../images/game-category/b_Volleyball.jpg);
+}
+.live-game-score.score-Wrestling{
+	background-image: url(../../images/game-category/Wrestling1.jpg);
+}
+.live-game-score.score-AmericanFootball{
+	background-image: url(../../images/game-category/amer_fball.jpg);
+}
+.live-game-score.score-Dota,
+.live-game-score.score-Dota2 {
+	background-image: url(../../images/game-category/dota.jpg);
+}
+.live-game-score.score-LeagueOfLegends {
+	background-image: url(../../images/game-category/league-of-legends.jpg);
+}
+.live-game-score.score-StarCraft{
+	background-image: url(../../images/game-category/star-craft.jpg);
+}
+.live-game-score.score-CounterStrike{
+	background-image: url(../../images/game-category/counter-strike.jpg);
+}
+.live-game-score.score-CallofDuty{
+	background-image: url(../../images/game-category/callofduty.jpg);
+}
+//.live-game-score.score-hearthstone .game-score.soccer-template {
+//	background-image: url(../../images/game-category/hearthstone.jpg);
+//}
+//.live-game-score.score-heroesofthestorm .game-score.soccer-template {
+//	background-image: url(../../images/game-category/heroesofthestorm.jpg);
+//}
+//.live-game-score.score-worldoftanks .game-score.soccer-template {
+//	background-image: url(../../images/game-category/worldoftanks.jpg);
+//}
+//.live-game-score.score-overwatch .game-score.soccer-template {
+//	background-image: url(../../images/game-category/overwatch.jpg);
+//}
+//
+.game-statistic-view{
+	float: left;
+	width: 100%;
+	margin: 0;
+	background: rgba(40, 44, 56, 0.4);
+	padding: 0 0 8px;
+}
+.game-statistic-view > table{
+	float: left;
+	width: 100%;
+	table-layout: fixed;
+	padding: 5px;
+}
+.game-statistic-view > table tr td{
+	text-align: center;
+	padding: 8px 2px 2px;
+	vertical-align: middle;
+	width: 26px;
+	color: $text-palette-1;
+}
+.game-statistic-view > table tr td:first-child{
+	text-align: left;
+	width: 52%;
+}
+.game-statistic-view > table tr:first-child td{
+	padding: 5px 2px;
+	background: $skin-palette-10;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+.name-wrapper-s{
+	float: left;
+	width: 100%;
+	padding: 0 0 0 5px;
+}
+.team-name-statistic{
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 14px;
+	float: left;
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+td.pass {
+	display: none;
+}
+td.pass.active {
+	display: table-cell;
+}
+.mini-icon{
+	font-weight: normal;
+	font: 12px/14px Sport-icons;
+	float: left;
+}
+.pass > .mini-icon:before{
+	color: $text-palette-3;
+}
+.game-score-view{
+	float: left;
+	width: 100%;
+	padding: 10px 5px;
+	margin: 0;
+	color: #ffffff;
+}
+.game-score-view > ul{
+	float: left;
+	width: 100%;
+	display: table;
+	table-layout: fixed;
+}
+.game-score-view > ul > li{
+	display: table-cell;
+	vertical-align: middle;
+	padding: 0 5px;
+}
+.team-name-statistic-view{
+	width: 100%;
+	font-size: 11px;
+	line-height: 16px;
+}
+.game-score-view > ul > li:first-child{
+	text-align: right;
+}
+.team-name-statistic-view > p{
+	float: left;
+	width: 100%;
+	display: table;
+}
+.team-name-score-v{
+	display: table-cell;
+	vertical-align: middle;
+}
+.team-name-score-v > i{
+	float: left;
+	font-style: normal;
+	width: 100%;
+}
+.team-name-statistic-view > p > b{
+	font-weight: normal;
+	display: table-cell;
+	vertical-align: middle;
+}
+.team-name-statistic-view > p > b > img{
+	max-width: 24px;
+	display: block;
+	float: left;
+	margin: 0 5px 0 0;
+}
+.game-score-view > ul > li:first-child > p > b > img{
+	float: right;
+	margin: 0 0 0 5px;
+}
+.draw-column-view{
+	width: 46%;
+	white-space: nowrap;
+	font-size: 20px;
+	line-height: 24px;
+	text-align: center;
+}

@@ -1,0 +1,146 @@
+@import 'skin';
+//replace
+.single-sport-title-dashboard-m{
+	float: left;
+	width: 100%;
+	height: 38px;
+	border-bottom: 2px solid transparent;
+	background: $skin-palette-11;
+	position: relative;
+	padding: 0 30px 0 34px;
+	color: lighten( desaturate( adjust-hue( $skin-palette-11, -2deg ), 11 ), 37 );
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+	transition: border 180ms;
+}
+.single-sport-title-dashboard-m.active{border-color: $skin-palette-6;}
+.single-sport-title-dashboard-m:before{
+	display: none;
+}
+.dashboard-sport-icon-m{
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 38px;
+	width: 34px;
+	font: 16px/36px Sport-icons;
+	display: block;
+	padding: 0 0 0 10px;
+	box-shadow: 3px 0 0 $skin-palette-6 inset;
+	transition: box-shadow 180ms;
+	color: $text-palette-6;
+}
+.dashboard-live-game-list-m .single-sport-title-dashboard-m.active > .dashboard-sport-icon-m,
+.dashboard-upcoming-game-list-m .single-sport-title-dashboard-m.active > .dashboard-sport-icon-m{
+	box-shadow: none;
+}
+.closed-open-arrow-m{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 30px;
+	height: 36px;
+	font: 20px/36px icomoon;
+	color: $text-palette-6;
+	text-align: center;
+	padding: 2px 0 0;
+}
+.single-sport-title-dashboard-m.active > .closed-open-arrow-m{
+	padding: 0;
+}
+.closed-open-arrow-m:before{
+	content: "\e670";
+}
+.single-sport-title-dashboard-m.active > .closed-open-arrow-m:before{
+	content: "\e671";
+	padding: 0;
+}
+.single-sport-title-dashboard-m > h5{
+	font-weight: normal;
+	float: left;
+	width: 100%;
+	font-size: 13px;
+	line-height: 37px;
+	color: $text-palette-6;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+//sport nav
+//sport nav EMD
+.mini-sport-nav-box > .single-sport-title-dashboard-m{
+	margin: 0 0 2px;
+	background: $skin-palette-9;
+	padding: 0;
+}
+.mini-sport-nav-box > .single-sport-title-dashboard-m > a{
+	text-decoration: none;
+	float: left;
+	width: 100%;
+	display: block;
+	height: 38px;
+	padding: 0 30px 0 34px;
+	font-size: 13px;
+	line-height: 38px;
+	color: $text-palette-6;
+}
+.mini-sport-nav-box > .single-sport-title-dashboard-m > a > h5{
+	float: left;
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	font-weight: normal;
+}
+.mini-sport-nav-box > .single-sport-title-dashboard-m > a.active{
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+	border-color: transparent;
+	background: $skin-palette-11;
+	color: set-color($skin-palette-11);
+}
+.mini-sport-nav-box .closed-open-arrow-m{
+	line-height: 38px;
+	height: 38px;
+	padding: 0;
+}
+.mini-sport-nav-box .closed-open-arrow-m:before,
+.mini-sport-nav-box .single-sport-title-dashboard-m.active .closed-open-arrow-m:before{
+	content: "\e672";
+}
+.mini-sport-nav-box > .single-sport-title-dashboard-m.more-sports, .mini-sport-nav-box > .single-sport-title-dashboard-m.more-sports.active{
+	background: lighten( desaturate( adjust-hue( $skin-color, -94deg ), 6 ), 11 );
+	padding-right: 50px;
+}
+.more-sport-count-m {
+	position: absolute;
+	right: 0;
+	top: 0;
+	font-size: 12px;
+	line-height: 38px;
+	padding: 0 10px 0 0;
+	width: 50px;
+	text-align: right;
+	color: $text-palette-3;
+}
+.mini-sport-nav-box > .single-sport-title-dashboard-m.more-sports > h5{
+	color: $text-palette-3;
+}
+.dashboard-sport-icon-m.more-sports{
+	font: 14px/38px icomoon;
+	color: $text-palette-3;
+}
+.dashboard-sport-icon-m.more-sports:before{
+	content: "\e937";
+}
+.mini-sport-nav-box > .single-sport-title-dashboard-m.active .dashboard-sport-icon-m.more-sports:before{
+	content: "\e938";
+}
+.single-sport-title-dashboard-m.VirtualHorseRacing + .single-sport-game-list-d .names-mini-row-m > ul > li:nth-child(n+2),
+.single-sport-title-dashboard-m.VirtualGreyhoundRacing + .single-sport-game-list-d .names-mini-row-m > ul > li:nth-child(n+2),
+.single-sport-title-dashboard-m.VirtualCarRacing + .single-sport-game-list-d .names-mini-row-m > ul > li:nth-child(n+2){
+	display: none;
+}
+.single-sport-title-dashboard-m.VirtualHorseRacing + .single-sport-game-list-d .names-mini-row-m > ul > li.title-team-name-view-m,
+.single-sport-title-dashboard-m.VirtualGreyhoundRacing + .single-sport-game-list-d .names-mini-row-m > ul > li.title-team-name-view-m,
+.single-sport-title-dashboard-m.VirtualCarRacing + .single-sport-game-list-d .names-mini-row-m > ul > li.title-team-name-view-m{
+	max-width: 100%;
+}

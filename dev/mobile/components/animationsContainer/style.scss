@@ -1,0 +1,64 @@
+@import 'skin';
+.animation-video-wrapper{
+  float: left;
+  width: 100%;
+}
+.animation-v-nav-view{
+  float: left;
+  width: 100%;
+  padding: 0 30px 0 0;
+  position: relative;
+  height: 30px;
+  background: darken( desaturate( adjust-hue( $skin-palette-7, 5deg ), 2 ), 12 );
+  box-shadow: 0 1px 0 rgba(123, 129, 145, 0.15) inset;
+  margin: 1px 0;
+}
+.tab-video-nav-b{
+  float: left;
+  width: 100%;
+  display: table;
+  padding: 0;
+  height: 30px;
+  table-layout: fixed;
+}
+.video-animation-button-m{
+  display: table-cell;
+  vertical-align: top;
+  border-right: 1px solid darken( saturate( adjust-hue( $skin-palette-7, -12deg ), 17 ), 28 );
+  color: $text-palette-6;
+  font-size: 12px;
+  padding: 0 5px;
+  line-height: 30px;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.video-animation-button-m.active{
+  box-shadow: 0 -2px 0 $hero-color inset;
+  color: $text-palette-2;
+}
+.arrow-toggle-view{
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  font: 20px/30px icomoon;
+  text-align: center;
+  color: $text-palette-6;
+}
+.arrow-toggle-view:before{content: "\E671";}
+.collapsed .arrow-toggle-view:before{content: "\E670";}
+.wrapper-v-a-view{
+  float: left;
+  width: 100%;
+  overflow: hidden;
+  height: auto;
+  max-height: 600px;
+  transition: max-height 450ms;
+}
+.collapsed + .wrapper-v-a-view{
+  max-height: 0;
+  transition: max-height 300ms;
+}

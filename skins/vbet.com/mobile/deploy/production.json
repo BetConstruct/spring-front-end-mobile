@@ -1,0 +1,7 @@
+{
+  "host": "mobile01-lx.betconstruct.int",
+  "port": "22",
+  "key": "mobile",
+  "cacheFile": "vbet_mobile_cache.json",
+  "remotePath": "/var/www/html/react/react.vbet.com"
+}

@@ -1,0 +1,192 @@
+@import 'skin';
+.bonus-page-wrapper{
+  float: left;
+  width: 100%;
+}
+.bonus-wrapper{
+  float: left;
+  width: 100%;
+}
+.single-bonus-container{
+  float: left;
+  width: 100%;
+  background: $skin-palette-10;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  margin: 4px 0 0;
+  padding: 12px 10px;
+}
+.single-bonus-container:first-child{margin: 0;}
+.bonus-title-view{
+  float: left;
+  width: 100%;
+  margin: 0 0 12px;
+}
+.bonus-title-view > h3{
+  float: left;
+  width: 100%;
+  font-weight: normal;
+  color: $text-palette-4;
+  font-size: 14px;
+  line-height: 16px;
+}
+.bonus-info-contain{
+  float: left;
+  width: 100%;
+}
+.bonus-info-contain > ul{
+  float: left;
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+}
+.bonus-info-contain > ul > li{
+  display: table-cell;
+  vertical-align: top;
+}
+.bonus-info-contain > ul > li:first-child{
+  width: 118px;
+}
+.bonus-icon-view{
+  float: left;
+  width: 118px;
+  height: 120px;
+  background: lighten( desaturate( adjust-hue( $text-color, -1deg ), 7 ), 10 );
+  font: 50px/120px icomoon;
+  text-align: center;
+  color: $text-palette-5;
+}
+.bonus-icon-view:before{
+  content: "\e90a";
+  color: #b6862e;
+}
+.claim-b{
+  float: left;
+  width: 100%;
+  padding: 0 18px;
+  position: relative;
+  margin: -20px 0 0;
+}
+.claim-b > .button-view-normal-m{
+  min-width: 100%;
+  width: auto;
+}
+.bonus-info-contain > ul > li > p{
+  float: left;
+  width: 100%;
+  color: $text-palette-6;
+  font-size: 12px;
+  line-height: 14px;
+  padding: 0 0 5px 10px;
+}
+.more-bonus-info{
+  float: left;
+  width: 100%;
+  padding: 10px 0 0 10px;
+}
+.more-bonus-info > span{
+  font-size: 14px;
+  line-height: 16px;
+  color: $hero-color;
+}
+.bonus-more-view-wrapper{
+  float: left;
+  width: 100%;
+}
+.title-info-bonus{
+  float: left;
+  width: 100%;
+  position: relative;
+  padding: 0 38px 0 15px;
+  height: 40px;
+  background: $skin-palette-11;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  margin: 1px 0 0;
+}
+.title-info-bonus > p{
+  float: left;
+  width: 100%;
+  font-size: 14px;
+  line-height: 40px;
+  color: $text-palette-6;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.bonus-info-arrow{
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 38px;
+  height: 40px;
+  text-align: center;
+  font: 20px/40px icomoon;
+  color: $text-palette-6;
+}
+.bonus-info-arrow:before{
+  content: "\E670";
+}
+.title-info-bonus.active > .bonus-info-arrow:before{
+  content: "\E671";
+}
+.sub-info-contain{
+  float: left;
+  width: 100%;
+  overflow: hidden;
+  height: auto;
+  max-height: 0;
+  transition: max-height 360ms;
+}
+.title-info-bonus.active + .sub-info-contain{
+  max-height: 500px;
+  transition: max-height 600ms;
+}
+.sub-info-contain > p{
+  float: left;
+  width: 100%;
+  background: $skin-palette-10;
+  padding: 15px;
+  margin: 1px 0 0;
+  font-size: 13px;
+  line-height: 16px;
+  color: lighten( desaturate( adjust-hue( $text-palette-10, -1deg ), 6 ), 32 );
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  word-break: break-word;
+}
+.sub-info-contain > p > span{
+  float: left;
+  width: 100%;
+  padding: 2px 0;
+}
+.bonus-info-contain > ul > li > p > span{
+  color: $text-palette-4;
+}
+.bonus-info-contain > ul > li > p.status-1 > span{
+  color: #1a7152;
+}
+.bonus-info-contain > ul > li > p.status-0 > span{
+  color: #b6862e;
+}
+.bonus-claim-button-w{
+  float: left;
+  width: 100%;
+  background: $skin-palette-10;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 15px;
+  margin: 1px 0 0;
+}
+.bonus-claim-button-w > .separator-box-buttons-m{
+  margin: 0;
+}
+.cancel-b{
+  background: lighten( saturate( adjust-hue( $text-color, 117deg ), 80 ), 27 );
+  box-shadow: 0 0 0 1px lighten( saturate( adjust-hue( $text-color, 117deg ), 80 ), 27 ) inset;
+}
+.bonus-claim-button-w > span{
+  float: left;
+  width: 100%;
+  font-size: 12px;
+  line-height: 14px;
+  color: $text-palette-6;
+  padding: 0 0 5px;
+}

@@ -1,0 +1,131 @@
+@import 'skin';
+.profile-info-contain-m{
+  float: left;
+  width: 100%;
+  margin: 0;
+}
+.top-profile-info{
+  float: left;
+  width: 100%;
+  margin: 0;
+  background: $skin-palette-10;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 20px 15px;
+}
+.top-profile-info > p{
+  float: left;
+  width: 100%;
+  font-size: 13px;
+  line-height: 16px;
+  color: $text-palette-6;
+}
+.upload-file-info{
+  float: left;
+  width: 100%;
+  background: lighten( saturate( adjust-hue( $skin-color, -35deg ), 1 ), 12 );
+  border-top: 1px solid lighten( saturate( adjust-hue( $text-color, -43deg ), 26 ), 34 );
+  border-bottom: 1px solid lighten( saturate( adjust-hue( $text-color, -43deg ), 26 ), 34 );
+  padding: 12px 15px;
+  margin: 0 0 2px;
+}
+.upload-file-info > p{
+  float: left;
+  width: 100%;
+  font-size: 12px;
+  line-height: 14px;
+  color: $text-palette-3;
+}
+.profile-text-container-separator{
+  float: left;
+  width: 100%;
+  background: $skin-palette-10;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 20px 15px 10px;
+  margin: 0 0 1px;
+}
+.profile-text-container-separator > h3{
+  float: left;
+  width: 100%;
+  color: $text-palette-4;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: normal;
+  margin: 0 0 10px;
+}
+.profile-text-container-separator > p{
+  float: left;
+  width: 100%;
+  color: $text-palette-6;
+  font-size: 13px;
+  line-height: 16px;
+  margin: 0 0 10px;
+}
+.profile-form-contain-m{
+  float: left;
+  width: 100%;
+}
+.profile-form-contain-m > h4{
+  float: left;
+  width: 100%;
+  color: $text-palette-6;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: normal;
+  margin: 5px 0;
+}
+.form-p-i-m{
+  float: left;
+  width: 100%;
+}
+.form-p-i-m > .select-contain-m{
+  float: left;
+  width: 100%;
+  height: 38px;
+  margin: 0 0 10px;
+}
+.form-p-i-m > .select-contain-m > select{
+  width: 100%;
+  height: 38px;
+}
+.form-p-i-m > .select-contain-m:before{
+  line-height: 22px;
+  top: 8px;
+  height: 22px;
+}
+.imp-file-box{
+  float: left;
+  width: 100%;
+  margin: 0 0 10px;
+}
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.inputfile + label {
+  float: left;
+  width: 100%;
+  font-size: 14px;
+  line-height: 38px;
+  color: $text-palette-6;
+  font-weight: normal;
+  display: table;
+}
+.inputfile + label > span{
+  display: table-cell;
+  box-shadow: 1px 0 0 $text-palette-6 inset, 0 1px 0 $text-palette-6 inset, 0 -1px 0 $text-palette-6 inset;
+  padding: 0 10px;
+  width: 100%;
+}
+.inputfile + label > i{
+  display: table-cell;
+  font-style: normal;
+  text-transform: uppercase;
+  color: set-color($button-bg);
+  background: $button-bg;
+  padding: 0 15px;
+  text-align: center;
+}

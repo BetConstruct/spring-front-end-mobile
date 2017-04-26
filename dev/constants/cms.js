@@ -1,0 +1,1 @@
+export const TERMS_AND_CONDITIONS_SLUG = "general-terms-and-conditions";

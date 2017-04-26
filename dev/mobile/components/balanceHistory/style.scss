@@ -1,0 +1,124 @@
+@import 'skin';
+.balance-view-wrapper{
+  float: left;
+  width: 100%;
+}
+.filter-view-b{
+  float: left;
+  width: 100%;
+  background: darken( desaturate( adjust-hue( $skin-color, -1deg ), 1 ), 1 );
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 15px 10px 10px;
+  margin: 0 0 2px;
+}
+.column-view-form-m{
+  float: left;
+  width: 100%;
+}
+.column-view-form-m > ul{
+  float: left;
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+}
+.column-view-form-m > ul > li{
+  display: table-cell;
+  vertical-align: top;
+  padding: 0 5px;
+  width: 50%;
+}
+.column-view-form-m > ul > li:first-child{padding-left: 0;}
+.column-view-form-m > ul > li:last-child{padding-right: 0;}
+.balance-history-inf-b{
+  float: left;
+  width: 100%;
+  background: lighten( desaturate( adjust-hue( $skin-color, 3deg ), 5 ), 6 );
+  margin: 0 0 4px;
+}
+.balance-history-inf-b:nth-child(even){
+  background: $skin-palette-10;
+}
+.single-b-row-m{
+  float: left;
+  width: 100%;
+  border-bottom: 1px solid $skin-palette-11;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 5px;
+}
+.single-b-row-m:last-child{
+  border: none;
+}
+.balance-h-row-b{
+  float: left;
+  width: 100%;
+  display: table;
+  padding: 2px 0;
+}
+.balance-h-row-b > h5, .balance-h-row-b > h6{
+  display: table-cell;
+  vertical-align: top;
+  text-align: left;
+  font-weight: normal;
+  padding: 0 5px;
+}
+.balance-h-row-b > h5{
+  font-size: 14px;
+  line-height: 16px;
+  color: $text-palette-4;
+  text-transform: uppercase;
+}
+.balance-h-row-casino-b{
+  float: left;
+  width: 100%;
+  padding: 2px 0;
+}
+.balance-h-row-casino-b > h5{
+  font-size: 14px;
+  line-height: 16px;
+  color: $text-palette-2;
+  font-weight: normal;
+  padding: 0 5px;
+}
+.balance-h-row-b > h5.yellow{color: #b6862e;}
+.balance-h-row-b > h5.green{color: #1a7051;}
+.balance-h-row-b > h5.red{color: #e9044a;}
+.balance-h-row-b > h6{
+  color: $text-palette-4;
+  font-size: 12px;
+  line-height: 14px;
+}
+.second-r-b > .balance-h-row-b > h6{
+  color: $text-palette-6;
+}
+.balance-h-row-b > span, .balance-h-row-b > p{
+  display: table-cell;
+  vertical-align: top;
+  text-align: right;
+  padding: 0 5px;
+}
+.balance-h-row-b > span{
+  color: $text-palette-6;
+  font-size: 12px;
+  line-height: 16px;
+}
+.balance-h-row-b > p{
+  color: $text-palette-3;
+  font-size: 14px;
+  line-height: 16px;
+}
+.balance-h-row-b > p > i{
+  font-style: normal;
+}
+.second-r-b > .balance-h-row-b > p{
+  color: #1a7051;
+}
+p.no-transactions {
+  float: left;
+  width: 100%;
+  margin: 5px 0 0;
+  padding: 10px;
+  color: $text-palette-6;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+}

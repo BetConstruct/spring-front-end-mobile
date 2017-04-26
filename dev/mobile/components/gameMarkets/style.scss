@@ -1,0 +1,195 @@
+@import 'skin';
+.game-view-wrapper{
+	float: left;
+	width: 100%;
+	margin: 0;
+}
+.game-view-wrapper:before{
+	display: none;
+}
+.markets-list-wrapper{
+	float: left;
+	width: 100%;
+	padding: 0;
+	margin: 0 0 2px;
+}
+.market-group-title-m{
+	float: left;
+	width: 100%;
+	height: 38px;
+	background: $skin-palette-9;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+	padding: 0 38px 0 12px;
+	position: relative;
+}
+.market-group-title-m > h3{
+	float: left;
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	color: $text-palette-6;
+	font-size: 13px;
+	line-height: 38px;
+	font-weight: normal;
+}
+.markets-closed-open-arrow-m{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 38px;
+	height: 38px;
+	font: 20px/38px icomoon;
+	color: $text-palette-8;
+	text-align: center;
+}
+.markets-closed-open-arrow-m:before{
+	content: "\e670";
+}
+.single-market-title-m.active > .markets-closed-open-arrow-m:before{
+	content: "\e671";
+}
+.market-group-title-m  > .markets-closed-open-arrow-m{
+	color: $text-palette-6;
+	font-size: 16px;
+	line-height: 38px;
+}
+.market-group-title-m  > .markets-closed-open-arrow-m:before{
+	content: "\E937";
+}
+.market-group-title-m.active  > .markets-closed-open-arrow-m:before{
+	content: "\E938";
+}
+.all-markets-view-m{
+	float: left;
+	width: 100%;
+	border-left: 2px solid $skin-palette-9;
+	border-right: 2px solid $skin-palette-9;
+	box-shadow: 0 -2px 0 $skin-palette-9 inset;
+	padding: 5px 5px 7px;
+}
+.singe-market-view-m{
+	float: left;
+	width: 100%;
+	margin: 0 0 2px;
+	overflow: hidden;
+	height: auto;
+}
+.singe-market-view-m.active{
+	max-height: 99999px;
+}
+.coefficient-game-view{
+	overflow: hidden;
+	height: auto;
+	animation: closed-animate-menu 180ms ease;
+	max-height: 0;
+}
+.single-market-title-m.active + .coefficient-game-view{
+	height: auto;
+	max-height: 99999px;
+	animation: open-animate-market 400ms ease-in-out;
+}
+@keyframes open-animate-market{
+	0% {max-height: 0;}
+	100% {max-height: 500px;}
+}
+@keyframes closed-open-animate-market{
+	0% {max-height: 500px;}
+	100% {max-height: 0;}
+}
+.singe-market-view-m:first-child{
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+.singe-market-view-m:last-child{
+	margin: 0;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+.singe-market-view-m:last-child > .single-market-title-m{
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	overflow: hidden;
+}
+.singe-market-view-m:last-child > .single-market-title-m.active{
+	border-radius: 0;
+	overflow: inherit;
+}
+.single-market-title-m{
+	float: left;
+	width: 100%;
+	background: $skin-palette-10;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+	height: 36px;
+	padding: 0 30px 0 46px;
+	position: relative;
+	margin: 0;
+}
+.single-market-title-m > .markets-closed-open-arrow-m{
+	line-height: 36px;
+	width: 30px;
+	color: $text-palette-6;
+}
+.single-market-title-m > .fav-star-m{
+	height: 36px;
+	width: 36px;
+	line-height: 36px;
+}
+.single-market-title-m > h4{
+	float: left;
+	width: 100%;
+	display: table;
+	height: 36px;
+	font-weight: normal;
+	color: $text-palette-3;
+	font-size: 12px;
+	line-height: 36px;
+}
+.name-market-contain-cell-m{
+	display: table-cell;
+	vertical-align: top;
+	position: relative;
+	width: 100%;
+}
+.name-market-contain-cell-m > i{
+	font-style: normal;
+	position: absolute;
+	left: 0;
+	top: 0;
+	color: $text-palette-3;
+	font-size: 12px;
+	line-height: 36px;
+	display: block;
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.market-icons-cell-m{
+	display: table-cell;
+	vertical-align: top;
+	white-space: nowrap;
+}
+.market-icons-cell-m > i{
+	font-style: normal;
+	line-height: 36px;
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 0 0 5px;
+}
+.chain-icon-view-m:before{
+	font: 13px/30px icomoon;
+	content: "\e800";
+	color: #9fa948;
+	padding: 0 4px 0 0;
+	position: relative;
+	top: 1px;
+}
+.cash-out-icon-view-m:before{
+	font: 13px/30px icomoon;
+	content: "\e801";
+	color: #9fa948;
+	padding: 0 4px 0 0;
+	position: relative;
+	top: 1px;
+}

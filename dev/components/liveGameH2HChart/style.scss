@@ -1,0 +1,56 @@
+@import 'skin';
+.live-game-stats{
+  float: left;
+  width: 100%;
+  margin: 0 0 4px;
+}
+.statistic-view-m{
+  float: left;
+  width: 50%;
+  background: $skin-palette-10;
+  margin: 0;
+  padding: 5px 30px;
+  text-align: center;
+}
+.statistic-view-m > p{
+  float: left;
+  width: 100%;
+  font-size: 10px;
+  line-height: 12px;
+  color: $text-palette-2;
+  padding: 0 0 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.statistic-line-view{
+  float: left;
+  width: 100%;
+  height: 4px;
+  display: table;
+  text-align: center;
+  margin: 0 0 5px;
+}
+.statistic-line-view > span{
+  display: table-cell;
+  background: $text-palette-1;
+  position: relative;
+}
+.statistic-line-view > span:first-child{
+  background: #ff0000;
+}
+.statistic-line-view > span > i{
+  position: absolute;
+  text-align: center;
+  width: 20px;
+  font-size: 10px;
+  line-height: 12px;
+  font-style: normal;
+  top: -4px;
+  right: -24px;
+  display: block;
+}
+.statistic-line-view > span:first-child > i{
+  right: auto;
+  left: -24px;
+}

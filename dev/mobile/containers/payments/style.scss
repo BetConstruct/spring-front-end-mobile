@@ -1,0 +1,92 @@
+@import 'skin';
+.payments-form-wrapper{
+  float: left;
+  width: 100%;
+  background: $skin-palette-11;
+}
+.animate-from-right-to-left{
+  animation: open-single-payment 300ms ease-in-out;
+}
+@keyframes open-single-payment{
+  0% {
+    -webkit-transform: translate3d(100%,0,0);
+    -moz-transform: translate3d(100%,0,0);
+    -ms-transform: translate3d(100%,0,0);
+    transform: translate3d(100%,0,0);
+  }
+  100% {
+    -webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+  }
+}
+.single-payment-title{
+  float: left;
+  width: 100%;
+  background: $skin-palette-9;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  margin: 0 0 1px;
+  padding: 10px;
+}
+.single-payment-title > ul{
+  float: left;
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+}
+.single-payment-title > ul > li{
+  display: table-cell;
+  vertical-align: top;
+}
+.single-payment-title > ul > li:first-child{
+  width: 80px;
+}
+.single-payment-title > ul > li > p{
+  float: right;
+  width: 100%;
+  font-size: 13px;
+  line-height: 16px;
+  color: $text-palette-6;
+  text-align: right;
+}
+.single-payment-title > ul > li > p > i{
+  font-style: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+}
+.deposit-form-container{
+  float: left;
+  width: 100%;
+  background: $skin-palette-9;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  margin: 0 0 1px;
+  padding: 15px 10px 10px;
+}
+.amount-b{
+  margin: 10px 0 0;
+}
+.deposit-amount-buttons{
+  float: left;
+  width: 100%;
+  overflow: hidden;
+}
+.deposit-amount-buttons > ul{
+  float: left;
+  width: calc(100% + 10px);
+  position: relative;
+  left: -10px;
+}
+.deposit-amount-buttons > ul > li{
+  float: left;
+  width: 33.3%;
+  padding: 0 0 0 10px;
+  margin: 0 0 10px;
+}
+.deposit-amount-buttons > ul > li > .button-view-normal-m{
+  padding: 0 10px;
+  font-size: 12px;
+}

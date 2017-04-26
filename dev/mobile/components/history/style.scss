@@ -1,0 +1,240 @@
+@import 'skin';
+.open-bets {
+  float: left;
+  width: 100%;
+}
+.bet-coupon-view{
+  float: left;
+  width: 100%;
+  background: $skin-palette-10;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 15px 15px 10px;
+  margin: 0 0 4px;
+}
+.bet-coupon-view.bonus{
+  background: lighten( desaturate( adjust-hue( $skin-color, 3deg ), 5 ), 6 );
+}
+.top-row-info-bet{
+  float: left;
+  width: 100%;
+  padding: 0 0 15px;
+  border-bottom: 1px solid darken( saturate( adjust-hue( $text-color, 1deg ), 14 ), 8 );
+}
+.link-bet-all-info{
+  float: left;
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  position: relative;
+  padding: 0 15px 0 30px;
+  height: 30px;
+}
+.bet-kind{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 100%;
+  font: 22px/32px icomoon;
+  color: $text-palette-6;
+}
+.multiple:before{content: "\e6fe";}
+.single:before{content: "\e701";}
+.chain:before{content: "\e6fd";}
+.system:before{content: "\e700";}
+.arrow-view-bet-info{
+  position: absolute;
+  width: 15px;
+  top: 0;
+  right: -5px;
+  font: 18px/32px icomoon;
+  color: $text-palette-6;
+  text-align: right;
+}
+.arrow-view-bet-info:before{
+  content: "\E672";
+}
+.additional-information-bet{
+  float: left;
+  width: 100%;
+}
+.additional-information-bet > i{
+  font-style: normal;
+  float: left;
+  font-size: 12px;
+  line-height: 14px;
+  color: $text-palette-3;
+  position: relative;
+  padding: 0 20px 0 0;
+}
+.super .additional-information-bet > i:before{
+  color: #ffc353;
+  content: "y";
+  font: 14px/14px icomoon;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.bonus .additional-information-bet > i:before{
+  color: #ffc353;
+  content: "a";
+  font: 14px/14px icomoon;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.status-bet-coupon{
+  float: right;
+  text-transform: uppercase;
+  padding: 0 0 0 16px;
+  font-size: 12px;
+  line-height: 14px;
+  position: relative;
+}
+.status-bet-coupon:before{
+  position: absolute;
+  top: 0;
+  left: 0;
+  font: 12px/14px icomoon;
+  text-align: left;
+}
+.unsettled{color: #1a7051;}
+.unsetteled{color: #b6862e;}
+.won{color: #1a7051;}
+.lost{color: #e9044a;}
+.won:before{content: "\54";}
+.lost:before{
+  content: "\E90C";
+  font-size: 10px;
+}
+.date-id-info-bet{
+  float: left;
+  width: 100%;
+  margin: 4px 0 0;
+}
+.id-info-view{
+  float: left;
+  display: block;
+  color: $text-palette-6;
+  font-size: 12px;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+.id-info-view > b{
+  font-weight: normal;
+  color: $text-palette-3;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 0 0 2px;
+}
+.date-id-info-bet > i{
+  float: right;
+  text-transform: uppercase;
+  display: block;
+  font-size: 12px;
+  line-height: 14px;
+  color: $text-palette-6;
+  font-style: normal;
+}
+.stake-odd-view-box{
+  float: left;
+  width: 100%;
+  border-top: 1px solid $skin-palette-8;
+  border-bottom: 1px solid $text-palette-12;
+  padding: 3px 0 5px;
+}
+.stake-container{
+  float: left;
+  width: 100%;
+  padding: 5px 0;
+}
+.stake-container > b{
+  float: left;
+  display: block;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  color: $text-palette-6;
+}
+.stake-container > span{
+  float: right;
+  color: $text-palette-3;
+  font-size: 13px;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+.stake-container > span > i{
+  font-style: normal;
+}
+.stake-container.odd > span{
+  color: #b6862e;
+}
+.possible-win-coupon{
+  float: left;
+  width: 100%;
+  border-top: 1px solid $skin-palette-8;
+  padding: 8px 0 0;
+}
+.possible-win-coupon > p{
+  float: left;
+  font-size: 13px;
+  line-height: 16px;
+  color: $text-palette-6;
+}
+.possible-win-coupon > span, .win-b-result{
+  float: right;
+  color: #1a7051;
+  font-size: 13px;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+.possible-win-coupon > span > i, .win-b-result > i{
+  font-style: normal;
+}
+.bonus-amount{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 0 0 18px;
+  font-weight: normal;
+  color: #ffc353;
+}
+.bonus-amount:before{
+  position: absolute;
+  left: 2px;
+  top: 0;
+  content: "\61";
+  font: 10px/14px icomoon;
+  text-transform: none;
+}
+.cash-out-button{
+  float: left;
+  width: 100%;
+  padding: 10px 0 0;
+}
+.cash-out-button > .button-view-normal-m{
+  padding: 0 15px;
+}
+.cash-out-button > .button-view-normal-m > i{
+  float: left;
+  font-style: normal;
+  color: $text-palette-3;
+}
+.cash-out-button > .button-view-normal-m > b{
+  float: right;
+  font-weight: normal;
+  color: $text-palette-3;
+}
+.cash-out-button > .button-view-normal-m > b > i{
+  font-style: normal;
+}
+p.no-bets {
+  float: left;
+  width: 100%;
+  margin: 5px 0 0;
+  padding: 10px;
+  color: $text-palette-6;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+}

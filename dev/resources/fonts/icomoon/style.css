@@ -1,0 +1,246 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?lhfxbd');
+  src:  url('fonts/icomoon.eot?lhfxbd#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?lhfxbd') format('truetype'),
+    url('fonts/icomoon.woff?lhfxbd') format('woff'),
+    url('fonts/icomoon.svg?lhfxbd#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-back:before {
+  content: "\e91c";
+}
+.icon-recycle:before {
+  content: "\e91b";
+}
+.icon-picture:before {
+  content: "\e91a";
+}
+.icon-Info-Icon:before {
+  content: "\e919";
+}
+.icon-calendar:before {
+  content: "\e918";
+}
+.icon-blocked:before {
+  content: "\e916";
+}
+.icon-error:before {
+  content: "\e917";
+}
+.icon-info:before {
+  content: "\e915";
+}
+.icon-Settings:before {
+  content: "\e914";
+}
+.icon-arrow-circle:before {
+  content: "\e913";
+}
+.icon-0:before {
+  content: "\e912";
+}
+.icon-Forma-1:before {
+  content: "\e911";
+}
+.icon-Live:before {
+  content: "\e901";
+}
+.icon-Menu-left:before {
+  content: "\e902";
+}
+.icon-Menu-right:before {
+  content: "\e903";
+}
+.icon-Message:before {
+  content: "\e904";
+}
+.icon-Profile:before {
+  content: "\e905";
+}
+.icon-Search:before {
+  content: "\e906";
+}
+.icon-TV:before {
+  content: "\e907";
+}
+.icon-Arrow:before {
+  content: "\e908";
+}
+.icon-Balance:before {
+  content: "\e909";
+}
+.icon-Bonus:before {
+  content: "\e90a";
+}
+.icon-Card:before {
+  content: "\e90b";
+}
+.icon-Close:before {
+  content: "\e90c";
+}
+.icon-Collapse:before {
+  content: "\e90d";
+}
+.icon-Corner:before {
+  content: "\e90e";
+}
+.icon-History:before {
+  content: "\e90f";
+}
+.icon-VIP:before {
+  content: "\e910";
+}
+.icon-icons-feed-finished:before {
+  content: "\e93e";
+}
+.icon-icons-feed-free-kick:before {
+  content: "\e93f";
+}
+.icon-icons-feed-gk-save:before {
+  content: "\e940";
+}
+.icon-icons-feed-kickoff:before {
+  content: "\e941";
+}
+.icon-icons-feed-not-started:before {
+  content: "\e942";
+}
+.icon-icons-feed-offside:before {
+  content: "\e943";
+}
+.icon-icons-feed-save:before {
+  content: "\e946";
+}
+.icon-icons-feed-shot-blocked:before {
+  content: "\e947";
+}
+.icon-icons-feed-throwin:before {
+  content: "\e948";
+}
+.icon-corner-54:before {
+  content: "\76";
+}
+.icon-icon-web-2-56:before {
+  content: "\7a";
+}
+.icon-icon-web-2-57:before {
+  content: "\7c";
+}
+.icon-icon-web-2-55:before {
+  content: "\7d";
+}
+.icon-icons-feed-goal-kick:before {
+  content: "\7e";
+}
+.icon-icon_web_2-collapse-74:before {
+  content: "\e937";
+}
+.icon-icon_web_2-collapse-73:before {
+  content: "\e938";
+}
+.icon-live4:before {
+  content: "\e936";
+}
+.icon-ios-link:before {
+  content: "\e800";
+}
+.icon-ios-currency:before {
+  content: "\e801";
+}
+.icon-29:before {
+  content: "\e704";
+}
+.icon-returned:before {
+  content: "\e705";
+}
+.icon-chain:before {
+  content: "\e6fd";
+}
+.icon-multiple:before {
+  content: "\e6fe";
+}
+.icon-repeat-button:before {
+  content: "\e6ff";
+}
+.icon-system:before {
+  content: "\e700";
+}
+.icon-single:before {
+  content: "\e701";
+}
+.icon-refresh:before {
+  content: "\e6f4";
+}
+.icon-help:before {
+  content: "\e6ef";
+}
+.icon-error-pu:before {
+  content: "\e6eb";
+}
+.icon-success-pu:before {
+  content: "\e6ec";
+}
+.icon-check-u:before {
+  content: "\54";
+}
+.icon-dollar:before {
+  content: "\61";
+}
+.icon-souperman:before {
+  content: "\79";
+}
+.icon-stopwatch:before {
+  content: "\e6e2";
+}
+.icon-equalizer:before {
+  content: "\e681";
+}
+.icon-search:before {
+  content: "\e900";
+}
+.icon-arrow-down4:before {
+  content: "\e66c";
+}
+.icon-arrow-up3:before {
+  content: "\e66d";
+}
+.icon-arrow-left5:before {
+  content: "\e66f";
+}
+.icon-arrow-down5:before {
+  content: "\e670";
+}
+.icon-arrow-up4:before {
+  content: "\e671";
+}
+.icon-arrow-right5:before {
+  content: "\e672";
+}
+.icon-lock2:before {
+  content: "\e68f";
+}
+.icon-star-big:before {
+  content: "\f005";
+}
+.icon-star-big-outline:before {
+  content: "\f006";
+}
+

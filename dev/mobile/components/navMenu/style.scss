@@ -1,0 +1,56 @@
+@import 'skin';
+.navigation-container-m{
+	float: left;
+	width: 100%;
+	position: fixed;
+	top: 49px;
+	left: 0;
+	padding: 0 48px 0 0;
+	background: $skin-palette-10;
+	margin: 0 0 1px;
+	z-index: 66;
+	box-shadow: 0 1px 0 darken( saturate( adjust-hue( $text-color, -15deg ), 13 ), 11 );
+}
+.navigation-container-m:after {
+	box-shadow: -1px 0 0 darken( saturate( adjust-hue( $text-color, -15deg ), 13 ), 11 ), -2px 0 2px 0px darken( saturate( adjust-hue( $text-color, -15deg ), 13 ), 11 );
+	content: "";
+	display: block;
+	position: absolute;
+	right: 46px;
+	top: 0;
+	height: 100%;
+	width: 2px;
+	z-index: 10;
+}
+//navigation
+.nav-bar-contain-m{
+	float: left;
+	width: 100%;
+	overflow-y: hidden;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+.nav-bar-contain-m::-webkit-scrollbar {display: none;width: 0;}
+.nav-bar-contain-m > ul{
+	padding: 0;
+}
+.nav-bar-contain-m > ul > li{
+	display: inline-block;
+	vertical-align: top;
+	font-size: 13px;
+	line-height: 48px;
+	text-transform: uppercase;
+	margin: 0 7px;
+}
+.nav-bar-contain-m > ul > li > a{
+	display: block;
+	text-decoration: none;
+	padding: 0 8px;
+	color: $text-palette-3;
+}
+.nav-bar-contain-m > ul > li > a.active{
+	box-shadow: 0 -2px 0 $hero-color inset;
+	pointer-events: none;
+	color: $text-palette-1;
+}
+//navigation END

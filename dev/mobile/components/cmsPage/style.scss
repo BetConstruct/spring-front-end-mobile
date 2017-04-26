@@ -1,0 +1,185 @@
+@import 'skin';
+.promo-info-container{
+  float: left;
+  width: 100%;
+  padding: 10px;
+  background: $skin-palette-9;
+}
+.promo-info-container > h1{
+  float: left;
+  width: 100%;
+  margin: 0 0 10px;
+  font-weight: normal;
+  text-align: center;
+  font-size: 16px;
+  line-height: 22px;
+  color: $text-palette-4;
+  text-transform: uppercase;
+}
+.page-no-found-t-m{
+  float: left;
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 14px;
+  line-height: 18px;
+  color: $text-palette-6;
+}
+.img-p-wrapper-m{
+  float: left;
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  background: $skin-palette-10;
+}
+.promo-text-box img{
+  max-width: 100%;
+  height: auto;
+}
+.img-p-wrapper-m > img{
+  margin: 0 auto;
+  display: block;
+  max-width: 100%;
+}
+.promo-text-box{
+  float: left;
+  width: 100%;
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: $text-palette-6;
+  text-align: justify;
+  word-break: break-word;
+}
+.promo-text-box strong{
+  font-weight: normal;
+  color: $text-palette-4;
+}
+.promo-text-box a{
+  color: $text-palette-4;
+}
+.promo-text-box table{
+  width: 100% !important;
+  border-spacing: 0 2px;
+  border-collapse: separate;
+}
+.promo-text-box table tr td{
+  padding: 12px;
+  vertical-align: top;
+  background: $skin-palette-10;
+  border-bottom: 2px solid transparent;
+}
+.promo-text-box table tr:nth-child(even) td{
+  background: lighten($skin-palette-10, 2);
+}
+// Promo END
+
+//help
+.page-container{
+  float: left;
+  width: 100%;
+}
+.help-root{
+  background: $skin-palette-10;
+}
+.page-section{
+  float: left;
+  width: 100%;
+  background: $skin-palette-9;
+  height: 38px;
+  padding: 0 38px 0 12px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  position: relative;
+  overflow: hidden;
+}
+.help-root > .page-container > .page-section{
+  background: $skin-palette-11;
+}
+.page-section:after{
+  position: absolute;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  font: 20px/40px icomoon;
+  text-align: center;
+  color: $text-palette-6;
+  content: "\E670";
+}
+.page-section.active:after{
+  content: "\E671";
+}
+.help-root > .page-section:after{
+  display: none;
+}
+.page-section > h2{
+  float: left;
+  width: 100%;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 38px;
+  color: $text-palette-6;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  transition: color 240ms;
+}
+.page-section.active > h2{color: $text-palette-3;}
+.help-root > .page-section > h2{
+  text-align: center;
+  text-transform: uppercase;
+  color: $text-palette-3;
+  padding-left: 26px;
+}
+.page-content{
+  float: left;
+  width: 100%;
+  padding: 0 10px;
+  font-size: 12px;
+  line-height: 16px;
+  color: $text-palette-6;
+  text-align: justify;
+  height: auto;
+  animation: closed-animate-menu 180ms ease;
+  max-height: 0;
+  overflow: hidden;
+  transition: padding 180ms;
+}
+.help-root > .page-container > .page-section.active + .page-content{
+  height: auto;
+  max-height: 99999px;
+  animation: open-animate-market 400ms ease-in-out;
+}
+.help-root > .page-container > .page-section + .page-content ~ .page-container{
+  height: auto;
+  animation: closed-animate-menu 180ms ease;
+  max-height: 0;
+  overflow: hidden;
+}
+.help-root > .page-container > .page-section.active + .page-content ~ .page-container{
+  height: auto;
+  max-height: 99999px;
+  animation: open-animate-market 400ms ease-in-out;
+}
+.page-content p{
+ margin: 0 0 5px;
+}
+.page-content a{
+  color: $text-palette-4;
+  text-decoration: none;
+}
+.page-content a > span{
+  color: $text-palette-4 !important;
+  text-decoration: underline;
+}
+.page-content strong{
+  font-size: 14px;
+  font-weight: normal;
+  color: $text-palette-4;
+}
+.help-root > .page-container > .page-container .page-section.active + .page-content{
+  height: auto;
+  max-height: 99999px;
+  animation: open-animate-market 400ms ease-in-out;
+  padding: 10px;
+}
+//help END

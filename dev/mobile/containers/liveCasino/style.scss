@@ -1,0 +1,183 @@
+@import 'skin';
+.livecasino-wrapper{
+  float: left;
+  width: 100%;
+  background: $skin-palette-12;
+}
+.l-casino-menu-view{
+  float: left;
+  width: 100%;
+  /*padding: 0 48px 0 0;*/
+  padding: 0;
+  margin: 0 0 4px;
+  position: relative;
+  overflow: hidden;
+}
+.l-casino-provider-nav{
+  float: left;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  text-align: center;
+  background: darken( desaturate( adjust-hue( $skin-palette-7, 5deg ), 2 ), 12 );
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  height: 40px;
+}
+.l-casino-provider-nav::-webkit-scrollbar{
+  display: none;
+  width: 0;
+}
+.l-casino-provider-nav > ul{
+  padding: 0;
+}
+.l-casino-provider-nav > ul > li{
+  display: inline-block;
+  vertical-align: top;
+  font-size: 14px;
+  line-height: 40px;
+  margin: 0 7px;
+  text-transform: uppercase;
+}
+.l-casino-provider-nav > ul > li > p{
+  text-decoration: none;
+  padding: 0 8px;
+  color: $text-palette-6;
+}
+.l-casino-provider-nav > ul > li > p.active{
+  box-shadow: 0 -2px 0 $hero-color inset;
+  color: $text-palette-1;
+}
+.help-view-b{
+  position: absolute;
+  right: 0;
+  z-index: 33;
+  width: 48px;
+  height: 40px;
+  background: darken( desaturate( adjust-hue( $skin-palette-7, 5deg ), 2 ), 12 );
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 0 6px 1px darken( saturate( adjust-hue( $text-color, -15deg ), 13 ), 11 );
+}
+.help-icon-view{
+  float: left;
+  width: 100%;
+  font: 16px/40px icomoon;
+  color: $text-palette-6;
+  text-align: center;
+}
+.help-view-b.active > .help-icon-view{
+  color: $text-palette-1;
+}
+.help-icon-view:before{
+  content: "\e6ef";
+}
+.l-casino-list-container{
+  float: left;
+  width: 100%;
+  padding: 10px 10px 0;
+}
+.provider-title{
+  float: left;
+  width: 100%;
+  position: relative;
+  margin: 0 0 10px;
+}
+.provider-title:before{
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin: -1px 0 0;
+  background: $skin-palette-10;
+}
+.provider-title > h2{
+  float: left;
+  width: 100%;
+  text-align: center;
+  color: $text-palette-6;
+  font-size: 14px;
+  line-height: 16px;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+.provider-title > h2 > span{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  background: darken( saturate( adjust-hue( $skin-color, -15deg ), 13 ), 11 );
+  padding: 0 15px;
+}
+.l-game-contain{
+  float: left;
+  width: 100%;
+  padding: 0 5px;
+}
+.single-l-game{
+  float: left;
+  width: 50%;
+  padding: 5px 5px 15px;
+}
+.mini-separator-l{
+  float: left;
+  width: 100%;
+  border: 1px solid darken( adjust-hue( $skin-palette-4, -2deg ), 48 );
+  background: $skin-palette-11;
+  margin: 0 0 10px;
+}
+.screen-view-l-game{
+  float: left;
+  width: 100%;
+  position: relative;
+  padding: 0 0 70%;
+  overflow: hidden;
+}
+.screen-view-l-game:before{
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -18px;
+  margin-top: -18px;
+  font: 36px/36px icomoon;
+  text-align: center;
+  z-index: 11;
+  color: $text-palette-5;
+  content: "\E91A";
+}
+.screen-view-l-game > img{
+  display: block;
+  width: 100%;
+  position: absolute;
+  z-index: 44;
+}
+.title-single-game{
+  float: left;
+  width: 100%;
+  color: $text-palette-1;
+  font-size: 14px;
+  line-height: 31px;
+  text-transform: uppercase;
+  height: 30px;
+  padding: 0 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.l-game-contain.EZG .title-single-game{
+  height: 42px;
+  font-size: 12px;
+  line-height: 18px;
+  white-space: normal;
+  padding-top: 4px;
+  text-transform: none;
+}
+.l-game-contain.EZG .screen-view-l-game{
+  padding-bottom: 99%;
+}
+@media screen and (min-width: 600px){
+  .single-l-game{
+    width: 25%;
+  }
+}

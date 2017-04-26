@@ -1,0 +1,76 @@
+@import 'skin';
+body{
+  width: 100%;
+  height: calc(100% + 1px);
+  font-family: $font-f;
+  font-size: 14px;
+  line-height: 16px;
+  background: darken( saturate( adjust-hue( $skin-palette-11, -16deg ), 10 ), 8 );
+  color: $text-palette-1;
+  overflow-y: scroll;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+}
+.popup-opened-m{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+#root{
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+.wrapper-m{
+  float: left;
+  width: 100%;
+  height: 100%;
+  display: table;
+  table-layout: fixed;
+  padding: 98px 0 0;
+}
+.full-container-m{
+  display: table-row;
+  height: 100%;
+}
+.import-view-container{
+  float: left;
+  width: 100%;
+}
+.please-login{
+  float: left;
+  width: 100%;
+  font-size: 18px;
+  line-height: 22px;
+  padding: 50px 10px;
+  text-align: center;
+  color: $text-palette-6;
+}
+//global hide
+.hide{display: none !important;}
+//global hide END
+
+//Content*
+.content-m{
+  float: left;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+//Content END
+.loading{
+  //filter: grayscale(62%);
+}
+//tablet view
+@media screen and (min-width: 500px) {
+  .game-date-view-m > ul {
+    width: calc(100% - 58px);
+  }
+  .game-information-m > ul {
+    width: 100%;
+  }
+}
+//tablet view END
+@import 'custom';

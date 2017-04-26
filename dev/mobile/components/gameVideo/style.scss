@@ -1,0 +1,12 @@
+@import 'skin';
+.game-video p{
+  padding: 15px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 16px;
+  color: $text-palette-6;
+}
+video{
+  float: left;
+  width: 100%;
+}

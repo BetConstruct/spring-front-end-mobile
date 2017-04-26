@@ -1,0 +1,144 @@
+@import 'skin';
+//Date picker
+.date-picker-wrapper{
+  float: left;
+  width: 100%;
+  margin: 0 0 10px;
+}
+.date-picker-wrapper > .react-datepicker__input-container{
+  float: left;
+  width: 100%;
+  position: relative;
+}
+.date-picker-wrapper > .react-datepicker__input-container:before{
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 25px;
+  height: 38px;
+  font: 16px/38px icomoon;
+  content: "\e918";
+  color: lighten( desaturate( adjust-hue( $text-color, -2deg ), 4 ), 13 );
+  z-index: 10;
+}
+.date-picker-wrapper > .react-datepicker__input-container > input[type=text]{
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid $text-palette-6;
+  background: none;
+  height: 38px;
+  padding: 6px 10px;
+  font-family: $font-f;
+  font-size: 14px;
+  color: $text-palette-6;
+  transition: border 240ms;
+  border-radius: inherit;
+  box-shadow: none;
+  position: relative;
+  z-index: 20;
+}
+.date-picker-wrapper > .react-datepicker__input-container > input[type=text]:focus {
+  border: 1px solid $hero-color;
+}
+.date-picker-wrapper > .react-datepicker__input-container > input::-webkit-input-placeholder{
+  opacity: 1;
+  color: $text-palette-6;
+}
+.date-picker-wrapper > .react-datepicker__input-container > input::-moz-placeholder{
+  opacity: 1;
+  color: $text-palette-6;
+}
+.date-picker-wrapper > .react-datepicker__input-container > input:-ms-input-placeholder{
+  opacity: 1;
+  color: $text-palette-6;
+}
+.date-picker-wrapper > .react-datepicker__input-container > input:-moz-placeholder{
+  opacity: 1;
+  color: $text-palette-6;
+}
+.react-datepicker{
+  font-family: $font-f !important;
+  background-color: $skin-palette-10 !important;
+  border: 1px solid darken( saturate( adjust-hue( $skin-color, -15deg ), 13 ), 11 ) !important;
+  color: $text-palette-2 !important;
+}
+.react-datepicker__header{
+  background-color: $skin-palette-11 !important;
+  border-bottom: 1px solid darken( saturate( adjust-hue( $skin-color, -15deg ), 13 ), 11 ) !important;
+}
+.react-datepicker__day-name, .react-datepicker__day{
+  color: $text-palette-6 !important;
+}
+.react-datepicker__current-month{
+  color: $text-palette-2 !important;
+  font-weight: normal !important;
+}
+.react-datepicker__tether-element-attached-bottom .react-datepicker__triangle,
+.react-datepicker__year-read-view--down-arrow,
+.react-datepicker__tether-element-attached-bottom .react-datepicker__triangle::before,
+.react-datepicker__year-read-view--down-arrow::before{
+  border-top-color: #darken( saturate( adjust-hue( $skin-color, -15deg ), 13 ), 11 ) !important;
+}
+.react-datepicker__tether-element-attached-top .react-datepicker__triangle,
+.react-datepicker__tether-element-attached-top .react-datepicker__triangle::before {
+  border-top: none;
+  border-bottom-color: darken( saturate( adjust-hue( $skin-color, -15deg ), 13 ), 11 ) !important;
+}
+.react-datepicker__navigation--previous{
+  border-right-color: $skin-palette-6 !important;
+}
+.react-datepicker__navigation--next{
+  border-left-color: $skin-palette-6 !important;
+}
+.react-datepicker__year-dropdown-container--select,
+.react-datepicker__month-dropdown-container--select{
+  position: relative;
+}
+.react-datepicker__year-dropdown-container--select > select, .react-datepicker__month-dropdown-container--select > select{
+  float: left;
+  width: auto;
+  position: relative;
+  z-index: 55;
+  background: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid $skin-palette-6;
+  height: 32px;
+  box-sizing: border-box;
+  color: $text-palette-5;
+  font-family: $font-f;
+  font-size: 12px;
+  padding-left: 7px;
+  padding-right: 36px;
+  text-transform: uppercase;
+  border-radius: inherit;
+}
+.react-datepicker__year-dropdown-container--select:before,
+.react-datepicker__month-dropdown-container--select:before{
+  display: block;
+  position: absolute;
+  z-index: 10;
+  font: 14px/18px icomoon;
+  content: "\E670";
+  right: 0;
+  top: 7px;
+  width: 26px;
+  height: 18px;
+  border-left: 1px solid lighten( desaturate( adjust-hue( $skin-color, -6deg ), 3 ), 4 );
+  text-align: center;
+  color: $text-palette-6;
+}
+.react-datepicker__header__dropdown--select{
+  margin-top: -6px !important;
+}
+//.react-datepicker__tether-element{
+  //position: fixed !important;
+  //transform: translateX(0px) translateY(10px) translateZ(0px) !important;
+  //top: 5% !important;
+  //left: 50% !important;
+  //margin-left: -120px;
+  //margin-top: 0 !important;
+//}
+//Date picker END

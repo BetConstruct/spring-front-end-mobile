@@ -1,0 +1,339 @@
+@import 'skin';
+.right-nav-container-m{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 150%;
+  padding: 0 0 0 56px;
+  z-index: 9999;
+  transform: translate3d(0, 0, 0);
+  overflow: hidden;
+  transition: left 300ms;
+  -webkit-overflow-scrolling: touch;
+}
+.left-trans-box-m{
+  position: absolute;
+  left: 0;
+  width: 56px;
+  height: 100%;
+  top: 0;
+  z-index: 11;
+}
+.right-nav-container-m:before{
+  content: "";
+  display: block;
+  left: 0;
+  top: 0;
+  position: absolute;
+  height: 200%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0);
+  transition: background 300ms;
+}
+.right-nav-container-m.open:before{
+  transition-delay: 200ms;
+  background: rgba(0, 0, 0, 0.7);
+}
+.right-nav-container-m.open > .closed-nav-icon{
+  transition-delay: 300ms;
+  opacity: 1;
+}
+.right-nav-container-m.open{
+  left: 0;
+}
+.right-nav-container-m > .closed-nav-icon{
+  right: auto;
+  left: 8px;
+}
+.right-navigate-list-view-m{
+  float: left;
+  width: 100%;
+  margin: 0;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.right-menu-full-box-m{
+  float: left;
+  width: 100%;
+  background: darken( saturate( adjust-hue( $skin-palette-7, -9deg ), 7 ), 25 );
+  height: 100%;
+  position: relative;
+}
+
+//sign-in registration
+.sign-in-reg-buttons-m{
+  float: left;
+  width: 100%;
+  padding: 15px 25px;
+}
+.separator-box-buttons-m{
+  float: left;
+  width: 100%;
+  margin: 0 0 15px;
+}
+.separator-box-buttons-m > label{
+  float: left;
+  width: 100%;
+  text-align: center;
+  color: $text-palette-3;
+  font-size: 14px;
+  line-height: 16px;
+  margin: 0 0 7px;
+}
+.button-view-normal-m{
+  float: left;
+  width: 100%;
+  background: $button-bg;
+  border: none;
+  box-sizing: border-box;
+  padding: 0 20px;
+  text-align: center;
+  height: 38px;
+  font-family: $font-f;
+  font-size: 14px;
+  line-height: 38px;
+  color: set-color($button-bg);
+  text-transform: uppercase;
+  box-shadow: 0 0 0 1px $button-bg inset;
+}
+.button-view-normal-m:disabled{
+  background: $skin-palette-6;
+  box-shadow: 0 0 0 1px $text-palette-6 inset;
+  color: set-color($skin-palette-6);
+}
+.button-view-normal-m.color-progress{
+  background: #c3953c;
+  box-shadow: 0 0 0 1px #c3953c inset;
+}
+.button-view-normal-m.trans-m{
+  background: none;
+  color: $text-palette-5;
+}
+//sign-in registration END
+
+//information menu
+.info-menu-contain-m{
+  float: left;
+  width: 100%;
+  background: darken( saturate( adjust-hue( $skin-palette-7, 3deg ), 8 ), 21 );
+  padding: 0;
+}
+.info-menu-contain-m > ul{
+  float: left;
+  width: 100%;
+  padding: 5px 0;
+}
+.info-menu-contain-m > ul > li{
+  float: left;
+  width: 100%;
+}
+.info-menu-contain-m > ul > li > a{
+  float: left;
+  width: 100%;
+  display: block;
+  padding: 10px;
+  font-size: 13px;
+  line-height: 16px;
+  color: $text-palette-6;
+  text-decoration: none;
+}
+//information menu END
+
+//universal menu
+.universal-menu-wrapper{
+  float: left;
+  width: 100%;
+}
+.single-universal-menu-contain{
+  float: left;
+  width: 100%;
+}
+.promotions,
+.userMenu,
+.profile,
+.history,
+.messages{
+  float: left;
+  width: 100%;
+}
+.title-row-u-m{
+  float: left;
+  width: 100%;
+  position: relative;
+  height: 38px;
+  background: $skin-palette-9;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  padding: 0 38px;
+}
+.title-row-u-m.active{background: $skin-palette-11;}
+.icon-view-u-m{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 38px;
+  height: 100%;
+  font: 16px/38px icomoon;
+  color: $text-palette-3;
+  text-align: center;
+}
+.balance-view-m:before{content: "\e909";}
+.bonuses-view-m:before{content: "\61";}
+.profile-view-m:before{content: "\e905";}
+.history-view-m:before{content: "\e90f";}
+.messages-view-m:before{content: "\e904";}
+.promo-view-m:before{content: "\e90a";}
+.arrow-u-m{
+  position: absolute;
+  display: block;
+  font-style: normal;
+  right: 0;
+  top: 0;
+  width: 38px;
+  height: 100%;
+  font: 18px/38px icomoon;
+  color: $text-palette-6;
+  text-align: center;
+}
+.arrow-u-m:before{content: "\e670";}
+.title-row-u-m.active > .arrow-u-m:before{content: "\e671";}
+.title-row-u-m > p{
+  float: left;
+  width: 100%;
+  font-size: 13px;
+  line-height: 38px;
+  color: $text-palette-3;
+  white-space: nowrap;
+}
+.title-row-u-m.active > .icon-view-u-m,
+.title-row-u-m.active > p{
+  color: $text-palette-3;
+}
+.title-row-u-m > p > span{
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  padding: 0 28px 0 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
+.title-row-u-m > p > span > i{
+  font-style: normal;
+  display: block;
+  position: absolute;
+  top: 8px;
+  right: 0;
+  background: $hero-color;
+  color: set-color($hero-color);
+  font-size: 10px;
+  line-height: 21px;
+  height: 21px;
+  padding: 0 4px;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 21px;
+}
+.open-view-single-u-m{
+  float: left;
+  width: 100%;
+  margin: 1px 0 0;
+  max-height: 0;
+  height: auto;
+  overflow: hidden;
+  animation: closed-animate-u-menu 180ms ease;
+}
+.title-row-u-m.active + .open-view-single-u-m{
+  max-height: 9999px;
+  animation: open-animate-u-menu 400ms ease-in-out;
+}
+@keyframes open-animate-u-menu{
+  0% {max-height: 0;}
+  100% {max-height: 500px;}
+}
+@keyframes closed-animate-u-menu{
+  0% {max-height: 500px;}
+  100% {max-height: 0;}
+}
+.open-view-single-u-m > ul{
+  float: left;
+  width: 100%;
+  background: darken( saturate( adjust-hue( $skin-palette-7, -4deg ), 2 ), 15 );
+  border-bottom: 1px solid darken( saturate( adjust-hue( $text-color, -12deg ), 3 ), 8 );
+}
+.open-view-single-u-m > ul > li{
+  float: left;
+  width: 100%;
+}
+.open-view-single-u-m > ul > li > a{
+  float: left;
+  width: 100%;
+  display: block;
+  padding: 0 10px;
+  text-decoration: none;
+  color: $text-palette-5;
+  font-size: 13px;
+}
+.name-sub-u-m-title{
+  display: block;
+  float: left;
+  width: 100%;
+  height: 37px;
+  border-bottom: 1px solid $skin-palette-11;
+  color: $text-palette-5;
+  font-size: 13px;
+  line-height: 36px;
+  position: relative;
+  padding: 0 0 0 26px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.open-view-single-u-m > ul > li:last-child > a > .name-sub-u-m-title{
+  border-bottom: none;
+}
+.name-sub-u-m-title > .arrow-u-m{
+  right: auto;
+  left: 0;
+  line-height: 36px;
+  color: $text-palette-5;
+  width: 20px;
+}
+.name-sub-u-m-title > .arrow-u-m:before{
+  content: "\E672";
+}
+.log-out-b-m{
+  float: left;
+  width: 100%;
+}
+.log-out-b-m > button{
+  float: left;
+  width: 100%;
+  height: 38px;
+  border: none;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  background: $skin-palette-9;
+  font-size: 13px;
+  line-height: 38px;
+  color: lighten( desaturate( adjust-hue( $text-color, 2deg ), 2 ), 50 );
+  box-sizing: border-box;
+  padding: 0 10px 0 38px;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+}
+.log-out-b-m > button:before{
+  font: 16px/38px icomoon;
+  content: "\e913";
+  left: 0;
+  top: 0;
+  text-align: center;
+  position: absolute;
+  width: 38px;
+  height: 100%;
+  display: block;
+}
+//universal menu END

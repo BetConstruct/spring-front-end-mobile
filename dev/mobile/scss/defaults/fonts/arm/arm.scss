@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'Roboto';
+  font-weight: normal;
+  font-style: normal;
+  src: local('arnamu'),
+  url('../../../../fonts/arm/arnamu.woff2') format('woff2'),
+  url('../../../../fonts/arm/arnamu.woff') format('woff'),
+  url('../../../../fonts/arm/arnamu.ttf') format('truetype'),
+  url('../../../../fonts/arm/arnamu.eot'),
+  url('../../../../fonts/arm/arnamu.eot') format('embedded-opentype'),
+  url('../../../../fonts/arm/arnamu.svg') format('svg');
+  unicode-range: U+0530-058F;
+}
+@font-face {
+  font-family: 'Roboto';
+  font-weight: bold;
+  font-style: normal;
+  src: local('arnamu'),
+  url('../../../../fonts/arm/arnamu_bold.woff2') format('woff2'),
+  url('../../../../fonts/arm/arnamu_bold.woff') format('woff'),
+  url('../../../../fonts/arm/arnamu_bold.ttf') format('truetype'),
+  url('../../../../fonts/arm/arnamu_bold.eot'),
+  url('../../../../fonts/arm/arnamu_bold.eot') format('embedded-opentype'),
+  url('../../../../fonts/arm/arnamu_bold.svg') format('svg');
+  unicode-range: U+0530-058F;
+}
