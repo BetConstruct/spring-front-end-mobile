@@ -1,0 +1,10 @@
+node_modules
+src/js
+src/fonts
+src/images
+src/languages
+src/app.css
+src/app.css.map
+src/favicon.ico
+src/conf.json
+src/index.html
