@@ -11,18 +11,9 @@
     "build-mobile": "cross-env NODE_ENV='production' webpack --config=webpack.mobile.config.js",
     "build-mobile-dev": "cross-env NODE_ENV='development' webpack --config=webpack.mobile.config.js",
     "build-all-mobile": "npm run build-vendor && npm run build-mobile",
-    "build-all-mobile-dev": "npm run build-vendor-dev && npm run build-mobile-dev",
-    "deploytest": "npm run build-vendor && npm run build-mobile && cross-env NODE_ENV='development' node scripts/deploy/upload.js mobile",
-    "deploy-mobile": "npm run build-all-mobile && cross-env NODE_ENV='production' node scripts/deploy/upload.js mobile",
-    "deploy-mobile-without-build": "cross-env NODE_ENV='production' node scripts/deploy/upload.js mobile",
-    "deploy-mobile-fast": "npm run build-mobile && cross-env NODE_ENV='production' node scripts/deploy/upload.js mobile",
-    "deploy-translations-mobile": "npm run download-translations-mobile && cross-env NODE_ENV='production' node scripts/deploy/upload.js mobile translations",
-    "deploy-translations-mobile-dev": "npm run download-translations-mobile && cross-env NODE_ENV='development' node scripts/deploy/upload.js mobile translations",
+    "build-all-mobile-dev": "npm run build-vendor-dev && npm run build-mobile",
     "download-translations-mobile": "node scripts/trans/downloadTrans.js mobile",
-    "extract-translations": "node scripts/trans/extractTranslations.js > eng.po",
-    "create-skin": "node scripts/create/create.js",
-    "create-skin-and-deploy": "node scripts/automation/createNewSkin/index.js",
-    "create-skin-wizard": "node scripts/create/create.js interactive"
+    "extract-translations": "node scripts/trans/extractTranslations.js > eng.po"
   },
   "license": "ISC",
   "dependencies": {
