@@ -11,23 +11,27 @@
   background:  $mobile-app;
   display: block;
 }
-
+.casino .phone-i-view{
+  background:  $mobile-app-casino;
+}
 .info-new-version-b{
   float: left;
   bottom: 0;
   width: 100%;
   position: relative;
 }
-.info-new-version-b:before{
+.info-new-version-b:before,
+.download-links:before{
   content: "";
   display: block;
   position: absolute;
   left: -15px;
   top: 0;
   width: 100%;
+  height: 100%;
   box-sizing: content-box;
   padding: 0 15px 15px;
-  height: 100%;
+ // height: 100%;
   z-index: 10;
   background: $skin-palette-11;
   opacity: 0.8;
@@ -39,9 +43,9 @@
   position: relative;
   z-index: 22;
   font-size: 14px;
-  padding: 5px 10px;
+  padding: 40px 10px 10px 10px;
   color: $text-palette-1;
-  font-weight: bold;
+ // font-weight: bold;
 }
 .download-links {
   float: left;
@@ -52,21 +56,32 @@
 .download-links >button{
   z-index: 22;
   position: relative;
+  font-size: 16px;
 }
-.download-links >button:first-child{
+.download-links > button:first-child{
   margin: 0 0 10px 0;
 }
-.download-links:before{
-  content: '';
-  display: block;
-  position: absolute;
-  left: -15px;
-  top: 15px;
-  z-index: 10;
-  background: $skin-palette-11;
-  opacity: 0.8;
-  height: 100%;
-  width: 100%;
-  box-sizing: content-box;
+.download-links > button:last-child{
+  box-shadow: none;
+  font-size: 13px;
+}
+//.download-links:before{
+//  content: '';
+//  display: block;
+//  position: absolute;
+//  left: -15px;
+//  top: 15px;
+//  z-index: 10;
+//  background: $skin-palette-11;
+//  opacity: 0.8;
+//  height: 100%;
+//  width: 100%;
+//  box-sizing: content-box;
+//  padding: 0 15px 15px;
+//}
+//.info-new-version-b:before {
+//  height: 100vh;
+//}
+.popup-message {
   padding: 0 15px 15px;
 }

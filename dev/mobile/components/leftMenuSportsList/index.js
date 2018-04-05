@@ -4,6 +4,7 @@ import {SwarmDataMixin} from '../../../mixins/swarmDataMixin';
 import {UIMixin} from '../../../mixins/uiMixin';
 import {GetLeftMenuData} from '../../../helpers/selectors';
 import {SCROLL_TO_SPORT_ALIAS} from '../../../actions/actionTypes';
+import PropTypes from 'prop-types';
 
 class LeftMenuSportsList extends React.PureComponent {
 
@@ -27,11 +28,11 @@ class LeftMenuSportsList extends React.PureComponent {
 }
 
 LeftMenuSportsList.propTypes = {
-    isInLive: React.PropTypes.bool
+    isInLive: PropTypes.bool
 };
 
 LeftMenuSportsList.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
 };
 
 function mapStateToProps (state) {

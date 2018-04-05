@@ -1,12 +1,17 @@
+/**
+ * @description  Start loading bet shops
+ * @param {Boolean} payload
+ * @returns {Object} new State
+ */
 import Zergling from '../helpers/zergling';
 import {actionTypes as REDUX_FORM_ACTION_TYPES} from "redux-form";
+import {t} from "../helpers/translator";
 import {
     BETSHOP_LOADING_DONE,
     BETSHOP_LOADING_START,
     BETSHOP_LOADING_FAILURE,
     OPEN_PAYMENT_METHOD_FORM,
     CLOSE_PAYMENT_METHOD_FORM,
-    FILTER_PAYMENTS_FOR_USER_CURRENCY,
     SET_EXTERNAL_FORM_DATA,
     SET_METHOD_IFRAME_DATA,
     UNSET_METHOD_IFRAME_DATA,
@@ -17,13 +22,18 @@ import {
     FILTERS_LOADING_START,
     FILTERS_LOADING_DONE,
     FILTERS_LOADING_FAILURE,
-    UNSET_EXTERNAL_FORM_DATA} from './actionTypes/';
+    START_POSTFIX,
+    DONE_POSTFIX,
+    FAIL_POSTFIX,
+    UNSET_EXTERNAL_FORM_DATA,
+    WITHDRAWALS_LOADING_START,
+    WITHDRAWALS_LOADING_DONE,
+    WITHDRAWALS_LOADING_FAILURE,
+    GET_BUDDY_TO_BUDDY_FRIEND_LIST
+} from './actionTypes/';
+import Config from "../config/main";
+import {OpenPopup} from "./ui";
 
-/**
- * @description  Start loading bet shops
- * @param {Boolean} payload
- * @returns {Object} new State
- */
 export const betShopsLoadingStarted = (payload) => {
     return {
         type: BETSHOP_LOADING_START,
@@ -128,12 +138,21 @@ export const SetDepositNextStep = (payload) => {
 
 /**
  * @description Unset deposit next step data
- * @param {Object} payload
  * @returns {Object} New state
  */
-export const UnsetDepositNextStep = (payload) => {
+export const UnsetDepositNextStep = () => {
     return {
-        type: UNSET_DEPOSIT_NEXT_STEP,
+        type: UNSET_DEPOSIT_NEXT_STEP
+    };
+};
+
+/**
+ * @description Unset deposit next step data
+ * @returns {Object} New state
+ */
+export const GetBuddyToBuddyFriendList = (payload) => {
+    return {
+        type: GET_BUDDY_TO_BUDDY_FRIEND_LIST,
         payload
     };
 };
@@ -191,7 +210,7 @@ export const UnsetMethodConfirmAction = () => {
 
 /**
  * @description Unset method external form data
-  * @returns {Object} New state
+ * @returns {Object} New state
  */
 export const UnsetMethodExternalFormData = () => {
     return {
@@ -293,3 +312,99 @@ export function LoadFilters () {
             });
     };
 }
+
+export const makeEuroPaymentAction = (type, key, payload) => ({type: `${type}${START_POSTFIX}`, key, payload});
+
+export function generateMessagesForEuroPayments ({key, requestData, command, type = "ACTIVE_MESSAGES_FOR_PAYMENT_METHOD_LOADING", successCallback, parseData = null}) {
+    return (dispatch) => {
+        dispatch(makeEuroPaymentAction(`${type}${START_POSTFIX}`, key));
+        Zergling
+            .get(requestData, 'deposit')
+            .then(
+                (response) => {
+                    let data = parseData ? parseData(response) : response;
+                    if (response && response.result !== undefined && response.result === 0 && response.details && response.details.fields && !(parseData && data.status === 'error' && data.msg)) {
+                        successCallback
+                            ? successCallback(data, command, () => dispatch({
+                                type: `${type}${DONE_POSTFIX}`,
+                                key,
+                                payload: data
+                            }))
+                            : dispatch(makeEuroPaymentAction(`${type}${DONE_POSTFIX}`, key, data));
+                    } else {
+                        successCallback
+                            ? successCallback(data, command, () => dispatch({
+                                type: `${type}${DONE_POSTFIX}`,
+                                key,
+                                payload: data
+                            }))
+                            : dispatch(makeEuroPaymentAction(`${type}${DONE_POSTFIX}`, key, data));
+                    }
+                },
+                (response) => {
+                    dispatch(makeEuroPaymentAction(`${type}${FAIL_POSTFIX}`, key, parseData ? parseData(response, command) : response));
+                }
+            )
+            .catch((data) => {
+                dispatch(makeEuroPaymentAction(`${type}${FAIL_POSTFIX}`, data));
+            });
+    };
+}
+
+export const withdrawalsLoadingStart = () => ({
+    type: WITHDRAWALS_LOADING_START
+});
+
+export const withdrawalsLoadingDone = (payload) => ({
+    type: WITHDRAWALS_LOADING_DONE,
+    payload
+});
+
+export const withdrawalsLoadingFail = (payload) => ({
+    type: WITHDRAWALS_LOADING_FAILURE,
+    payload
+});
+
+export function loadWithdrawals () {
+    return (dispatch) => {
+        dispatch(withdrawalsLoadingStart());
+        Zergling
+            .get({}, 'get_withdrawals').then(
+                (response) => {
+                    if (response && response.result_status === "OK") {
+                        if (response.withdrawal_requests && response.withdrawal_requests.request) {
+                            let withdrawHistory;
+                            if (!Config.main.GmsPlatform && !response.withdrawal_requests.request[0]) {
+                                response.withdrawal_requests.request = [response.withdrawal_requests.request];
+                            }
+                            withdrawHistory = response.withdrawal_requests.request.reverse();
+                            dispatch(withdrawalsLoadingDone(withdrawHistory));
+                            return;
+                        }
+                    }
+                    withdrawalsLoadingFail(response);
+                },
+                (response) => {
+                    withdrawalsLoadingFail(response);
+                }
+            );
+    };
+}
+
+export const cancelWithdraw = (request, successHandler, errorHandler, resolve) => {
+    return (dispatch) => {
+        Zergling.get(request, 'withdraw_cancel').then(function (response) {
+            if (response.result === 2418) {
+                return errorHandler(resolve());
+            }
+            successHandler(resolve());
+        }, function () {
+            resolve();
+            dispatch(OpenPopup("message", {
+                title: t("Error"),
+                type: "error",
+                body: t("Sorry something went wrong please try again later")
+            }));
+        });
+    };
+};

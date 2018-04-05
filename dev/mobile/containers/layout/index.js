@@ -21,7 +21,7 @@ const Layout = React.createClass({
             dispatch(
                 OpenPopup("templateAsBody", {
                     title: t("App is available"),
-                    type: "info",
+                    type: "",
                     body: AndroidAppTemplate(this),
                     additionalCloseCallback: () => {
                         dispatch(HideAndroidDownloadPopup());

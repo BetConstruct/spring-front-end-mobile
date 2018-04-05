@@ -1,9 +1,10 @@
-import {Component, PropTypes} from "react";
+import {Component} from "react";
 import {connect} from "react-redux";
 import formsNames from "../../../constants/formsNames";
 import {reduxForm} from 'redux-form';
 import {predefinedDateRanges} from '../../../constants/balanceHistory';
 import {SetBetHistoryFilters} from "../../../actions/betHistory";
+import PropTypes from 'prop-types';
 
 const mapStateToProps = (state) => {
     return {

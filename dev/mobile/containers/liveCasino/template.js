@@ -39,11 +39,11 @@ module.exports = function LiveCasinoTemplate () {
                             if (studiIds.length) {
                                 return studiIds.map((id) => {
                                     let group = self.props.casino.liveCasino.providers[selectedProvider].filter((game) => {
-                                        let market = game.markets;
-                                        if (typeof market !== 'object') {
+                                        let market = game && game.markets;
+                                        if (typeof market !== 'object' && market !== undefined) {
                                             market = JSON.parse(market);
                                         }
-                                        return market.available.indexOf(id) !== -1;
+                                        return (market && market.available && market.available.indexOf(id) !== -1) ? market.available.indexOf(id) !== -1 : {};
                                     }).map((game) => {
                                         return (
                                             <div key={game.id || game.front_game_id} className="single-l-game">

@@ -95,7 +95,7 @@ export var SwarmDataMixin = ComposedComponent => class extends React.Component {
                 function (response) {
                     console.debug("swarm response:", response);
                     this.props.dispatch(SwarmLoadingDone(this.swarmDataKey)); // eslint-disable-line react/prop-types
-                    this.props.dispatch(SwarmReceiveData(response.data, this.swarmDataKey)); // eslint-disable-line react/prop-types
+                    this.props.dispatch(SwarmReceiveData(this.takeFromResponse ? response[this.takeFromResponse] : response.data, this.swarmDataKey)); // eslint-disable-line react/prop-types
                 }.bind(this)
             ).catch(
                 function (ex) {

@@ -6,23 +6,24 @@ import {t} from "../../../helpers/translator";
 
 module.exports = function gameInfoTemplate () {
     console.log("game info", this.props.game);
+    let conf = Config.main,
+        gameTime = conf.changeTimeZoneByUTC ? moment.unix(this.props.game.start_ts).utcOffset(conf.changeTimeZoneByUTC).format(conf.timeFormat) : moment.unix(this.props.game.start_ts).format(conf.timeFormat);
     return (
         <div className="game-view-wrapper">
-
             {/*Pre match Game*/}
             <div className={"game-view-title-contain-m" + (this.props.game.team2_name ? "" : " single-team")}>
                 <div className="game-date-row-m">
                     <p>{moment.unix(this.props.game.start_ts).format(Config.main.dateFormat)}</p>
-                    {this.props.game.is_stat_available
+                    {Config.main.showGameStatistics && this.props.game.is_stat_available
                         ? <div className="statistic-icon-view-m">
                             <a href={getStatsLink(this.props.game, this.props.language)} target="_blank">
                                 <span className="statistic-icon-m-v"/>
                             </a>
                         </div> : null}
-                    <span>{moment.unix(this.props.game.start_ts).format(Config.main.timeFormat)}</span>
+                    <span>{gameTime}</span>
                 </div>
                 <div className="teams-name-shirt-color">
-                     <ul>
+                    <ul>
                         <li className="team-names-b-m">
                             <p>{this.props.game.team1_name}</p>
                             {this.props.game.info.shirt1_color && this.props.game.show_type !== "OUTRIGHT" ? <div className="shirt-box-m"></div> : null }

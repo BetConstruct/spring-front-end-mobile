@@ -3,12 +3,23 @@ import {connect} from 'react-redux';
 import {reduxForm} from 'redux-form';
 import Validate from "../../../helpers/validate";
 import formsNames from '../../../constants/formsNames';
-import {DoPaymentRequest, SetMethodExternalFormData, SetMethodIframeData, SetMethodConfirmAction, SetDepositNextStep} from '../../../actions/payments';
-import {OpenPopup} from "../../../actions/ui";
+import {
+    DoPaymentRequest,
+    SetMethodExternalFormData,
+    SetMethodIframeData,
+    SetMethodConfirmAction,
+    SetDepositNextStep
+} from '../../../actions/payments';
+import {OpenPopup, ClosePopup} from "../../../actions/ui";
+import {updateUserProfile} from "../../../actions/user";
 import {t} from "../../../helpers/translator";
 import PaymentsFormMixin from "../../../mixins/paymentsFormMixin";
 import {PaymentsMixin} from "../../../mixins/paymentsMixin";
 import {GetPaymentsData} from "../../../helpers/selectors";
+import Config from "../../../config/main";
+import Zergling from '../../../helpers/zergling';
+import PropTypes from 'prop-types';
+import moment from "moment";
 
 /**
  * @name validate
@@ -59,15 +70,15 @@ const validate = (values, state) => {
 const DepositForm = React.createClass({
 
     propTypes: {
-        payments: React.PropTypes.object,
-        routeParams: React.PropTypes.object,
-        checkUserAuthontication: React.PropTypes.func,
-        selectMethod: React.PropTypes.func,
-        uiState: React.PropTypes.object
+        payments: PropTypes.object,
+        routeParams: PropTypes.object,
+        checkUserAuthentication: PropTypes.func,
+        selectMethod: PropTypes.func,
+        uiState: PropTypes.object
     },
 
     contextTypes: {
-        router: React.PropTypes.object.isRequired
+        router: PropTypes.object.isRequired
     },
 
     componentWillMount () {
@@ -78,7 +89,10 @@ const DepositForm = React.createClass({
         if (this.props.payments.method && this.props.payments.method.name !== nextProps.routeParams.method) {
             this.props.selectMethod(nextProps.routeParams.method, nextProps.payments.availableMethods, this.props.dispatch, this.context.router, this.props.payments.data);
         }
-        this.props.checkUserAuthontication(this.context.router);
+        this.props.checkUserAuthentication(this.context.router);
+        if (nextProps.submitSucceeded && nextProps.payments.nextStep) {
+            this.props.enableNextStep();
+        }
     },
 
     render () {
@@ -89,38 +103,105 @@ const DepositForm = React.createClass({
     }
 });
 
+function firstElement (list) {
+    if (!list || (list && list.constructor !== Object && list.constructor !== Array)) {
+        return null;
+    }
+    if (list.constructor === Array) {
+        return list[0];
+    } else if (list.constructor === Object && Object.keys(list).length) {
+        return list[Object.keys(list)[0]];
+    }
+}
+
 const mapStateToProps = (state, ownParams) => {
     let payments = GetPaymentsData(state),
+        initialValues;
+
+    if (state.form[formsNames.depositForm] && !state.form[formsNames.depositForm].initial && !state.payments.nextStep) {
         initialValues = ((payments.method || {}).depositFormFields || []).reduce((collected, current) => {
-            if (current.type === 'select') {
-                collected[current.name] = current.options && current.options[0] ? current.options[0].value || "" : "";
-            } else if (current.name !== "amount") {
-                collected[current.name] = current.defaultValue || "";
-            } else if (current.type === "dateMask") {
-                collected[current.name] = "1900-01-01";
+
+            switch (current.type) {
+                case "select":
+                    collected[current.name] = current.options && current.options[0] ? current.options[0].value || "" : "";
+                    break;
+                case "amount":
+                    collected[current.name] = current.defaultValue || 0;
+                    break;
+                case "number":
+                    collected[current.name] = current.defaultValue || 0;
+                    break;
+                case "month":
+                    collected[current.name] = 1;
+                    break;
+                case "year":
+                    collected[current.name] = new Date().getFullYear();
+                    break;
+                case "dateMask":
+                    collected[current.name] = moment().format("YYYY-MM-DD");
+                    break;
+                case "email":
+                    collected[current.name] = "";
+                    break;
+                default:
+                    collected[current.name] = current.defaultValue || "";
+                    break;
             }
             return collected;
         }, {});
-    initialValues.amount = 0;
+    } else if (state.form[formsNames.depositForm] && state.form[formsNames.depositForm].initial && state.payments.nextStep && state.payments.nextStep.fields) {
+        initialValues = initialValues || {};
+        state.payments.nextStep.fields.constructor === Array && state.payments.nextStep.fields.forEach((field) => {
+            initialValues[field.name] = field.value && field.value.type !== "select" ? field.value.setValue || field.setValue || "" : field.value.options && firstElement(field.value.options) && firstElement(field.value.options).value || 0;
+        });
+    }
+
     return {
         user: state.user,
         uiState: state.uiState,
         initialValues,
         forms: state.form,
         ownParams: ownParams,
-        payments
+        payments,
+        language: state.preferences.lang,
+        ratesCurrencies: state.swarmConfigData.currency || null
     };
 };
 
 export default connect(mapStateToProps)(PaymentsMixin({
     Component: PaymentsFormMixin({
-        Component: (reduxForm({ form: formsNames.depositForm, validate })(DepositForm)),
+        Component: (reduxForm({form: formsNames.depositForm, validate})(DepositForm)),
         submit: function (values) {
-            let request = this.toBackendObject(this.props, values),
-                selectedMethod = this.props.payments.method;
-
-            request.payer.forProduct = this.props.uiState.lastRouteType || 'sport';
-            return this.processRequest(request, selectedMethod);
+            let profile = this.props.user.profile,
+                self = this;
+            if (profile.active_step === 21 && profile.active_step_state === 5 && Config.main.checkActiveStepsForFirstDeposit) {
+                const acceptCondition = () => {
+                    Zergling.get({}, 'accept_terms_conditions').then(function (response) {
+                        if (response.result === 0) {
+                            self.props.dispatch(updateUserProfile({active_step: null, active_step_state: null}));
+                            self.props.dispatch(ClosePopup());
+                        } else {
+                            console.error('accept_terms_conditions ERROR');
+                        }
+                    }, function () {
+                        console.error('accept_terms_conditions ERROR');
+                    });
+                };
+                this.props.dispatch(OpenPopup("accept_or_cancel", {
+                    type: "info",
+                    title: t("Confirmation"),
+                    body: t("We hold customers funds separately from the business accounts, and arrangements have been made to ensure that assets in the customer accounts are distributed to customers in the event of insolvency. For more information, please refer to our Terms and Conditions. This meets with the UK Gambling Commission’s requirements for the segregation of customer funds at the level: medium protection. Further information can be found here."),
+                    accept_button: 'I agree',
+                    cancel_button: 'I do not agree',
+                    accept_button_function: acceptCondition
+                }));
+            } else {
+                let paymentId = this.props.payments.method.paymentID,
+                    request = this.toBackendObject(this.props, values, paymentId, this.props.payments.method.name),
+                    selectedMethod = this.props.payments.method;
+                request.payer.forProduct = this.props.uiState.lastRouteType || 'sport';
+                return this.processRequest(request, selectedMethod);
+            }
         },
         processRequest: function (request, selectedMethod) {
             let self = this;
@@ -186,9 +267,9 @@ export default connect(mapStateToProps)(PaymentsMixin({
         },
         init: function () {
             if (this.props.routeParams.method && this.props.payments.availableMethods.length) {
-                this.selectMethod(this.props.routeParams.method, this.props.payments.availableMethods, this.props.dispatch, this.context.router, this.props.payments.data);
+                this.selectMethod(this.props.routeParams.method, this.props.payments.availableMethods, this.props.dispatch, this.context.router, this.props.payments.data, this.props.ratesCurrencies);
             }
-            this.checkUserAuthontication(this.context.router);
+            this.checkUserAuthentication(this.context.router);
         }
     })
 }));

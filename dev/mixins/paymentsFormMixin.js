@@ -1,15 +1,21 @@
 import React from 'react';
 import {SubmissionError, Field} from 'redux-form';
-import {RenderInputField, RenderSelectField, RenderPhoneNumberField, RenderDatePickerField} from "../components/registrationFields";
+import {RenderInputField, RenderSelectField, RenderPhoneNumberField, RenderDatePickerField, RenderMonthField, RenderYearField, RenderTimeField} from "../components/registrationFields";
 import {t} from '../helpers/translator';
 import {getErrorMessageByCode} from '../constants/errorCodes';
-import {SelectPaymentMethod, LoadBetShops, SelectDefaultAmount, DeselectPaymentMethod} from '../actions/payments';
+import {
+    SelectPaymentMethod, LoadBetShops, SelectDefaultAmount, DeselectPaymentMethod,
+    UnsetDepositNextStep
+} from '../actions/payments';
 import {UIOpen, OpenPopup} from "../actions/ui";
 import {updateQueryStringParameter} from "../helpers/updateQueryStringParameter";
 import formsNames from '../constants/formsNames';
 import Loader from "../mobile/components/loader";
 import Config from "../config/main";
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import {LoadCurrencyConfig} from "../actions/initialData";
+import Helpers from "../helpers/helperFunctions";
 
 /**
  * @name amountNormalizer
@@ -31,8 +37,9 @@ const amountNormalizer = (value) => {
  * @param {React.Component} ComposedComponent
  * @constructor
  */
+
 const PaymentsFormMixin = ComposedComponent => {
-    class PaymentsFormMixin extends React.Component {
+    class PaymentsFormWrapper extends React.Component {
         constructor (props) {
             super(props);
             this.getLimits = this.getLimits.bind(this);
@@ -40,6 +47,7 @@ const PaymentsFormMixin = ComposedComponent => {
             this.handleSubmissionErrors = this.handleSubmissionErrors.bind(this);
             this.getMethodFromConfig = this.getMethodFromConfig.bind(this);
             this.selectMethod = this.selectMethod.bind(this);
+            this.enableNextStep = this.enableNextStep.bind(this);
             this.handleDefaultAmountClick = this.handleDefaultAmountClick.bind(this);
 
             if (ComposedComponent.submit) {
@@ -56,6 +64,7 @@ const PaymentsFormMixin = ComposedComponent => {
 
         componentWillUnmount () {
             this.props.dispatch(DeselectPaymentMethod());
+            this.props.dispatch(UnsetDepositNextStep());
         }
 
         /**
@@ -82,11 +91,13 @@ const PaymentsFormMixin = ComposedComponent => {
          * @fire event:selectPaymentMethod
          * @fire event:loadBetShops
          */
-        selectMethod (methodName, availableMethods, dispatcher, router, paymentData) {
-
+        selectMethod (methodName, availableMethods, dispatcher, router, paymentData, ratesCurrencies) {
             let method = this.getMethodFromConfig(methodName, availableMethods);
+            if (method && ratesCurrencies && method.customCurrency && !ratesCurrencies[method.customCurrency]) {
+                dispatcher(LoadCurrencyConfig(method.customCurrency));
+            }
             if (method) {
-                dispatcher && dispatcher(SelectPaymentMethod(Object.assign({}, method)));
+                dispatcher && dispatcher(SelectPaymentMethod(Helpers.cloneDeep(method)));
                 if (dispatcher && method.hasBetShops && !(paymentData.loaded || paymentData.loading || paymentData.failed)) {
                     dispatcher(LoadBetShops());
                 }
@@ -106,6 +117,8 @@ const PaymentsFormMixin = ComposedComponent => {
                 throw new SubmissionError({_error: t(response.error)});
             } else if (response.method === "message" && typeof response.message === 'string') {
                 throw new SubmissionError({_error: t(response.message)});
+            } else if (response.error && typeof response.error === 'string') {
+                throw new SubmissionError({_error: t(response.error)});
             } else if (response.code !== undefined || typeof response.error === 'string') {
                 throw new SubmissionError({_error: getErrorMessageByCode(response.code || response.error, true, response.error)});
             } else {
@@ -119,9 +132,10 @@ const PaymentsFormMixin = ComposedComponent => {
          * @param {object} field
          * @param {string|number} key
          * @param {boolean} isBetShopField
+         * @param {boolean} hasCustomCurrency
          * @returns {React.Element}
          */
-        getFormItem (field, key, isBetShopField) {
+        getFormItem (field, key, isBetShopField, hasCustomCurrency) {
 
             if (isBetShopField) {
                 return (
@@ -144,6 +158,7 @@ const PaymentsFormMixin = ComposedComponent => {
                             name={field.name}
                             component={RenderInputField}
                             key={key}
+                            showErrorsAnyTime={hasCustomCurrency}
                             type={field.type}
                             className="single-form-item"
                             normalize={amountNormalizer}
@@ -161,6 +176,16 @@ const PaymentsFormMixin = ComposedComponent => {
                             className="single-form-item"
                         />
                     );
+                case "hidden":
+                    return (
+                        <Field
+                            name={field.name}
+                            component={RenderInputField}
+                            key={key}
+                            type={field.type}
+                            className="single-form-item"
+                        />
+                    );
                 case "select":
                     return (
                         <Field
@@ -168,8 +193,28 @@ const PaymentsFormMixin = ComposedComponent => {
                             component={RenderSelectField}
                             key={key}
                             className="form-p-i-m"
-                            options={field.options}
+                            options={field.options.constructor === Array ? field.options : Helpers.objectToArray(field.options)}
                             selected={field.options[0]}
+                        />
+                    );
+                case "month":
+                    return (
+                        <Field
+                            name={field.name}
+                            component={RenderMonthField}
+                            key={key}
+                            className="form-p-i-m"
+                            selected={1}
+                        />
+                    );
+                case "year":
+                    return (
+                        <Field
+                            name={field.name}
+                            component={RenderYearField}
+                            key={key}
+                            className="form-p-i-m"
+                            selected={new Date().getFullYear()}
                         />
                     );
                 case "phone":
@@ -186,11 +231,22 @@ const PaymentsFormMixin = ComposedComponent => {
                         <Field
                             name={field.name}
                             component={RenderDatePickerField}
+                            placeholder="Day/Month/Year"
                             key={key}
                             min={Config.main.regConfig.settings.minYearOld}
                             max={Config.main.regConfig.settings.maxYearOld}
                             type="text"
                             className="single-form-item date-picker-wrapper"
+                        />
+                    );
+                case "time":
+                    return (
+                        <Field
+                            name={field.name}
+                            component={RenderTimeField}
+                            key={key}
+                            type={field.type}
+                            className="single-form-item"
                         />
                     );
             }
@@ -266,41 +322,63 @@ const PaymentsFormMixin = ComposedComponent => {
          * @description Helper function to prepare data for request
          * @returns {object}
          */
-        toBackendObject (props, values) {
-            let amount = +values.amount,
-                formFields = this.isForWithdraw() ? props.payments.method.withdrawFormFields : props.payments.method.depositFormFields,
-                length = formFields.length,
-                i = 0;
+        toBackendObject (props, values, paymentID, serviceName) {
+            this.amount = this.amount || values.amount;
+            if (paymentID === 87) {
+                values = {
+                    ...values,
+                    type: 0,
+                    command: 'CreatePaymentMessage',
+                    eamount: values.amount
+                };
+                delete values.amount;
+                delete values.forProduct;
+                return Object.assign({}, {payer: values}, {service: serviceName || paymentID}, {amount: 100});
+            } else {
+                let amount = (!this.isForWithdraw() && props.payments.method.depositPrefilledAmount) || (+values.amount),
+                    formFields = this.isForWithdraw() ? props.payments.method.withdrawFormFields : props.payments.method.depositFormFields,
+                    length = formFields.length,
+                    i = 0;
 
-            values = {
-                ...values,
-                status_urls: {
-                    success: updateQueryStringParameter(window.location.toString(), "status", "ok"),
-                    cancel: updateQueryStringParameter(window.location.toString(), "status", "cancel"),
-                    fail: updateQueryStringParameter(window.location.toString(), "status", "fail")
+                delete values.amount;
+                values = {
+                    ...values,
+                    status_urls: {
+                        success: updateQueryStringParameter(window.location.toString(), "status", "ok"),
+                        cancel: updateQueryStringParameter(window.location.toString(), "status", "cancel"),
+                        fail: updateQueryStringParameter(window.location.toString(), "status", "fail")
+                    }
+                };
+                for (; i < length; i++) {
+                    let field = formFields[i];
+                    if (field.type === "dateMask") {
+                        values[field.name] = moment(values[field.name]).format(Config.main.regConfig.settings.dateFormat || "DD/MM/YYYY");
+                        break;
+                    }
                 }
-            };
-            for (; i < length; i++) {
-                let field = formFields[i];
-                if (field.type === "dateMask") {
-                    values[field.name] = moment(values[field.name]).format(Config.main.regConfig.settings.dateFormat || "DD/MM/YYYY");
-                    break;
+
+                if (this.isForWithdraw()) {
+                    let customCurrencyFromConfig = props.payments && props.payments.method && props.payments.method.customCurrency && props.payments.method.customCurrency.trim(),
+                        realCurrency = props.user.profile.currency_name;
+                    if (customCurrencyFromConfig && customCurrencyFromConfig !== realCurrency) {
+                        let allRatesCurrencies = props.ratesCurrencies,
+                            rate = allRatesCurrencies[customCurrencyFromConfig] && allRatesCurrencies[customCurrencyFromConfig].rate && (+allRatesCurrencies[customCurrencyFromConfig].rate),
+                            exchangedAmount = amount * rate;
+                        values.custom_amount = exchangedAmount;
+                    }
+                    return Object.assign({}, {payee: values}, {service: serviceName}, {amount: amount || +this.amount});
                 }
+                return Object.assign({}, {payer: values}, {service: serviceName || paymentID}, {amount: amount || +this.amount});
             }
-            delete values.amount;
-            if (this.isForWithdraw()) {
-                return Object.assign({}, {payee: values}, {service: props.payments.method.name}, {amount: amount});
-            }
-            return Object.assign({}, {payer: values}, {service: props.payments.method.name}, {amount: amount});
         }
 
         /**
-         * @name toBackendObject
+         * @name checkUserAuthentication
          * @description Helper function to check user authentication and redirect
          * @fire event:uiOpen
          * @fire event:openPopup
          */
-        checkUserAuthontication (router) {
+        checkUserAuthentication (router) {
             let user = this.user || this.props.user,
                 dispatch = this.dispatch || this.props.dispatch;
 
@@ -311,6 +389,11 @@ const PaymentsFormMixin = ComposedComponent => {
             }
         }
 
+        enableNextStep () {
+            this.nextStepUID = Date.now();
+            this.forceUpdate();
+        }
+
         render () {
             if (!this.props.payments.method) {
                 this.initMethod();
@@ -319,25 +402,29 @@ const PaymentsFormMixin = ComposedComponent => {
             return <ComposedComponent.Component
                 {...this.props}
                 {...this.state}
+                key={this.nextStepUID || "formWrapper"}
                 getFormItem={this.getFormItem}
                 getLimits={this.getLimits}
                 handleSubmissionErrors={this.handleSubmissionErrors}
                 submitHandler={this.submitHandler}
+                enableNextStep={this.enableNextStep}
                 selectMethod={this.selectMethod}
                 getMethodFromConfig={this.getMethodFromConfig}
-                checkUserAuthontication={this.checkUserAuthontication}
+                checkUserAuthentication={this.checkUserAuthentication}
                 handleDefaultAmountClick={this.handleDefaultAmountClick}
                 toBackendObject={this.toBackendObject}
             />;
         }
     }
-    PaymentsFormMixin.contextTypes = {
-        router: React.PropTypes.object.isRequired
+    PaymentsFormWrapper.contextTypes = {
+        router: PropTypes.object.isRequired
     };
-    return PaymentsFormMixin;
+    PaymentsFormWrapper.propTypes = {
+        payments: PropTypes.object,
+        location: PropTypes.object,
+        user: PropTypes.object
+    };
+    return PaymentsFormWrapper;
 };
 
-PaymentsFormMixin.PropTypes = {
-    payments: React.PropTypes.object.isRequired
-};
 export default PaymentsFormMixin;

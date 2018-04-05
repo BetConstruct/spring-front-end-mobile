@@ -6,14 +6,15 @@ import {UIOpen, OpenPopup, ConfirmationDialogReset} from "../../../actions/ui";
 import {isMissingAnyRequiredField} from "../../../helpers/profile/isMissingAnyRequiredField";
 import {t} from '../../../helpers/translator';
 import {GetPaymentsData} from "../../../helpers/selectors";
+import PropTypes from 'prop-types';
 
 const MethodsList = React.createClass({
     contextTypes: {
-        router: React.PropTypes.object.isRequired
+        router: PropTypes.object.isRequired
     },
     propTypes: {
-        user: React.PropTypes.object.isRequired,
-        dispatch: React.PropTypes.func.isRequired
+        user: PropTypes.object.isRequired,
+        dispatch: PropTypes.func.isRequired
     },
 
     componentWillMount () {
@@ -30,6 +31,7 @@ const MethodsList = React.createClass({
      * @param {object} method
      * @returns {undefined}
      */
+
     selectMethod (method) {
         let self = this;
         if (this.props.user.loggedIn && this.props.user.profile && isMissingAnyRequiredField(this.props.user.profile)) {

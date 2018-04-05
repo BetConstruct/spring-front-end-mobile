@@ -14,6 +14,13 @@
   height: 25px;
   background: darken( desaturate( adjust-hue( $skin-palette-7, 6deg ), 1 ), 12 );
   box-shadow: 0 1px 0 rgba(123, 129, 145, 0.15) inset;
+  top: 98px;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 555;
+}
+.integration-view .game-date-view-m{
+  top: 0;
 }
 .game-date-view-m > ul{
   float: left;

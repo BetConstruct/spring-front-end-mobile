@@ -14,7 +14,7 @@ module.exports = function messagesmenuTemplate () {
             ? messages.sort(sortByDate).map(message =>
                 this.props.ui.loading["deleteUserMessage" + message.id] === false
                     ? <div className="deleted-message">{t("Message has been deleted")}</div>
-                    : <Expandable key={message.id} uiKey={"message" + message.id} onExpand={this.readMessage(message.id)} className="message-container">
+                    : <Expandable key={message.id} uiKey={"message" + message.id} onExpand={this.readMessage(message)} className="message-container">
                         <div className="message-top-tow-b">
                             <div className="message-t">
                                 { /* <h3>{message.sender}</h3> we don't have sender field for now */}
@@ -101,9 +101,9 @@ module.exports = function messagesmenuTemplate () {
             </div>
             <div className="page-menu-contain">
                 <ul>
-                    <li><Link to="/messages/inbox" activeClassName="active"><span>{t("Inbox")}</span></Link></li>
-                    <li><Link to="/messages/sent" activeClassName="active"><span>{t("Sent")}</span></Link></li>
-                    <li><Link to="/messages/new" activeClassName="active"><span>{t("New message")}</span></Link></li>
+                    {!(Config.messages && Config.messages.disableInboxMessages) ? <li><Link to="/messages/inbox" activeClassName="active"><span>{t("Inbox")}</span></Link></li> : null}
+                    {!(Config.messages && Config.messages.disableSentMessages) ? <li><Link to="/messages/sent" activeClassName="active"><span>{t("Sent")}</span></Link></li> : null}
+                    {!(Config.messages && Config.messages.disableNewMessages) ? <li><Link to="/messages/new" activeClassName="active"><span>{t("New message")}</span></Link></li> : null}
                 </ul>
             </div>
 

@@ -1,8 +1,9 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Expandable from "../../../containers/expandable/";
 import {Link} from 'react-router';
 import {GetRegionDataSelector} from '../../../../helpers/selectors';
+import PropTypes from 'prop-types';
 
 let selectorInstance = {};
 
@@ -73,4 +74,4 @@ function mapStateToProps (state, ownParams) {
     return selectorInstance.selector(state);
 }
 
-export default connect(mapStateToProps)(Region)
+export default connect(mapStateToProps)(Region);

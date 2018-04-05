@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {checkIfUserIsLoggedIn} from "../../../mixins/checkAuthentication";
 import {LoadBetHistory, ResetLoadedBetHistory} from "../../../actions/betHistory";
@@ -6,6 +6,7 @@ import {UIMixin} from '../../../mixins/uiMixin';
 import _ from "lodash";
 import {GetBetHistoryDataSelector} from "../../../helpers/selectors";
 import {SwarmDataMixin} from "../../../mixins/swarmDataMixin";
+import PropTypes from 'prop-types';
 
 /**
  * @name getSwarmSubscriptionRequest

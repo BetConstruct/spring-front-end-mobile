@@ -1,8 +1,9 @@
 import Zergling from '../helpers/zergling';
 import cookie from 'react-cookie';
 import Config from "../config/main";
-import {UILoading, UILoadingDone, UILoadingFailed} from "./ui";
+import {UILoading, UILoadingDone, UILoadingFailed, OpenPopup} from "./ui";
 import {startSubmit, stopSubmit} from 'redux-form';
+import {t} from '../helpers/translator';
 
 import {REALLY_LOGGED_IN, LOGGED_IN, LOGGED_OUT, LOGIN_START, LOGIN_FAILED, CAPTCH_LOAD_SUCCESS, CAPTCH_LOAD_FAILURE} from './actionTypes/';
 
@@ -91,6 +92,30 @@ export const loadCaptchaFailure = (payload) => {
 };
 
 /**
+ * @description User Logged in state
+ * @param {Object} payload
+ * @returns {Object} new State
+ */
+export const loadReCaptchaSuccess = (payload) => {
+    return {
+        type: CAPTCH_LOAD_SUCCESS,
+        payload
+    };
+};
+
+/**
+ * @description Fail to load captcha
+ * @param {Object} payload
+ * @returns {Object} new State
+ */
+export const loadReCaptchaFailure = (payload) => {
+    return {
+        type: CAPTCH_LOAD_FAILURE,
+        payload
+    };
+};
+
+/**
  * @description User login
  * @param {String} username
  * @param {String} password
@@ -150,23 +175,50 @@ export function RestoreLogin (authData) {
  * @param {String} formName
  * @returns {Function} async action dispatcher
  */
-export function Register (regInfo, formName) {
+export function Register (regInfo, formName, geoData) {
     return function (dispatch) {
+        let regConfig = Config.main.regConfig && Config.main.regConfig.settings;
+
+        if (regConfig.notRestrictedCountries && regConfig.notRestrictedCountries.indexOf(regInfo.country_code) === -1) {
+            return dispatch(OpenPopup("message", {
+                title: t("Info"),
+                type: "info",
+                body: t("restircted_countries_info")
+            }));
+        }
+        if (regConfig.restrictedCountriesByIp && regConfig.restrictedCountriesByIp.indexOf(geoData.countryCode) !== -1) {
+            return dispatch(OpenPopup("message", {
+                title: t("Info"),
+                type: "info",
+                body: t("ipRestriction")
+            }));
+        }
         dispatch(UILoading(formName));   // state.ui
         dispatch(startSubmit(formName)); // state.forms , for redux-form
-
         return Zergling
             .get({user_info: regInfo}, 'register_user')
-            .then((response) => {
-                if (response.result === "OK") {
-                    dispatch(stopSubmit(formName));
-                    Config.main.regConfig.settings.loginAfterRegistration && Login((regInfo.username || regInfo.email), regInfo.password)(dispatch);
-                } else {
+            .then(
+                (response) => {
+                    if (response.result === "OK") {
+                        dispatch(stopSubmit(formName));
+                        !regConfig.redirectAfterRegistration && dispatch(OpenPopup("message", {
+                            title: t("Success"),
+                            type: "accept",
+                            body: t("Registration complete.")
+                        }));
+                        regConfig.loginAfterRegistration && Login((regInfo.username || regInfo.email), regInfo.password)(dispatch);
+                    } else {
+                        dispatch(stopSubmit(formName, {error: response}));
+                    }
+                    dispatch(UILoadingDone(formName));
+                    return response;
+                },
+                (response) => {
                     dispatch(stopSubmit(formName, {error: response}));
+                    dispatch(UILoadingDone(formName));
+                    return response;
                 }
-                dispatch(UILoadingDone(formName));
-                return response;
-            })
+            )
             .catch((data) => {
                 dispatch(UILoadingFailed(formName, data));
                 dispatch(stopSubmit(formName, {error: data}));
@@ -197,6 +249,33 @@ export function LoadCaptcha () {
             })
             .catch((data) => {
                 dispatch(loadCaptchaFailure(data));
+                dispatch(UILoadingFailed("captcha", data));
+            });
+    };
+}
+
+/**
+ * @description Load registration captch
+ * @returns {Function} async action dispatcher
+ */
+export function LoadReCaptcha () {
+    /**
+     * @event loadReCaptcha
+     */
+    return function (dispatch) {
+        dispatch(UILoading("captcha"));
+        Zergling
+            .get({}, "recaptcha_sitekey")
+            .then(function (data) {
+                if (data && data.result) {
+                    dispatch(loadReCaptchaSuccess(data.result));
+                    dispatch(UILoadingDone("re_captcha"));
+                } else {
+                    dispatch(loadReCaptchaFailure(data));
+                }
+            })
+            .catch((data) => {
+                dispatch(loadReCaptchaFailure(data));
                 dispatch(UILoadingFailed("captcha", data));
             });
     };

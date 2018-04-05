@@ -30,8 +30,8 @@ export function HandleProviderClick (provider, callBack) {
 
 export function HandleOpenGameClick (game, playType, authorized, isMostPopular, studioId) {
     let gameUrl,
-        casinoUrl = gamesUrlFromHelpers.processingCasinoUrl(),
-        casinoBackendUrl = gamesUrlFromHelpers.processingCasinoBackendUrl(),
+        casinoUrl = gamesUrlFromHelpers.processingGamesUrl().casinoUrl,
+        casinoBackendUrl = gamesUrlFromHelpers.processingGamesUrl().casinoBackendUrl,
         gameOption = game.game_options ? game.game_options : "",
         request,
         urlPrefix,

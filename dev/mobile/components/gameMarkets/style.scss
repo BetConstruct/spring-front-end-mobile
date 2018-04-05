@@ -81,13 +81,13 @@
 .coefficient-game-view{
 	overflow: hidden;
 	height: auto;
-	animation: closed-animate-menu 180ms ease;
+	//animation: closed-animate-menu 180ms ease;
 	max-height: 0;
 }
 .single-market-title-m.active + .coefficient-game-view{
 	height: auto;
 	max-height: 99999px;
-	animation: open-animate-market 400ms ease-in-out;
+	animation: open-animate-market 180ms ease-in-out;
 }
 @keyframes open-animate-market{
 	0% {max-height: 0;}
@@ -192,4 +192,13 @@
 	padding: 0 4px 0 0;
 	position: relative;
 	top: 1px;
+}
+.game-is-neutral {
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0 5px 0 0;
+	font: 11px/20px icomoon;
+}
+.game-is-neutral:before {
+	content: '\e959';
 }

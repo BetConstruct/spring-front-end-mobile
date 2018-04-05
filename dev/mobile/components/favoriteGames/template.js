@@ -30,7 +30,9 @@ module.exports = function favoriteGamesTemplate () {
             </div>
             {Games.sort(Helpers.byStartTsSortingFunc).map(
                 game => {
-                    let isLive = game.type === 1;
+                    let isLive = game.type === 1,
+                        conf = Config.main,
+                        gameTime = conf.changeTimeZoneByUTC ? moment.unix(game.start_ts).utcOffset(conf.changeTimeZoneByUTC).format(conf.timeFormat) : moment.unix(game.start_ts).format(conf.timeFormat);
                     // let gameHasXMarket = hasXMarket(game);
                     // let gameHasP1P2Market = hasP1P2Market(game);
                     return <div key={game.id} className="single-game-list-item-m">
@@ -47,7 +49,7 @@ module.exports = function favoriteGamesTemplate () {
                                         <span className="time-markets-count-m">
                                             { isLive
                                                 ? <span className="time-view-game-m">{t(convertGameStateName(game.info.current_game_state, game.sportAlias))}</span>
-                                                : <i className="time-view-game-m">{moment.unix(game.start_ts).format(Config.main.timeFormat)}</i>
+                                                : <i className="time-view-game-m">{gameTime}</i>
                                             }
 
                                             <i className="markets-count-view-m">{additionalMarketsCount(game)}</i>

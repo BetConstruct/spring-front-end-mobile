@@ -11,9 +11,18 @@
     "build-mobile": "cross-env NODE_ENV='production' webpack --config=webpack.mobile.config.js",
     "build-mobile-dev": "cross-env NODE_ENV='development' webpack --config=webpack.mobile.config.js",
     "build-all-mobile": "npm run build-vendor && npm run build-mobile",
-    "build-all-mobile-dev": "npm run build-vendor-dev && npm run build-mobile",
+    "build-all-mobile-dev": "npm run build-vendor-dev && npm run build-mobile-dev",
+    "deploytest": "npm run build-vendor && npm run build-mobile && cross-env NODE_ENV='development' node scripts/deploy/upload.js mobile",
+    "deploy-mobile": "npm run build-all-mobile && cross-env NODE_ENV='production' node scripts/deploy/upload.js mobile",
+    "deploy-mobile-without-build": "cross-env NODE_ENV='production' node scripts/deploy/upload.js mobile",
+    "deploy-mobile-fast": "npm run build-mobile && cross-env NODE_ENV='production' node scripts/deploy/upload.js mobile",
+    "deploy-translations-mobile": "npm run download-translations-mobile && cross-env NODE_ENV='production' node scripts/deploy/upload.js mobile translations",
+    "deploy-translations-mobile-dev": "npm run download-translations-mobile && cross-env NODE_ENV='development' node scripts/deploy/upload.js mobile translations",
     "download-translations-mobile": "node scripts/trans/downloadTrans.js mobile",
-    "extract-translations": "node scripts/trans/extractTranslations.js > eng.po"
+    "extract-translations": "node scripts/trans/extractTranslations.js > eng.po",
+    "create-skin": "node scripts/create/create.js",
+    "create-skin-and-deploy": "node scripts/automation/createNewSkin/index.js",
+    "create-skin-wizard": "node scripts/create/create.js interactive"
   },
   "license": "ISC",
   "dependencies": {
@@ -27,6 +36,7 @@
     "babel-register": "^6.9.0",
     "core-js": "^2.4.1",
     "country-telephone-data": "^0.4.2",
+    "create-react-class": "^15.5.3",
     "cross-env": "^3.1.4",
     "css-loader": "^0.26.1",
     "easywizard": "^0.2.0",
@@ -35,7 +45,9 @@
     "escape-string-regexp": "^1.0.5",
     "expect": "^1.20.1",
     "extract-text-webpack-plugin": "2.0.0",
+    "fetch-jsonp": "^1.0.6",
     "file-loader": "^0.10.0",
+    "fingerprintjs2": "^1.5.1",
     "history": "^4.5.1",
     "jest": "^19.0.2",
     "json-hash": "^1.2.0",
@@ -43,18 +55,24 @@
     "moment": "^2.15.1",
     "node-libs-browser": "latest",
     "node-sass": "^4.5.0",
+    "prop-types": "^15.5.9",
     "react": "^15.4.0",
     "react-addons-test-utils": "^15.4.1",
+    "react-async-script": "^0.9.1",
     "react-cookie": "^1.0.4",
-    "react-datepicker": "^0.41.1",
+    "react-datepicker": "^0.40.0",
     "react-dom": "^15.4.0",
     "react-ga": "^2.1.2",
+    "react-google-recaptcha": "^0.9.5",
+    "react-password-mask": "^2.4.6",
+    "react-recaptcha": "^2.3.1",
     "react-redux": "latest",
     "react-router": "^3.0.2",
     "react-router-redux": "^4.0.8",
     "react-scroll": "^1.4.4",
     "react-telephone-input": "^4.0.1",
     "react-test-renderer": "^15.4.1",
+    "react-ym": "0.0.7",
     "redux": "^3.5.2",
     "redux-form": "^6.1.1",
     "redux-logger": "^2.6.1",
@@ -62,8 +80,10 @@
     "redux-persist": "^4.0.0-alpha6",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.1.0",
+    "request": "^2.81.0",
     "reselect": "^2.5.4",
     "sass-loader": "^6.0.2",
+    "shelljs": "^0.7.8",
     "style-loader": "^0.13.1",
     "svg-url-loader": "^2.0.2",
     "webpack": "^2.3.3",
@@ -75,9 +95,12 @@
   },
   "devDependencies": {
     "babel-plugin-react-transform": "^2.0.2",
+    "babel-plugin-transform-react-constant-elements": "^6.23.0",
+    "babel-plugin-transform-react-inline-elements": "^6.22.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-preset-stage-1": "^6.16.0",
     "baggage-loader": "^0.2.4",
+    "copy-webpack-plugin": "^4.0.1",
     "eslint": "^3.4.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-promise": "^3.3.0",
@@ -94,5 +117,15 @@
     "recursive-readdir": "^2.1.0",
     "redux-mock-store": "^1.2.1",
     "url-loader": "^0.5.7"
+  },
+  "babel": {
+    "env": {
+      "production": {
+        "plugins": [
+          "transform-react-constant-elements",
+          "transform-react-inline-elements"
+        ]
+      }
+    }
   }
 }

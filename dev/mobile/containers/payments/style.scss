@@ -58,6 +58,23 @@
   display: inline-block;
   width: 100%;
 }
+.frineds-list{
+  background: $skin-palette-9;
+  .title{
+    padding: 15px;
+  }
+  .radio-form-item{
+    padding-left: 11px;
+    background: $skin-palette-9;
+    margin: 1px 0;
+    padding-top: 5px;
+    label{
+      span{
+        padding-left: 5px;
+      }
+    }
+  }
+}
 .deposit-form-container{
   float: left;
   width: 100%;
@@ -89,4 +106,6 @@
 .deposit-amount-buttons > ul > li > .button-view-normal-m{
   padding: 0 10px;
   font-size: 12px;
-}
+}.rate-section {
+   padding: 0 0 10px 0;
+ }

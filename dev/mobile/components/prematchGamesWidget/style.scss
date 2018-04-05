@@ -131,7 +131,7 @@
   background: darken( saturate( adjust-hue( $skin-palette-7, 5deg ), 7 ), 18 );
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
   display: table;
-  transition: background 240ms;
+  //transition: background 240ms;
   position: relative;
   z-index: 22;
   overflow: hidden;
@@ -294,6 +294,6 @@
 @keyframes add-betslip{
   0% {transform: translate3d(0,0,0);opacity: 0;}
   50%{transform: translate3d(0,0,0);opacity: 1;}
-  100% {transform: translate3d(0,-100%,0);opacity: 0;display: none;}
+  100%{transform: translate3d(0,-100%,0);opacity: 0;display: none;}
 }
 //Dashboard Pre-match game END

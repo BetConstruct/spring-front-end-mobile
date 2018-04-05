@@ -7,6 +7,7 @@ import {startSubmit, stopSubmit} from 'redux-form';
 import formsNames from "../constants/formsNames";
 import {USER_PROFILE_UPDATE_RECEIVED} from './actionTypes/';
 import {Logout, LoggedOut} from './login';
+import {SET_REGISTRATION_ACTIVE_STEP, UPDATE_MESSAGES_UNREAD_COUNT, UPDATE_USER_PROFILE} from "./actionTypes/index";
 
 /**
  * @description Sync action creator
@@ -33,7 +34,9 @@ export function ChangePassword (currentPass, newPass, formName) {
         return Zergling
             .get({password: currentPass, new_password: newPass}, 'update_user_password')
             .then((response) => {
-                dispatch(UILoadingDone(formName));
+                response.result === 0
+                ? dispatch(UILoadingDone(formName))
+                : dispatch(UILoadingFailed(formName, response));
                 dispatch(stopSubmit(formName));
             })
             .catch((reason) => {
@@ -100,19 +103,39 @@ export function UpdateProfile (userData, formName) {
 export function SetUserLimits (type, limits, formName) {
     let limitValues = {
         "1-year": {years: 1},
+        "2-year": {years: 2},
+        "5-year": {years: 5},
         "6-month": {months: 6},
         "3-month": {months: 3},
+        "2-month": {months: 2},
         "1-month": {months: 1},
         "7-day": {days: 7},
         "1-day": {days: 1},
         "forever": {years: 10}
     };
-    let command = 'set_user_limits';
-    let request = {type, limits};
-    if (type === "self-exclusion" && Config.main.selfExclusionByExcType) {
-        command = "set_client_self_exclusion";
-        request = limitValues[limits.period];
-        request.exc_type = Config.main.selfExclusionByExcType;
+    let command = 'set_client_self_exclusion';
+    let request = limitValues[limits.period];
+
+    switch (true) {
+        case type === "self-exclusion" && !!Config.main.selfExclusionByExcType:
+            request.exc_type = Config.main.selfExclusionByExcType;
+            break;
+        case type === "timeout-limits" && !!Config.main.userTimeOut && Config.main.userTimeOut.type === 6:
+            request.exc_type = Config.main.userTimeOut.type;
+            break;
+        case type === "reality-checks":
+            request = {
+                active_time: parseFloat(limits)
+            };
+            command = "update_user_active_time";
+            break;
+        case type === "deposit-limits":
+            request = {
+                limits: limits.values,
+                type: "deposit"
+            };
+            command = "set_user_limits";
+            break;
     }
     return function (dispatch) {
         dispatch(startSubmit(formName));
@@ -123,9 +146,23 @@ export function SetUserLimits (type, limits, formName) {
                 if (response.result === 0 || response.result === "OK") {
                     dispatch(stopSubmit(formName));
                     dispatch(UILoadingDone(formName));
-                    dispatch(OpenPopup("message", {title: t("Self exclusion"), type: "info", body: t("Now you are self excluded and will be logged out.")}));
-                    dispatch(Logout());
-                    dispatch(LoggedOut());
+
+                    switch (type) {
+                        case "self-exclusion":
+                            dispatch(OpenPopup("message", {title: t("Self exclusion"), type: "info", body: t("Now you are self excluded and will be logged out.")}));
+                            dispatch(Logout());
+                            dispatch(LoggedOut());
+                            break;
+                        case "timeout-limits":
+                            dispatch(OpenPopup("message", {title: t("Success"), type: "accept", body: t("Time-Out period set.")}));
+                            break;
+                        case "reality-checks":
+                            dispatch(OpenPopup("message", {title: t("Success"), type: "accept", body: t("Your Reality Check settings have been updated.")}));
+                            break;
+                        case "deposit-limits":
+                            dispatch(OpenPopup("message", {title: t("Success"), type: "accept", body: t("Time-Out period set.")}));
+                            break;
+                    }
                 } else {
                     dispatch(UILoadingFailed(formName, response.result));
                     dispatch(stopSubmit(formName, {reason: response.result}));
@@ -188,3 +225,39 @@ export function ChangeForgottenPassword (password, code) {
             });
     };
 }
+
+export function updateUserProfile (payload) {
+    return {
+        type: UPDATE_USER_PROFILE,
+        payload
+    };
+}
+
+export function VerifyUserByEmail ({successCallback, errorCallback, params}) {
+    return Zergling.get({ "verification_code": params.code }, 'verify_user').then(function (response) {
+        if (response.result === 0) {
+            successCallback && successCallback();
+        } else {
+            errorCallback && errorCallback();
+        }
+    });
+}
+
+export const UpdateMessagesUnreadCount = (payload) => {
+    return {
+        type: UPDATE_MESSAGES_UNREAD_COUNT,
+        payload
+    };
+};
+
+export const SetRegistrationState = (payload, meta) => ({type: SET_REGISTRATION_ACTIVE_STEP, payload, meta});
+
+export const SubscribeForMessages = (callback) => (dispatch) => {
+    Zergling
+        .subscribe({'source': 'messages', 'what': {'messages': []}, 'subscribe': true}, () => {
+            dispatch(UpdateMessagesUnreadCount(1));
+        })
+        .then((result) => {
+            callback && callback(() => Zergling.unsubscribe([result.subid]).catch((ex) => console.error("cannot unsubscribe:", ex)));
+        });
+};

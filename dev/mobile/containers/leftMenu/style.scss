@@ -35,7 +35,7 @@
   padding: 0 56px 0 0;
   z-index: 9999;
   transform: translate3d(0, 0, 0);
-  transition: left 300ms;
+  transition: left 240ms;
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
 }
@@ -47,12 +47,11 @@
   position: absolute;
   height: 200%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  transition: background 300ms;
+  transition: background 240ms;
 }
 .left-nav-container-m.open:before{
-  transition-delay: 200ms;
   background: rgba(0, 0, 0, 0.7);
+  transition-delay: 200ms;
 }
 .left-menu-full-box-m{
   float: left;

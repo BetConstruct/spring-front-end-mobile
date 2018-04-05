@@ -1,10 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import {t} from "../../../helpers/translator";
 import BetDetails from "../../components/betDetails/";
 import Loader from "../../components/loader/";
 import BetHistoryFilters from "../betHistoryFilters/index";
 import BetsList from "./pices/betsList";
+import Config from '../../../config/main';
 
 module.exports = function historyTemplate () {
     let bets = this.props.swarmData.bets,
@@ -29,7 +30,18 @@ module.exports = function historyTemplate () {
     return (
         <div className="profile-view-wrapper">
             <div className="title-separator-contain-b">
-                <h1>{t("History")}</h1>
+                {
+                    Config.isPartnerIntegration && Config.isPartnerIntegration.mode && Config.isPartnerIntegration.mode.iframe
+                        ? <div className="bread-crumbs-view-m">
+                            <a onClick={browserHistory.goBack}>
+                                <span className="back-arrow-crumbs"/>
+                            </a>
+                            <p>
+                                <h1>{t("History")}</h1>
+                            </p>
+                        </div>
+                        : <h1>{t("History")}</h1>
+                }
             </div>
 
             <div className="page-menu-contain">

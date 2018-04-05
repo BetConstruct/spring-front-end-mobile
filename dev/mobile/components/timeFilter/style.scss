@@ -12,6 +12,15 @@
   overflow-x: auto;
   overflow-y: hidden;
 }
+.game-markets-f{
+  top: 98px;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 555;
+}
+.integration-view .game-markets-f{
+  top: 0;
+}
 .time-filter-m::-webkit-scrollbar {display: none;width: 0;}
 .time-filter-m > ul{
   float: left;

@@ -1,12 +1,73 @@
 import {createSelector} from "reselect";
 import Helpers from "./helperFunctions";
+import _ from "lodash";
 import Config from "../config/main";
+import {checkForContent} from "./cms";
+import moment from "moment";
 
 export const GetSwarmData = state => state.swarmData.data;
 
 export const GetSwarmLoadedState = state => state.swarmData.loaded;
 
-export const CreateComponentSwarmDataSelector = dataKeySelector => createSelector([GetSwarmData, dataKeySelector], (data, key) => data[key]);
+export const CreateComponentSwarmDataSelector = dataKeySelector => createSelector([GetSwarmData, dataKeySelector], (data, key) => {
+    let ret = _.cloneDeep(data);
+    ret[key] && (ret[key].__swarmDataKey = key);
+    return ret[key];
+});
+
+export const GetFilteredMarkets = dataKeySelector => {
+    return createSelector(
+        [
+            CreateComponentSwarmDataSelector(dataKeySelector),
+            state => state.gameMarkets.marketName
+        ],
+        (data, activeFilter) => {
+            data && (data = _.cloneDeep(data));
+            let ret = {sport: {}, __swarmDataKey: data && data.__swarmDataKey}, Region, Competition, Game, Sport,
+                filteredMarkets = {};
+            if (activeFilter !== "all") {
+                if (data && data.sport) {
+                    Sport = Helpers.firstElement(data.sport);
+                    if (Sport) {
+                        Region = Helpers.firstElement(Sport.region, null, "id");
+                        Competition = Helpers.firstElement(Region.competition, null, "id");
+                        Game = Helpers.firstElement(Competition.game, null, "id");
+                    }
+                    Object.keys(Game.market).map((marketId) => {
+                        if ((Game.market[marketId].group_name === activeFilter) || (activeFilter === "Other" && !Game.market[marketId].hasOwnProperty("group_name"))) {
+                            filteredMarkets[marketId] = Game.market[marketId];
+                        }
+                    });
+                    ret.sport[Object.keys(data.sport)[0]] = Sport;
+                    ret.sport[Object.keys(data.sport)[0]].region[Region.id].competition[Competition.id].game[Game.id].market = filteredMarkets;
+                    return ret;
+                }
+            }
+            return data;
+        }
+    );
+};
+
+export const GetMarkets = key => {
+    return createSelector(
+        [
+            GetSwarmData,
+            state => state.gameMarkets.marketName
+        ],
+        (data, activeFilter) => {
+            let Region, Competition, Game, Sport;
+            if (data && data[key] && data[key].sport) {
+                Sport = Helpers.firstElement(data[key].sport);
+                if (Sport) {
+                    Region = Helpers.firstElement(Sport.region, null, "id");
+                    Competition = Helpers.firstElement(Region.competition, null, "id");
+                    Game = Helpers.firstElement(Competition.game, null, "id");
+                }
+            }
+            return {game: Game, activeFilter};
+        }
+    );
+};
 
 export const CreateComponentSwarmLoadedStateSelector = dataKeySelector => createSelector([GetSwarmLoadedState, dataKeySelector], (loaded, key) => loaded[key]);
 
@@ -43,6 +104,40 @@ export const GetCompetitionsDataSelector = (key) => {
         }
     );
 };
+export const GetPopupsData = createSelector(
+    [
+        state => state.uiState.popup,
+        state => state.uiState.popupParams,
+        state => state.cmsData.loaded.popups,
+        state => state.cmsData.data.popups,
+        state => state.user,
+        state => state.preferences
+    ],
+    (popup, popupParams, externalPopupsLoaded, externalPopups, user, preferences) => {
+        let loadedPopups = externalPopups ? externalPopups.popups : [],
+            shouldOpen,
+            registrationPopup = popup === "confirm" && popupParams && popupParams.data && popupParams.data.slug === 'registration-popup';
+
+        if (loadedPopups.length && !popup) {
+            for (let i = loadedPopups.length - 1; i >= 0; i--) {
+                if (registrationPopup === (loadedPopups[i].slug === 'registration-popup')) {
+                    shouldOpen = loadedPopups[i];
+                    break;
+                }
+            }
+        }
+
+        return {
+            popup,
+            popupParams,
+            externalPopupsLoaded,
+            externalPopups: loadedPopups,
+            user,
+            preferences,
+            shouldOpen
+        };
+    }
+);
 
 export const GetBetslipData = createSelector(
     [
@@ -68,6 +163,26 @@ export const GetBetslipData = createSelector(
             ui,
             persistentUI,
             preferences
+        };
+    }
+);
+
+export const GetRightMenuData = createSelector(
+    [
+        state => state.preferences,
+        state => state.user,
+        state => state.uiState.opened.rightMenu,
+        state => state.cmsData.data["help-root-" + state.preferences.lang]
+    ],
+    (preferences, user, menuOpened, cmsData) => {
+        let cmsPageData = _.cloneDeep(cmsData || {});
+        cmsPageData.page && checkForContent(cmsPageData.page);
+
+        return {
+            preferences,
+            user,
+            menuOpened,
+            cmsData: cmsPageData
         };
     }
 );
@@ -131,14 +246,14 @@ export const GetSearchBarData = createSelector(
         };
     }
 );
-
 export const GetPaymentsData = createSelector(
     [
         state => state.payments,
         state => state.user.profile ? state.user.profile.currency_name : null,
-        state => state.user.profile ? state.user.profile.country_code : null
+        state => state.user.profile ? state.user.profile.country_code : null,
+        state => state.routing.locationBeforeTransitions.pathname.indexOf("deposit") !== -1 ? "deposit" : "withdraw"
     ],
-    (payments, currencyName, countryCode) => {
+    (payments, currencyName, countryCode, transactionType) => {
         if (!currencyName || (!Config.main.showAllAvailablePaymentSystems && !payments.filters.loaded)) {
             let {data, availableMethods, filters} = payments;
             return {
@@ -147,52 +262,74 @@ export const GetPaymentsData = createSelector(
                 filters
             };
         }
+        let paymentsObj = Config.main.payments,
+            swarmPaymentFilterEnabled = !Config.main.showAllAvailablePaymentSystems,
+            loadedFilters = payments.filters.data[transactionType],
+            enabledKey = `can${transactionType.charAt(0).toUpperCase()}${transactionType.slice(1)}`,
+            availableMethods = paymentsObj.filter(function (method) {
+                if (method.info && method.info.hasOwnProperty(currencyName) && (typeof method.info[currencyName] === "object")) {
+                    if ((method.countryAllow || method.countryRestrict) && countryCode) {
+                        let defaultFiltered = method[enabledKey]
+                            ? method.countryAllow
+                                ? method.countryAllow.indexOf(countryCode) !== -1
+                                : method.countryRestrict.indexOf(countryCode) === -1
+                            : false;
 
-        let availableMethods = Config.main.payments.filter(function (method) {
-            if (method.info && method.info.hasOwnProperty(currencyName) && (typeof method.info[currencyName] === "object")) {
-                if ((method.countryAllow || method.countryRestrict) && countryCode) {
-                    return method.countryAllow ? method.countryAllow.indexOf(countryCode) !== -1 : method.countryRestrict.indexOf(countryCode) === -1;
+                        return !swarmPaymentFilterEnabled
+                            ? defaultFiltered
+                            : defaultFiltered && (loadedFilters.includes(method.name) || (Config.main.additionalPayments && Config.main.additionalPayments.reduce((matched, additionalMethod) => {
+                                !matched && (matched = (additionalMethod.name === method.name));
+                                return matched;
+                            }, false)));
+                    }
+
+                    return !swarmPaymentFilterEnabled
+                        ? method[enabledKey]
+                        : method[enabledKey] && (
+                            loadedFilters.includes(method.name) || (Config.main.additionalPayments && Config.main.additionalPayments.reduce((matched, additionalMethod) => {
+                                !matched && (matched = (additionalMethod.name === method.name));
+                                return matched;
+                            }, false))
+                        );
                 }
-                return true;
-            }
-        }).map((method) => {
-            let exist,
-                amountField = {
-                    name: "amount",
-                    type: "number",
-                    label: "Amount",
-                    required: true
-                };
+            }).map((method) => {
+                let exist,
+                    amountField = {
+                        name: "amount",
+                        type: "number",
+                        label: "Amount",
+                        required: true
+                    };
 
-            if (!(method.hasBetShops || method.hideDepositButton)) {
-                if (method.depositFormFields) {
-                    method.depositFormFields.forEach((field) => {
+                if (!(method.hasBetShops || method.hideDepositButton || method.depositPrefilledAmount || method.onlyInfoTextOnDeposit)) {
+                    if (method.depositFormFields) {
+                        method.depositFormFields.forEach((field) => {
+                            if (field.name === "amount") {
+                                exist = true;
+                            }
+                        });
+
+                        !exist && method.depositFormFields.push(amountField);
+                    } else {
+                        method.depositFormFields = [amountField];
+                    }
+                    exist = false;
+                }
+
+                if (method.withdrawFormFields) {
+                    method.withdrawFormFields.forEach((field) => {
                         if (field.name === "amount") {
                             exist = true;
                         }
                     });
-
-                    !exist && method.depositFormFields.push(amountField);
+                    !exist && method.withdrawFormFields.push(amountField);
                 } else {
-                    method.depositFormFields = [amountField];
+                    method.withdrawFormFields = [amountField];
                 }
-                exist = false;
-            }
-
-            if (method.withdrawFormFields) {
-                method.withdrawFormFields.forEach((field) => {
-                    if (field.name === "amount") {
-                        exist = true;
-                    }
-                });
-                !exist && method.withdrawFormFields.push(amountField);
-            } else {
-                method.withdrawFormFields = [amountField];
-            }
-            return method;
-        }).sort((a, b) => {
-            return a.order - b.order;
-        });
+                return method;
+            }).sort((a, b) => {
+                return a.order - b.order;
+            });
 
         return {
             ...payments,
@@ -265,3 +402,53 @@ state.swarmData.data.loyalty_rates.details.reduce((acc, curr) => {
     acc[curr.CurrencyId] = curr;
     return acc;
 }, {});
+
+export const GetWithdrawsData = createSelector(
+    [
+        state => state.payments.withdrawals
+    ],
+    (withdrawals) => ({withdrawals})
+);
+
+export const _GetFreeQuizData = createSelector(
+    [
+        state => state.freeQuiz,
+        state => state.user.reallyLoggedIn
+    ],
+    (freeQuiz, loggedIn) => {
+        let {data, selected, day, loadedState} = Helpers.cloneDeep(freeQuiz), filtersData = [];
+        let {loading, loaded, failed} = (loadedState[day] || {});
+        if (loaded && data[day] && data[day].victorinas) {
+            data[day].victorinas = Object.keys(data[day].victorinas);
+        }
+        loggedIn && data && Object.keys(data).map((index) => {
+            if (loaded && data[index] && data[index].victorinas) {
+                filtersData.push({day: index, text: moment().subtract(index, 'days').format(Config.main.dateFormat)});
+            }
+        });
+
+        return {
+            loading,
+            loaded,
+            failed,
+            data: data[day],
+            selected,
+            day,
+            filtersData
+        };
+    }
+);
+
+export const MakeQuizListItemSelector = (quizId) => {
+    return createSelector(
+        [
+            state => state.freeQuiz.data[state.freeQuiz.day] && state.freeQuiz.data[state.freeQuiz.day].victorinas[quizId]
+        ],
+        (data) => {
+            if (data) {
+                return Helpers.objectToArray(data, "gameId").sort(Helpers.byOrderSortingFunc);
+            }
+            return [];
+        }
+    );
+};

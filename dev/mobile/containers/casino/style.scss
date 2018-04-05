@@ -90,7 +90,14 @@
   background: $skin-palette-11;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
   padding: 0 34px 0 10px;
-  position: relative;
+  //position: relative;
+  top: 98px;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 555;
+}
+.integration-view .title-game-type-box{
+  top: 0;
 }
 .title-game-type-box > p{
   float: left;

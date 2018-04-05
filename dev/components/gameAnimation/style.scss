@@ -87,6 +87,17 @@
   content: "-";
 }
 .score-2-view{text-align: left;}
+
+.is_neutral_venue{
+  position: absolute;
+  left: 5px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  font: 15px/26px icomoon;
+    &:before{
+      content: "\E959";
+    }
+}
 //live game score END
 
 //animation
@@ -323,7 +334,7 @@
       margin: 20px auto 15px;
       width: 100%;
       height: 100%;
-      padding: 0 0 28%;
+      padding: 0 0 27.6%;
       background: url("../../images/animation/soccer-field.png") no-repeat center center;
       background-size: contain;
       img{

@@ -75,7 +75,7 @@
   font-size: 14px;
   line-height: 40px;
   color: $text-palette-4;
-  text-transform: uppercase;
+  //text-transform: uppercase;
   font-weight: normal;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -94,26 +94,35 @@
   float: left;
   width: 100%;
   position: relative;
-  padding: 80px 15px 15px;
+  padding: 15px;
   background: $skin-palette-10;
   font-size: 14px;
   line-height: 16px;
   color: lighten( desaturate( adjust-hue( $skin-palette-10, -1deg ), 5 ), 57 );
   text-align: center;
 }
+.popup-message.accept_or_cancel p{
+  padding: 0 0 20px 0;
+  color: $text-palette-6;
+}
+.popup-message.accept_or_cancel button{
+  margin-top: 10px;
+}
 .popup-message:before{
   display: block;
-  position: absolute;
-  left: 0;
-  top: 15px;
   width: 100%;
-  height: 50px;
+ // height: 50px;
+  height: 60px;
   font: 48px/50px icomoon;
   text-align: center;
 }
 .popup-message.error:before{
   content: "\e917";
   color: #aa8136;
+}
+.popup-message.small-icon-v-m:before{
+
+  font: 35px/35px icomoon;
 }
 .popup-message.info:before{
   content: "\e915";
@@ -125,13 +134,17 @@
 }
 .popup-message.accept:before{
   content: "\54";
-  color: $brand-color-1;
+  color: green;
+  //color: $brand-color-1;
 }
 .popup-confirm-message{
   float: left;
   width: 100%;
   background: $skin-palette-10;
   padding: 15px 20px;
+}
+.popup-confirm-message.info table img{
+  width: 100%;
 }
 .popup-confirm-message > p{
   font-size: 14px;

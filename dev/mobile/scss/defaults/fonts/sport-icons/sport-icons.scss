@@ -33,7 +33,7 @@
 .Chess:before {content: "\e612";}
 .Cricket:before {content: "\e613";}
 .Curling:before {content: "\e614";}
-.Cycling:before {content: "\e615";}
+.Cycling:before, .InspiredCycling:before {content: "\e615";}
 .Cyclo-Cross:before {content: "\e616";}
 .CrossFire:before {content: "\e90e";}
 .Bowls:before {content: "\e800";}
@@ -53,13 +53,13 @@
 .Golf:before {content: "\e622";}
 .GrassHockey:before {content: "\e623";}
 .Greyhounds:before,
-.VirtualGreyhoundRacing:before {content: "\e624";}
+.VirtualGreyhoundRacing:before, .InspiredGreyhoundRacing:before {content: "\e624";}
 .Gymnastics:before {content: "\e625";}
 .Halo:before {content: "\e90d";}
 .Handball:before {content: "\e626";}
 .HardAthletics:before, .Weightlifting:before {content: "\e627";}
 .Hockey:before {content: "\e629";}
-.HorseRacing:before {content: "\e62a";}
+.HorseRacing:before, .InspiredTrotting:before {content: "\e62a";}
 .Hurling:before {content: "\e62b";}
 .IceHockey:before {content: "\e62c";}
 .Judo:before {content: "\e62d";}
@@ -71,7 +71,7 @@
 .Mafia:before {content: "\e633";}
 .MiniSoccer:before {content: "\e634";}
 .ModernPentathlon:before {content: "\e635";}
-.Motorbikes:before {content: "\e636";}
+.Motorbikes:before, .InspiredMotorRacing:before {content: "\e636";}
 .Motorsport:before {content: "\e637";}
 .Nascar:before {content: "\e638";}
 .Netball:before {content: "\e639";}
@@ -101,13 +101,13 @@
 .Snooker:before {content: "\e64f";}
 .Snowboard:before {content: "\e650";}
 .Smite:before {content: "\2b";}
-.Soccer:before, .Football:before, .MixedFootball:before {/*content: "\e651";*/ content: "\e66f";}
+.Soccer:before, .Football:before, .MixedFootball:before, .InspiredRush2Football:before {/*content: "\e651";*/ content: "\e66f";}
 .CyberFootball:before {content: "\e901";}
 .SoccerWC2014:before {content: "\e652";}
 .Softball:before {content: "\e653";}
 .SpecialBets:before {content: "\e654";}
 .Speedskating:before {content: "\e655";}
-.Speedway:before {content: "\e656";}
+.Speedway:before, .InspiredSpeedway:before {content: "\e656";}
 .SportAndFun:before {content: "\e657";}
 .SportFight:before {content: "\e658";}
 .Squash:before {content: "\e659";}
@@ -128,7 +128,7 @@
 .UltimateFighting:before {content: "\e666";}
 .virtualsports:before {content: "\e667";}
 .virtualdogs:before {content: "\e667";}
-.virtualhorses:before {content: "\e668";}
+.virtualhorses:before, .InspiredHorseRacing:before {content: "\e668";}
 .VirtualCarRacing:before {content: "\e905";}
 .virtualtennis:before, .VirtualTennis:before {content: "\e669";}
 .Volleyball:before {content: "\e66a";}
@@ -152,6 +152,8 @@
 .WorldOfWarcraft:before {content: "\29";}
 .CallofDuty:before, .CallOfDuty:before {content: "\e904";}
 .Livemonitor:before {content: "\e630";}
+.VirtualBicycle:before {content: "\e616";}
+.StreetFighterV:before {content: "\e636";}
 .Confederations:before,
 .icon-sport-asia.All:before{content: "\e600";}
 

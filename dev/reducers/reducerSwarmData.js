@@ -14,7 +14,7 @@ import {
 import Helpers from "../helpers/helperFunctions";
 
 const SwarmDataReducer = (state = {data: {}, loaded: {}, connected: false, useWebSocket: false}, action = {}) => {
-    var ret = Object.assign({}, state);
+    let ret = Helpers.cloneDeep(state);
     switch (action.type) {
         case SWARM_LOADING_START:
             ret.loaded[action.key] = false;

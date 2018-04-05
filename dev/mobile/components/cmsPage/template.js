@@ -4,9 +4,16 @@ import Scroll from "react-scroll";
 import Loader from "../loader/";
 import Expandable from "../../containers/expandable/";
 import {t} from "../../../helpers/translator";
+import {checkForContent} from "../../../helpers/cms";
 
 module.exports = function cmsPageTemplate () {
     const Element = Scroll.Element;
+    const scroller = Scroll.scroller;
+
+    scroller.scrollTo(this.props.params.section, {
+        duration: 100,
+        smooth: true
+    });
 
     /**
      * @name displayPage
@@ -14,13 +21,25 @@ module.exports = function cmsPageTemplate () {
      * @param {object} field
      * @returns {object}
      * */
+    let matched;
     let displayPage = page => {
-        console.log("page", page);
         if (page) {
-            return (page.hasContent) ? <div className={"page-container " + page.slug} key={page.id}>
-                <Expandable className="page-section" uiKey={"p" + page.id}>
-                    <Element name={page.slug}/>
-                    <h2>{page.title_plain}</h2>
+            return (page.hasContent) ? <div className={"page-container " + (page.slug || page.title)} key={page.id}>
+                <Expandable openAnywhere={page.slug === this.props.params.slug || page.title === this.props.params.section || (() => {
+                    const iterateOverChildren = (subPage) => {
+                        if (subPage && !matched) {
+                            if (subPage.title === this.props.params.section) {
+                                return true;
+                            } else if (subPage.children) {
+                                return iterateOverChildren(subPage.children);
+                            }
+                        }
+                    };
+                    matched = page.children.map(iterateOverChildren).indexOf(true) !== -1;
+                    return matched;
+                })()} className="page-section" uiKey={"p" + page.id}>
+                    <Element name={page.title}/>
+                    <h2>{t(page.title_plain)}</h2>
                 </Expandable>
                 <div dangerouslySetInnerHTML={{__html: page.content}} className="page-content"></div>
                 {page.children.map(displayPage)}
@@ -28,7 +47,6 @@ module.exports = function cmsPageTemplate () {
         } else {
             return <p className="page-no-found-t-m">{t("Page not found")}</p>;
         }
-
     };
 
     /**
@@ -49,25 +67,6 @@ module.exports = function cmsPageTemplate () {
             return <p className="page-no-found-t-m">{t("Page not found")}</p>;
         }
     };
-    console.debug("page", this.props);
-
-    /**
-     * Recursively checks pages for content(to have non-empty "content" field or children with that field)
-     * and marks them with hasContent field
-     * @param {Object} page
-     * @returns {boolean|*}
-     */
-    function checkForContent (page) {
-        if (page.content) {
-            page.hasContent = true;
-            page.children.map(checkForContent);
-        } else if (!page.children.length) {
-            page.hasContent = false;
-        } else {
-            page.hasContent = page.children.reduce((final, page) => (checkForContent(page) || final), false);
-        }
-        return page.hasContent;
-    }
 
     if (this.pageType === "page" && this.props.cmsData.loaded && this.props.cmsData.loaded[this.props.params.slug]) {
         checkForContent(this.props.cmsData.data[this.props.params.slug].page);

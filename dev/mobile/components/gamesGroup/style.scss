@@ -194,3 +194,24 @@
   font-size: 10px;
   font-weight: normal;
 }
+.content-m .single-coefficient-m{
+  &.blockedEvent:first-child{
+    background: $skin-palette-11;
+    pointer-events: none;
+     > span > i:first-child{
+      display: none;
+    }
+    &:after{
+      font: 16px/40px icomoon;
+      content: "\e68f";
+      color: $text-palette-6;
+    }
+  }
+  &.closedEvent {
+    pointer-events: none;
+  }
+}
+.coefficient-game-view ul li .single-coefficient-m.blockedEvent:after{
+  position: relative;
+  right: 10px;
+}

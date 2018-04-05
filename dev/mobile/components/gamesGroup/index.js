@@ -1,14 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import FavoritesMixin from "../../../mixins/favoritesMixin";
+import PropTypes from 'prop-types';
 
 const GamesGroup = React.createClass({
     propTypes: {
-        gamesObj: React.PropTypes.object,
-        gamesType: React.PropTypes.string,
-        sportAlias: React.PropTypes.string,
-        hasX: React.PropTypes.bool,
-        hasP1P2: React.PropTypes.bool
+        gamesObj: PropTypes.object,
+        gamesType: PropTypes.string,
+        sportAlias: PropTypes.string,
+        hasX: PropTypes.bool,
+        hasP1P2: PropTypes.bool
     },
     render () {
         return Template.apply(this); //eslint-disable-line no-undef

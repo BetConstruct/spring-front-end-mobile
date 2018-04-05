@@ -1,0 +1,178 @@
+@import 'skin';
+.freequiz-wrapper{
+  float: left;
+  width: 100%;
+  background: $skin-palette-12;
+}
+.freequiz-provider-nav{
+  float: left;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  text-align: center;
+  background: darken( desaturate( adjust-hue( $skin-palette-7, 5deg ), 2 ), 12 );
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  height: 40px;
+  position: relative;
+}
+.freequiz-info-b{
+  position: absolute;
+  right: 0;
+  height: 40px;
+  width: 40px;
+  top: 0;
+}
+.freequiz-info-b:before{
+  content: "\e915";
+  display: block;
+  font: 18px/40px icomoon;
+  color: $skin-palette-4;
+}
+.freequiz-guess,.freequiz-win-i, .events-i{
+  float: left;
+  width: 100%;
+  margin: 1px 0 0;
+  padding: 0;
+  height: 38px;
+  border-bottom: 2px solid transparent;
+  position: relative;
+  padding: 0 30px 0 34px;
+  box-shadow: inset 0 1px 0 hsla(0,0%,100%,.06);
+}
+.freequiz-guess{
+  background: $skin-palette-9;
+}
+.freequiz-win-i{
+  background: $skin-palette-11;
+}
+.events-i{
+  background: $skin-palette-8;
+}
+.freequiz-guess > ul, .freequiz-win-i > ul, .events-i > ul{
+  display: table;
+  width: 100%;
+  float: left;
+  table-layout: fixed;
+  vertical-align: top;
+}
+.freequiz-guess > ul > li, .freequiz-win-i > ul > li, .events-i > ul >li{
+  display: table-cell;
+}
+.freequiz-guess > ul > li:last-child, .freequiz-win-i > ul > li:last-child, .events-i > ul > li:last-child{
+  text-align: right;
+}
+.freequiz-guess > ul > li > span, .freequiz-win-i > ul > li > span, .events-i > ul > li > span{
+  float: left;
+  width: 100%;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  line-height: 38px;
+  color: $skin-palette-5;
+}
+.freequiz-win-i > ul > li > span{
+  color: $coef-color;
+}
+
+.game-information-m.freequiz > ul > li:first-child:nth-last-child(4) {
+  width: calc(100% - 169px);
+}
+
+.game-information-m.freequiz > ul {
+  width: 100%;
+}
+.freequize-button-container{
+  float: left;
+  width: 100%;
+  padding: 15px 25px;
+  background: $skin-palette-9;
+}
+.freequize-button-container > button{
+  margin: 0 0 20px 0;
+
+}
+.button-view-normal-m.trans-m.fav > span{
+  padding: 0 0 0 10px;
+  display: inline-block;
+  position: relative;
+}
+.button-view-normal-m.trans-m.fav > span:before{
+  content: '\f006';
+  font: 20px/38px icomoon;
+  color: $favorite-color;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -20px;
+}
+.info-content-f{
+  float: left;
+  width: 100%;
+  height: auto;
+  max-height: 99999px;
+  animation: open-animate-freequize .4s ease-in-out;
+  padding: 10px;
+  background: $skin-palette-7;
+}
+@keyframes  open-animate-freequize{
+  0% {
+    max-height: 0;
+  }
+
+  100% {
+    max-height: 500px;
+  }
+}
+
+.header-freequize-i {
+  float: left;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  min-height: 40px;
+}
+.header-freequize-i > span{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  display: block;
+  font: 18px/30px icomoon;
+  color: $skin-palette-6;
+  z-index: 100;
+}
+.header-freequize-i > span:before{
+  position: absolute;
+  content: "\E90C";
+}
+.header-freequize-i h2{
+  float: left;
+  width: 100%;
+  text-align: center;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 40px;
+  padding: 0 40px;
+  text-transform: uppercase;
+  color: #a4a9bb;
+  position: relative;
+  color: $skin-palette-3;
+}
+.freequize-text-i{
+  float: left;
+  width: 100%;
+  height: auto;
+}
+.freequize-text-i > p{
+  float: left;
+  width: 100%;
+  color: $skin-palette-3;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: justify;
+  padding: 0 5px 10px;
+}

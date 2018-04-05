@@ -35,12 +35,19 @@
   margin: 0 0 15px;
   min-width: 130px;
 }
+.form-contain-box .single-form-item{
+  height: inherit;
+}
 .single-form-item > input[type=text],
 .single-form-item > input[type=password],
 .single-form-item > input[type=email],
 .single-form-item > input[type=number],
 .single-form-item > input[type=tel],
-.single-form-item > .react-tel-input > input[type=tel]{
+.single-form-item > input[type=time],
+.single-form-item > .react-tel-input > input[type=tel],
+.single-form-item.reg_password > div > input[type=password],
+.single-form-item.reg_password > div > input[type=text],
+.date-picker-button-view-custom{
   float: left;
   width: 100%;
   box-sizing: border-box;
@@ -55,6 +62,42 @@
   border-radius: inherit;
   box-shadow: none;
 }
+.single-form-item.reg_password > div{
+  width: 100%;
+  height: 38px;
+  vertical-align: top;
+  float: left;
+}
+.single-form-item.reg_password > div a{
+  background: transparent !important;
+  text-indent: -9999em;
+  padding: 0;
+  position: absolute;
+  top: 0 !important;
+  right: 0 !important;
+  margin-top: 0 !important;
+  text-align: center;
+  text-indent: -9999px;
+  height: 100%;
+  width: 38px;
+  text-align: center;
+  display: block;
+}
+.single-form-item.reg_password > div a:before{
+  content: "\E91D";
+  display: block;
+  font: 20px/38px icomoon;
+  color: $text-palette-3;
+  text-indent: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  text-align: center;
+}
+.date-picker-button-view-custom{
+  text-align: left;
+}
 .single-form-item > .react-tel-input > input[type=tel]{
   padding-right: 30px;
 }
@@ -63,7 +106,10 @@
 .single-form-item > input[type=email]:focus,
 .single-form-item > input[type=number]:focus,
 .single-form-item > input[type=tel]:focus,
-.single-form-item > .react-tel-input > input[type=tel]:focus{
+.single-form-item > .react-tel-input > input[type=tel]:focus,
+.single-form-item.reg_password > div > input[type=password]:focus,
+.single-form-item.reg_password > div > input[type=text]:focus
+{
   border: 1px solid $hero-color;
 }
 .single-form-item > input::-webkit-input-placeholder{
@@ -92,6 +138,7 @@
   height: 20px;
   margin: 0 0 5px;
   padding: 0 10px 0 30px;
+  overflow: hidden;
 }
 .checkbox-wrapper-m:before{
   content: "";
@@ -106,8 +153,7 @@
 }
 .checkbox-wrapper-m > input[type=checkbox]{
   position: absolute;
-  //left: -9999px;
-  left: inherit;
+  left: -9999px;
   top: 0;
   opacity: 0;
 }
@@ -144,6 +190,11 @@
   float: left;
   width: 100%;
   margin: 0 0 20px;
+  text-align: center;
+}
+.forgot-password-m a{
+  color: $hero-color;
+  text-decoration: none;
 }
 .forgot-password-m > p{
   float: left;

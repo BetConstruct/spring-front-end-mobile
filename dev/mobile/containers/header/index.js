@@ -12,6 +12,7 @@ const Header = React.createClass({
 function mapStateToProps (state, ownParams) {
     return {
         loggedIn: GetLoginState(state),
+        unreadCount: state.user && state.user.profile && state.user.profile.unread_count || 0,
         ownParams
     };
 }

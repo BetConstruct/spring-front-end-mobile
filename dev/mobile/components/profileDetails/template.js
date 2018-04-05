@@ -8,6 +8,7 @@ import Countries from "../../../components/countriesList/";
 import {t} from "../../../helpers/translator";
 import formsNames from '../../../constants/formsNames';
 import {getErrorMessageByCode} from '../../../constants/errorCodes';
+import PropTypes from "prop-types";
 
 let now = new Date();
 
@@ -15,13 +16,27 @@ let now = new Date();
 const datePicker = field => <DatePicker
     showYearDropdown
     showMonthDropdown
-    selected={moment(field.input.value)}
+    selected={field.input.value && moment(field.input.value)}
     maxDate={moment(new Date(new Date(now.getFullYear() - Config.main.regConfig.settings.minYearOld, now.getMonth(), now.getDate()).getTime()))}
     minDate={moment(new Date(new Date(now.getFullYear() - Config.main.regConfig.settings.maxYearOld, now.getMonth(), now.getDate()).getTime()))}
     dateFormat="YYYY-MM-DD"
     dropdownMode="select"
     onChange={field.input.onChange}
 />;
+
+function GenderField ({input, fields}) {
+    return (
+        <select value={input.value} disabled={fields.gender.readOnly} onChange={input.onChange}>
+            <option value="M">{t("Male")}</option>
+            <option value="F">{t("Female")}</option>
+        </select>
+    );
+}
+
+GenderField.propTypes = {
+    input: PropTypes.object,
+    fields: PropTypes.object
+};
 
 module.exports = function profileDetailsTemplate () {
     console.debug("detail props", this.props, this.fieldFroperties);
@@ -37,7 +52,6 @@ module.exports = function profileDetailsTemplate () {
             </div>
         </div>;
 
-
     /**
      * @name displayFailReason
      * @description get changes of user profile details check the result and return corresponding message
@@ -52,59 +66,58 @@ module.exports = function profileDetailsTemplate () {
     }
 
     if (this.props.profile) {
-        return <form onSubmit={this.props.handleSubmit(this.save)}>
+        let excludeWhileLangArray = Config.main.personalDetails && Config.main.personalDetails.excludeWhileLang && Config.main.personalDetails.excludeWhileLang[Config.env.lang] || [];
+        return <form onSubmit={this.props.handleSubmit(this.save.bind(this))}>
             <div className="my-details-container-m">
+                {(fields.id && excludeWhileLangArray.indexOf("id") === -1) ? inputField("id", t("ID"), "text", fields.id.readOnly) : null}
+                {(fields.username && excludeWhileLangArray.indexOf("username") === -1) ? inputField("username", t("Username"), "text", fields.username.readOnly) : null}
+                {(fields.first_name && excludeWhileLangArray.indexOf("first_name") === -1) ? inputField("first_name", t("First Name"), "text", fields.first_name.readOnly) : null}
+                {(fields.last_name && excludeWhileLangArray.indexOf("last_name") === -1) ? inputField("last_name", t("Last Name"), "text", fields.last_name.readOnly) : null}
+                {(fields.email && excludeWhileLangArray.indexOf("email") === -1) ? inputField("email", t("E-mail"), "text", fields.email.readOnly) : null}
+                {(fields.doc_number && excludeWhileLangArray.indexOf("doc_number") === -1) ? inputField("doc_number", t("Passport Number"), "text", fields.doc_number.readOnly) : null}
+                {(fields.iban && excludeWhileLangArray.indexOf("iban") === -1) ? inputField("iban", t("Iban"), "text", fields.iban.readOnly) : null}
 
-                {fields.id ? inputField("id", t("ID"), "text", fields.id.readOnly) : null}
-                {fields.username ? inputField("username", t("Username"), "text", fields.username.readOnly) : null}
-                {fields.first_name ? inputField("first_name", t("First Name"), "text", fields.first_name.readOnly) : null}
-                {fields.last_name ? inputField("last_name", t("Last Name"), "text", fields.last_name.readOnly) : null}
-                {fields.email ? inputField("email", t("E-mail"), "text", fields.email.readOnly) : null}
-                {fields.doc_number ? inputField("doc_number", t("Passport Number"), "text", fields.doc_number.readOnly) : null}
-
-                {fields.birth_date
+                {(fields.birth_date && excludeWhileLangArray.indexOf("birth_date") === -1)
                     ? fields.birth_date.readOnly
                         ? inputField("birth_date", t("Date of Birth"), "text", fields.birth_date.readOnly)
                         : (
-                        <div className={"details-form-item-m" + (errors.birth_date ? " error" : "")}>
-                            <label>{t("Date of Birth")}</label>
-                            <div className="date-picker-wrapper">
-                                <Field name="birth_date" component={datePicker}/>
-                                {errors.birth_date ? <p className="error-message">{errors.birth_date}</p> : null}
+                            <div className={"details-form-item-m" + (errors.birth_date ? " error" : "")}>
+                                <label>{t("Date of Birth")}</label>
+                                <div className="date-picker-wrapper">
+                                    <Field name="birth_date" component={datePicker}/>
+                                    {errors.birth_date ? <p className="error-message">{errors.birth_date}</p> : null}
+                                </div>
                             </div>
-                        </div>
                         )
                     : null}
-                {fields.gender
+                {(fields.gender && excludeWhileLangArray.indexOf("gender") === -1)
                     ? <div className={"details-form-item-m" + (errors.gender ? " error" : "")}>
-                    <label>{t("Gender")}</label>
-                    <div className="form-p-i-m">
-                        <div className="select-contain-m">
-                            <Field component="select" name="gender">
-                                <option value="M">{t("Male")}</option>
-                                <option value="F">{t("Female")}</option>
-                            </Field>
-                            {errors.gender ? <p className="error-message">{errors.gender}</p> : null}
+                        <label>{t("Gender")}</label>
+                        <div className="form-p-i-m">
+                            <div className="select-contain-m">
+                                <Field name="gender" component={GenderField} fields={fields} />
+                                {errors.gender ? <p className="error-message">{errors.gender}</p> : null}
+                            </div>
                         </div>
-                    </div>
-                </div> : null}
+                    </div> : null}
 
-                {fields.country_code
+                {(fields.country_code && excludeWhileLangArray.indexOf("country_code") === -1)
                     ? <div className={"details-form-item-m" + (errors.country_code ? " error" : "")}>
-                    <label>{t("Country of Residence")}</label>
-                    <div className="form-p-i-m">
-                        <div className="select-contain-m">
-                            <Field name="country_code" component={ field => <Countries selected={field.input.value}
-                                                                                       onChange={field.input.onChange}/> }/>
-                            {errors.country_code ? <p className="error-message">{errors.country_code}</p> : null}
+                        <label>{t("Country of Residence")}</label>
+                        <div className="form-p-i-m">
+                            <div className="select-contain-m">
+                                <Field name="country_code" component={ field => <Countries selected={field.input.value}
+                                                                                           onChange={field.input.onChange}
+                                                                                           readOnly={fields.country_code.readOnly}/> }/>
+                                {errors.country_code ? <p className="error-message">{errors.country_code}</p> : null}
+                            </div>
                         </div>
-                    </div>
-                </div> : null}
+                    </div> : null}
 
-                {fields.city ? inputField("city", t("City of Residence"), "text", fields.city.readOnly) : null}
-                {fields.address ? inputField("address", t("Address"), "text", fields.address.readOnly) : null}
-                {fields.phone ? inputField("phone", t("Phone number"), "tel", fields.phone.readOnly) : null}
-                {fields.password ? inputField("password", t("Current Password"), "password", fields.password.readOnly) : null}
+                {(fields.city && excludeWhileLangArray.indexOf("city") === -1) ? inputField("city", t("City of Residence"), "text", fields.city.readOnly) : null}
+                {(fields.address && excludeWhileLangArray.indexOf("address") === -1) ? inputField("address", t("Address"), "text", fields.address.readOnly) : null}
+                {(fields.phone && excludeWhileLangArray.indexOf("phone") === -1) ? inputField("phone", t("Phone number"), "tel", fields.phone.readOnly) : null}
+                {(fields.password && excludeWhileLangArray.indexOf("password") === -1) ? inputField("password", t("Current Password"), "password", fields.password.readOnly) : null}
 
                 {/*
                  <div className="text-info-p-m">
@@ -122,8 +135,8 @@ module.exports = function profileDetailsTemplate () {
                             type="submit">
                         {t("Save Changes")}
                     </button>
-                    { this.props.ui.failReason[formsNames.profileDetailsForm] ? displayFailReason(this.props.ui.failReason[formsNames.profileDetailsForm]) : null}
-                    {(this.props.ui.loading[formsNames.profileDetailsForm] === false && !this.props.ui.failReason[formsNames.profileDetailsForm] /** && this.props.pristine **/)
+                    { this.props.ui.failReason[formsNames.profileDetailsForm] && this.props.submitFailed ? displayFailReason(this.props.ui.failReason[formsNames.profileDetailsForm]) : null}
+                    {(this.props.ui.loading[formsNames.profileDetailsForm] === false && !this.props.ui.failReason[formsNames.profileDetailsForm] && this.props.submitSucceeded /** && this.props.pristine **/)
                         ? <div className="success"><p>{t("Profile successfully updated.")}</p></div> : null }
                 </div>
 

@@ -1,10 +1,13 @@
 @import 'skin';
 .popup-contain-table-m .date-picker-wrapper,
 .popup-contain-table-m .form-p-i-m > .select-contain-m{
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 .registration-form-b{
   padding-bottom: 65px;
+}
+.single-form-item.hidden {
+  display: none;
 }
 .img-wrapper-m{
   float: left;
@@ -208,4 +211,73 @@
   overflow: hidden;
   color: $text-palette-3;
   padding: 0 0 5px;
+}
+
+
+.form-p-i-m {
+  &.phone_wrapper {
+    min-width: initial;
+    .reg_phone_code {
+      min-width: inherit;
+      width: 40%;
+    }
+    .reg_phone {
+      width: 58%;
+      min-width: inherit;
+      float: right;
+    }
+  }
+}
+
+.single-form-item.reg_g_recaptcha_response {
+  float: left;
+  width: 100%;
+  height: 90px;
+}
+
+.steps-for-reg-m {
+  display: block;
+  float: left;
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.steps-for-reg-m > i:before{
+ /* content: "\e936";
+  font: 16px/20px "icomoon";*/
+  content: '';
+  margin: 0 4px;
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 100%;
+  background: rgba(255,255,255,.1);
+}
+.steps-for-reg-m > i.registration-steps-slide-view.active:before{
+  background: rgba(255,255,255,.59);
+}
+.registration-form-b .separator-box-buttons-m > .button-view-normal-m:nth-child(1):nth-last-child(2),
+.registration-form-b .separator-box-buttons-m > .button-view-normal-m:nth-child(2):nth-last-child(1){
+  width: 50%;
+}
+.registration-form-b .separator-box-buttons-m > .button-view-normal-m:nth-child(1):nth-last-child(2){
+  background: $skin-palette-9;
+  box-shadow: 0 0 0 1px $skin-palette-6 inset;
+}
+.single-form-item.reg_promo_code {
+  height: 38px;
+}
+.single-form-item.reg_password.showed > div a:before{
+  content: "\E91D";
+}
+.single-form-item.reg_password > div a:before{
+  content: "\e91e";
+}
+.multistep-form .info-message{
+  float: left;
+  width: 100%;
+  font-size: 14px;
+  color: $skin-palette-6;
 }

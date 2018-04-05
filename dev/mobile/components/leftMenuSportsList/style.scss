@@ -12,6 +12,17 @@
 	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
 	transition: border 180ms;
 }
+.dashboard-live-game-list-m .single-sport-title-dashboard-m,
+.dashboard-upcoming-game-list-m .single-sport-title-dashboard-m{
+	top: 98px;
+	position: -webkit-sticky;
+	position: sticky;
+	z-index: 555;
+}
+.integration-view .dashboard-live-game-list-m .single-sport-title-dashboard-m,
+.integration-view .dashboard-upcoming-game-list-m .single-sport-title-dashboard-m{
+	top: 0;
+}
 .single-sport-title-dashboard-m.active{border-color: $skin-palette-6;}
 .single-sport-title-dashboard-m:before{
 	display: none;

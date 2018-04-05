@@ -3,11 +3,12 @@ import {connect} from 'react-redux';
 import {SwarmClearData} from "../../../actions/swarm";
 import {AcceptCounterOffer, DeclineCounterOffer} from "../../../actions/betslip";
 import {UIMixin} from '../../../mixins/uiMixin';
+import PropTypes from 'prop-types';
 
 const CounterOfferDialog = React.createClass({
     propTypes: {
-        betId: React.PropTypes.number.isRequired,
-        betInfo: React.PropTypes.object
+        betId: PropTypes.number.isRequired,
+        betInfo: PropTypes.object
     },
     componentWillMount () {
         this.props.dispatch(SwarmClearData("counterOffer"));

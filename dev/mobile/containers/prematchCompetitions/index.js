@@ -4,11 +4,13 @@ import {connect} from 'react-redux';
 import {GetCompetitionsDataSelector, CreateComponentSwarmLoadedStateSelector} from "../../../helpers/selectors";
 import {SwarmDataMixin, getSwarmDataKeyForRequest} from '../../../mixins/swarmDataMixin';
 import FavoritesMixin from "../../../mixins/favoritesMixin";
+import PropTypes from 'prop-types';
+import moment from "moment";
 
 const PrematchCompetitions = React.createClass({
     propTypes: {
-        selectedSportAlias: React.PropTypes.string.isRequired,
-        timeFilter: React.PropTypes.number
+        selectedSportAlias: PropTypes.string.isRequired,
+        timeFilter: PropTypes.number
     },
     render () {
         console.info("rendering preMatch regions list");
@@ -20,7 +22,7 @@ const PrematchCompetitions = React.createClass({
     }
 });
 
-let createSwarmDataKeySelector = defaultMemoize((sportAlias, timeFilter) => () => getSwarmDataKeyForRequest(getSwarmSubscriptionRequest(sportAlias, timeFilter))),
+let createSwarmDataKeySelector = defaultMemoize((sportAlias, timeFilter) => () => getSwarmDataKeyForRequest(getSwarmSubscriptionRequest(sportAlias, timeFilter, true))),
     selectorInstance = {};
 
 /**
@@ -49,10 +51,10 @@ function mapStateToProps (state, ownParams) {
  * @name getSwarmSubscriptionRequest
  * @description Prepare swarm subscription request
  * @param {String} sportAlias
- * @param {Number} timeFilter
+ * @param {Number | String} timeFilter
  * @return {Object} request
  */
-function getSwarmSubscriptionRequest (sportAlias, timeFilter) {
+function getSwarmSubscriptionRequest (sportAlias, timeFilter, isForHashing) {
     let req = {
         "source": "betting",
         "what": {
@@ -69,7 +71,7 @@ function getSwarmSubscriptionRequest (sportAlias, timeFilter) {
         }
     };
     if (timeFilter) {
-        req.where.game.start_ts = {'@now': {'@gte': 0, '@lt': timeFilter * 3600}};
+        req.where.game.start_ts = {'@now': {'@gte': 0, '@lt': timeFilter === 'today' ? isForHashing ? 'today' : moment().endOf("day").unix() - moment().unix() : timeFilter * 3600}};
     }
     return req;
 }
@@ -79,6 +81,7 @@ export default connect(mapStateToProps)(SwarmDataMixin(
         Component: FavoritesMixin({Component: PrematchCompetitions}),
         ComponentWillMount: function () {
             this.swarmSubscriptionRequest = getSwarmSubscriptionRequest(this.props.selectedSportAlias, this.props.timeFilter);
+            this.swarmDataKey = getSwarmDataKeyForRequest(getSwarmSubscriptionRequest(this.props.selectedSportAlias, this.props.timeFilter, true));
             this.keepDataAfterUnsubscribe = true;
         }
     }

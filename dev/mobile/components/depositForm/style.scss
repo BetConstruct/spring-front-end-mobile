@@ -26,3 +26,78 @@
   text-transform: uppercase;
   color: $text-palette-3;
 }
+
+//start korean part payments
+.status-update-m, .separator-box-buttons-m.second ul{
+  float: left;
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+}
+.status-update-m li, .separator-box-buttons-m.second li{
+  display: table-cell;
+  vertical-align: middle;
+}
+.status-update-m li:nth-child(2), .status-update-m li:nth-child(3), .separator-box-buttons-m.second li:nth-child(2),.separator-box-buttons-m.second li:nth-child(3){
+  width: 20%;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.status-update-m li p, .status-update-m li span{
+  color: $skin-palette-3;
+  font-size: 14px;
+  line-height: 38px;
+  text-transform: uppercase;
+}
+.status-update-m .update-button{
+
+  display: block;
+  float: left;
+  position: relative;
+  padding: 0 30px 0 0;
+}
+.status-update-m .update-button:after{
+  position: absolute;
+  display: block;
+  font: 16px/22px icomoon;
+  content: "\E6F4";
+  color:  $skin-palette-3;
+  top: 6px;
+  right: 0;
+}
+.separator-box-buttons-m.second
+{
+  float: left;
+  width: 100%;
+  background: $skin-palette-9;
+  padding: 10px;
+}
+.separator-box-buttons-m.second li span{
+  color: $hero-color;
+  text-transform: uppercase;
+}
+.separator-box-buttons-m.second li p{
+  float: left;
+  width: 100%;
+  color: $text-palette-6;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: justify;
+  padding: 0 0 10px;
+}
+//end of korean part payments
+
+//deposit iframe view
+.iframe-wrapper{
+  float: left;
+  width: 100%;
+}
+.iframe-wrapper > iframe{
+  float: left;
+  width: 100%;
+  height: 100%;
+  min-height: 580px;
+  max-height: 580px;
+}
+//deposit iframe view END

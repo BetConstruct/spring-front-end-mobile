@@ -4,10 +4,11 @@ import {checkIfUserIsLoggedIn} from "../../../mixins/checkAuthentication";
 import {LoadLoyaltyLevels, LoadLoyaltyRates, ExchangeLoyaltyPoints} from "../../../actions/loyalty";
 import {UIMixin} from "../../../mixins/uiMixin";
 import {GetLoginState, GetLoyaltyRates, GetLoyaltyLevels, GetUserCurrencyId, GetProfile} from "../../../helpers/selectors";
+import PropTypes from 'prop-types';
 
 const LoyaltyPoints = React.createClass({
     propTypes: {
-        type: React.PropTypes.string
+        type: PropTypes.string
     },
 
     /**

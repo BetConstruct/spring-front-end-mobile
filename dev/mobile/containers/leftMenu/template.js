@@ -3,8 +3,10 @@ import NavMenu from "../../components/navMenu/";
 import LeftMenuSportsList from "../../components/leftMenuSportsList/";
 import CasinoProvidersList from "../../components/casinoProvidersList/";
 import Swipeable from 'react-swipeable';
+import Config from '../../../config/main';
 import {t} from "../../../helpers/translator";
-
+let sportsbook = !!(Config.main.mainMenuItemsOrder && (Config.main.mainMenuItemsOrder.indexOf('prematch') !== -1 || Config.main.mainMenuItemsOrder.indexOf('live') !== -1)),
+    casino = !!(Config.main.mainMenuItemsOrder && Config.main.mainMenuItemsOrder.indexOf('casino') !== -1);
 module.exports = function LeftMenuTemplate () {
 
     if (this.props.ui.lastRouteType === "sport") {
@@ -15,7 +17,6 @@ module.exports = function LeftMenuTemplate () {
 
     let isInSport = this.props.ui.lastRouteType === "sport" || this.props.ui.lastRouteType === "";
     let isInCasino = this.props.ui.lastRouteType === "casino";
-
     return (
         <div className={"left-nav-container-m" + (this.props.ui.opened && this.props.ui.opened.leftMenu ? " open" : "")}>
             <Swipeable className="closed-nav-icon" onClick={this.props.closeLeftMenu()} onSwipingLeft={this.props.closeLeftMenu()}/>
@@ -23,15 +24,15 @@ module.exports = function LeftMenuTemplate () {
             <div className="left-menu-full-box-m">
                 <div className="import-view-container">
 
-                    <div className="navigation-container-m site-navigate-m">
+                    {!Config.disableNavMenuFromLeftMenu && <div className="navigation-container-m site-navigate-m">
                         <NavMenu/>
-                    </div>
+                    </div>}
 
                     <div className="navigation-container-m site-navigate-second-l-m">
                         <div className="nav-bar-contain-m">
                             <ul>
-                                {isInSport ? <li><p>{t("Choose a sport")}</p></li> : null}
-                                {isInCasino ? <li><p>{t("Choose a provider")}</p></li> : null}
+                                {(isInSport && sportsbook) ? <li><p>{t("Choose a sport")}</p></li> : null}
+                                {(isInCasino && casino) ? <li><p>{t("Choose a provider")}</p></li> : null}
 
                                 {/* <li>
                                     <Link to="/live" activeClassName="active">Sport</Link>
@@ -48,8 +49,8 @@ module.exports = function LeftMenuTemplate () {
 
                     </div>
                     <Swipeable className="left-navigate-list-view-m" onSwipingLeft={this.props.closeLeftMenu()}>
-                        {isInSport ? <LeftMenuSportsList isInLive={!!this.props.location.pathname.match("live")} sport={matchedSport}/> : null}
-                        {isInCasino ? <CasinoProvidersList isInLive={!!this.props.location.pathname.match("live")} /> : null}
+                        {(isInSport && sportsbook) ? <LeftMenuSportsList isInLive={!!this.props.location.pathname.match("live")} sport={matchedSport}/> : null}
+                        {(isInCasino && casino) ? <CasinoProvidersList isInLive={!!this.props.location.pathname.match("live")} /> : null}
                     </Swipeable>
                 </div>
             </div>

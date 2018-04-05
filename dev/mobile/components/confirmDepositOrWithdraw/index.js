@@ -2,12 +2,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {UnsetMethodExternalFormData, UnsetMethodConfirmAction} from "../../../actions/payments.js";
 import {ClosePopup} from "../../../actions/ui";
+import PropTypes from 'prop-types';
 
 var Template = Template || {};
 
 const ConfirmDepositOrWithdraw = React.createClass({
     propTypes: {
-        payments: React.PropTypes.object
+        payments: PropTypes.object
     },
 
     /**

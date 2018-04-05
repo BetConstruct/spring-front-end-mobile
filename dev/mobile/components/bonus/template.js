@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from "react-router";
 import Loader from "../../components/loader/";
+import BonusWagering from "../../components/bonusWagering";
 import {t} from "../../../helpers/translator";
 import Expandable from "../../containers/expandable/";
 import moment from "moment";
@@ -11,12 +12,13 @@ function bonusTemplate () {
     // console.log("------------- bonus props", this.props);
     let key = this.props.type === "casino" ? "casinoBonuses" : "sportBonuses";
     let bonuses = this.props.swarmData.data[key] && this.props.swarmData.data[key].bonuses;
-    if (this.props.swarmData.loaded[key] === false) {
+    if (!this.props.swarmData.loaded[key]) {
         return <Loader/>;
     }
     let currencyId = this.props.user.profile && this.props.user.profile.currency_id && this.props.user.profile.currency_id.toLowerCase();
     return (
        <div className="bonus-page-wrapper">
+           {Config.main.bonus && Config.main.bonus.enableBonusWagering && <BonusWagering/>}
            <div className="bonus-wrapper">
                { bonuses.map(bonus => {
                    let allowBonusCancelation = !!Config.main.bonus && !Config.main.bonus.disableBonusCanceling;

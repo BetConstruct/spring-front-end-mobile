@@ -1,33 +1,37 @@
-import {POOL_BETTING_TOKEN_LOADED, POOL_BETTING_TOKEN_LOADING, POOL_BETTING_TOKEN_FAILED} from "../actions/actionTypes/";
+import {
+    CASINO_GAMES_AUTH_LOADING_DONE, CASINO_GAMES_AUTH_LOADING_FAILED,
+    CASINO_GAMES_AUTH_LOADING_START
+} from "../actions/actionTypes/index";
+const addValue = (key, value) => {
+    let obj = {};
+    obj[key] = value;
+    return obj;
+};
 
-const setLoadingState = (data = null, loaded = false, loading = false, failed = false) => ({loaded, loading, failed, data});
+const getCurrentState = (state, action, loading, loaded, data) => ({
+    ...state,
+    loading: {
+        ...state.loading,
+        ...addValue(action.key, loading)
+    },
+    loaded: {
+        ...state.loaded,
+        ...addValue(action.key, loaded)
+    },
+    data: {
+        ...state.data,
+        ...addValue(action.key, data)
+    }
+});
 
-const NavigationMenuReducer = (state = {poolBet: setLoadingState()}, action) => {
+const NavigationMenuReducer = (state = {loaded: {}, loading: {}, data: {}}, action) => {
     switch (action.type) {
-        case POOL_BETTING_TOKEN_LOADING:
-            return {
-                ...state,
-                poolBet: {
-                    ...state.poolBet,
-                    ...setLoadingState(false, false, true, false)
-                }
-            };
-        case POOL_BETTING_TOKEN_LOADED:
-            return {
-                ...state,
-                poolBet: {
-                    ...state.poolBet,
-                    ...setLoadingState(action.payload, true)
-                }
-            };
-        case POOL_BETTING_TOKEN_FAILED:
-            return {
-                ...state,
-                poolBet: {
-                    ...state.poolBet,
-                    ...setLoadingState(action.payload, false, false, true)
-                }
-            };
+        case CASINO_GAMES_AUTH_LOADING_START:
+            return getCurrentState(state, action, true, false, null);
+        case CASINO_GAMES_AUTH_LOADING_DONE:
+            return getCurrentState(state, action, false, true, action.payload);
+        case CASINO_GAMES_AUTH_LOADING_FAILED:
+            return getCurrentState(state, action, false, false, null);
         default :
             return state;
     }

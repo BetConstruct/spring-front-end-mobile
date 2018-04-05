@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import {hasVideo} from "../../../helpers/sport/videoFilter";
 import Loader from "../../components/loader/";
 import GameMarkets from "../../components/gameMarkets/";
+import GameMarketGroups from "../../components/gameMarketGroups/";
 import GameInfo from "../../components/gameInfo/";
 import AnimationsContainer from "../../components/animationsContainer/";
 import Expandable from "../../containers/expandable/";
@@ -86,8 +87,13 @@ module.exports = function GameTemplate () {
                 {Game.type === 1 && this.props.ui.expanded.gi_timeline !== false ? <LiveGameTimeline game={Game} sportAlias={Sport.alias}/> : null}
                 {Game.type !== 1 ? <GameInfo game={Game} language={this.props.preferences.lang}/> : null}
                 {Game.text_info
-                    ? <div className="game-view-title-contain-m additional-info"><p className="additional-game-info">{Game.text_info}</p></div>
+                    ? <div className="game-view-title-contain-m additional-info">
+                        <p className="additional-game-info">
+                            {Game.info.hasOwnProperty("add_info") ? `${Game.info.add_info} | ` : null} {Game.text_info}
+                        </p></div>
                     : null}
+
+                {this.props.swarmData.__swarmDataKey ? <GameMarketGroups selectorKey={this.props.swarmData.__swarmDataKey}/> : null}
                 <GameMarkets game={Game} favorites={this.props.favorites}/>
 
             </div>

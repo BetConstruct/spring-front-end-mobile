@@ -1,17 +1,23 @@
 @import 'skin';
-.navigation-container-m{
-	float: left;
-	width: 100%;
+.top-navigation-menu-w{
 	position: fixed;
 	top: 49px;
 	left: 0;
+	width: 100%;
+	z-index: 669;
+}
+.integration-view .top-navigation-menu-w{
+	top: 0;
+}
+.navigation-container-m{
+	float: left;
+	width: 100%;
 	padding: 0 48px 0 0;
 	background: $skin-palette-10;
 	margin: 0 0 1px;
-	z-index: 66;
 	box-shadow: 0 1px 0 darken( saturate( adjust-hue( $text-color, -15deg ), 13 ), 11 );
 }
-.navigation-container-m:after {
+.navigation-container-m:after{
 	box-shadow: -1px 0 0 darken( saturate( adjust-hue( $text-color, -15deg ), 13 ), 11 ), -2px 0 2px 0px darken( saturate( adjust-hue( $text-color, -15deg ), 13 ), 11 );
 	content: "";
 	display: block;
@@ -47,6 +53,22 @@
 	text-decoration: none;
 	padding: 0 8px;
 	color: $text-palette-3;
+	position: relative;
+}
+.new-sticker-view{
+	text-transform: none;
+	display: inline-block;
+	vertical-align: top;
+	background: $hero-color;
+	line-height: 12px;
+	font-size: 10px;
+	font-style: normal;
+	padding: 0 3px;
+	position: absolute;
+	top: 5px;
+	right: -6px;
+	border-radius: 2px;
+	color: $text-palette-1;
 }
 .nav-bar-contain-m > ul > li > a.active{
 	box-shadow: 0 -2px 0 $hero-color inset;

@@ -3,11 +3,12 @@ import SportsList from "../../components/sportsList/";
 import LiveGamesList from "../../components/liveGamesList/";
 import LiveGamesFilter from "../../components/liveGamesFilter/";
 import Favorites from "../favorites/";
+import Config from "../../../config/main";
 
 module.exports = function liveTemplate () {
     return (
         <div className="import-view-container">
-            <LiveGamesFilter/>
+            {Config.main.video.disableLiveGamesVideoFiler ? (null) : <LiveGamesFilter/>}
             <SportsList routeParams={this.props.routeParams} location={this.props.location} gameType="live" key={this.props.liveVideoFilter} videoFilter={this.props.liveVideoFilter}/>
             { (this.props.routeParams.sportAlias && this.props.routeParams.sportAlias !== "Favorites")
                 ? <LiveGamesList

@@ -2,6 +2,7 @@ import React from 'react';
 import BalanceHistory from "../../components/balanceHistory/";
 import {t} from "../../../helpers/translator";
 import PaymentsNavigationMenu from "../../components/paymentsNavigationMenu/";
+import Withdraws from "../../components/withdraws/";
 
 module.exports = function paymentsTemplate () {
     return (
@@ -15,7 +16,9 @@ module.exports = function paymentsTemplate () {
             {(() => {
                 switch (this.props.route && this.props.route.path) {
                     case "history":
-                        return <BalanceHistory/>;
+                        return <BalanceHistory />;
+                    case "withdraws":
+                        return <Withdraws />;
                     default:
                         return null;
                 }

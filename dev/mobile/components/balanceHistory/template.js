@@ -7,7 +7,8 @@ import {t} from "../../../helpers/translator";
 import {mainTransactionTypes, casinoTransactionTypes, predefinedDateRanges} from "../../../constants/balanceHistory";
 import Loader from "../../components/loader/";
 import MoneyAmount from "../../components/moneyAmount/";
-
+let sportsbook = !!(Config.main.mainMenuItemsOrder && (Config.main.mainMenuItemsOrder.indexOf('prematch') !== -1 || Config.main.mainMenuItemsOrder.indexOf('live') !== -1)),
+    casino = !!(Config.main.mainMenuItemsOrder && Config.main.mainMenuItemsOrder.indexOf('casino') !== -1);
 // must be defined outside of render method, see redux-form Field(stateless function) documentation
 
 /**
@@ -61,7 +62,7 @@ module.exports = function balanceHistoryTemplate () {
                     <ul>
                         <li>
                             <div className="details-form-item-m">
-                                <label>Type</label>
+                                <label>{t("Type")}</label>
                                 <div className="form-p-i-m">
                                     <div className="select-contain-m">
                                         <Field component="select" name="type">
@@ -78,8 +79,8 @@ module.exports = function balanceHistoryTemplate () {
                                 <div className="form-p-i-m">
                                     <div className="select-contain-m">
                                         <Field component="select" name="product">
-                                            {!Config.disableSportsbook ? <option value="Sport">{t("Main")}</option> : null}
-                                            <option value="Casino">{t("Casino")}</option>
+                                            {sportsbook ? <option value="Sport">{t("Main")}</option> : null}
+                                            {casino ? <option value="Casino">{t("Casino")}</option> : null}
                                         </Field>
                                     </div>
                                 </div>
@@ -124,9 +125,14 @@ module.exports = function balanceHistoryTemplate () {
             {this.props.data.history && this.props.data.history.map((entry, i) => <div className="balance-history-inf-b" key={i}>
                     <div className="single-b-row-m">
                         <div className="balance-h-row-b">
-                            <h5 className={transactionHighlightColors[entry.operation]}>
-                                {t((this.selectedProduct === "Casino" ? casinoTransactionTypes : mainTransactionTypes)[entry.operation])}
-                            </h5>
+                            {entry.operation === 310
+                                ? <h6 className={transactionHighlightColors[entry.operation]}>
+                                    {mainTransactionTypes[entry.operation]}:({entry.buddy_id}:{entry.buddy_name})
+                                </h6>
+                                : <h5 className={transactionHighlightColors[entry.operation]}>
+                                    {t((this.selectedProduct === "Casino" ? casinoTransactionTypes : mainTransactionTypes)[entry.operation])}
+                                </h5>
+                            }
                             <span>{t("Amount")}</span>
                         </div>
                         {this.selectedProduct === "Casino" ? <div className="balance-h-row-casino-b">

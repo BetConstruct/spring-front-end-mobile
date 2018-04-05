@@ -1,15 +1,16 @@
 import React from 'react';
 import {t} from "../../helpers/translator";
-
+import PropTypes from 'prop-types';
 /**
  * Component which renders a <select> with countries list
  * @param {String} selected selected country code
  * @param {Function} onChange callback function to call on change
+ * @param {Boolean} if true selector will be read only
  * @returns {XML}
  * @constructor
  */
-function Countries ({selected, onChange}) {
-    return <select defaultValue={selected} onChange={onChange}>
+function Countries ({selected, onChange, readOnly}) {
+    return <select className="country_code" defaultValue={selected} disabled={readOnly} onChange={onChange}>
         <option value="AU" key="AU">{t("Australia")}</option>
         <option value="AD" key="AD">{t("Andorra")}</option>
         <option value="AE" key="AE">{t("UAE")}</option>
@@ -216,8 +217,25 @@ function Countries ({selected, onChange}) {
 }
 
 Countries.propTypes = {
-    selected: React.PropTypes.string,
-    onChange: React.PropTypes.func
+    selected: PropTypes.string,
+    onChange: PropTypes.func,
+    readOnly: PropTypes.bool
 };
 
 export default Countries;
+
+function Gender ({selected, onChange, readOnly}) {
+    return (
+            <select defaultValue={selected} disabled={readOnly} onChange={onChange}>
+                <option value="M">{t("Male")}</option>
+                <option value="F">{t("Female")}</option>
+            </select>);
+}
+
+export {Gender};
+
+Gender.propTypes = {
+    selected: PropTypes.string,
+    onChange: PropTypes.func,
+    readOnly: PropTypes.bool
+};

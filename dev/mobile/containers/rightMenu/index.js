@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {UIMixin} from '../../../mixins/uiMixin';
 import {Logout, LoggedOut} from "../../../actions/login";
 import {CmsLoadPage} from "../../../actions/cms";
+import {GetRightMenuData} from "../../../helpers/selectors";
 
 const RightMenu = React.createClass({
     componentWillMount () {
@@ -18,14 +19,4 @@ const RightMenu = React.createClass({
     }
 });
 
-function mapStateToProps (state, ownParams) {
-    return {
-        preferences: state.preferences,
-        user: state.user,
-        menuOpened: state.uiState.opened.rightMenu,
-        cmsData: state.cmsData.data["help-root-" + state.preferences.lang],
-        ownParams
-    };
-}
-
-export default connect(mapStateToProps)(UIMixin({Component: RightMenu}));
+export default connect(GetRightMenuData)(UIMixin({Component: RightMenu}));

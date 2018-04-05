@@ -47,7 +47,7 @@ function getSwarmSubscriptionRequest (timeFilterValue) {
         "source": "betting",
         "what": {
             "sport": ["name", "alias", "id", "order"],
-            "game": [["id", "team1_name", "team2_name", "order", "start_ts", "markets_count", "is_blocked", "info", "exclude_ids"]],
+            "game": [["id", "team1_name", "team2_name", "order", "start_ts", "markets_count", "is_blocked", "info", "exclude_ids", "team1_reg_name", "team2_reg_name"]],
             "market": ["name", "type", "id", "base", "express_id"],
             "event": ["name", "type", "id", "price", "base"]
         },

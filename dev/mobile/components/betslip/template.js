@@ -9,25 +9,39 @@ import Expandable from "../../containers/expandable/";
 import MoneyAmount from "../../components/moneyAmount/";
 import {t} from "../../../helpers/translator";
 import Keyboard from "../../components/virtualKeyboard/";
-
 import { doBetSlipViewCalculations, BetslipTypes, BETSLIP_TYPE_SINGLE, BETSLIP_TYPE_EXPRESS, BETSLIP_TYPE_SYSTEM, BETSLIP_TYPE_CHAIN
 } from "../../../helpers/sport/betslip";
 
+const getAdditionalMessage = (option) => {
+    if (option.link) {
+        return (
+            <p>
+                {
+                    option.message && <span>{t(option.message)}</span>
+                }
+                <a target="_blank" href={option.link}>{t(option.message ? option.postFix || "Link." : "Insufficient balance.")}</a>
+            </p>
+        );
+    }
+    return <p dangerouslySetInnerHTML={{__html: option.message || t("Insufficient balance.")}} />;
+};
+
 module.exports = function betslipTemplate () {
     // console.log("betslip props", this.props);
-    let betSlip = this.props.betslip;
+    let betSlip = this.props.betslip,
+        isPartnerIntegration = Config.isPartnerIntegration && Config.isPartnerIntegration.mode.iframe;
     var loggedIn = this.props.user.loggedIn;
 
-    let {events, info, posWin, expOdds, expBonus, freeBetAvailable, priceChangeNeeds2bConfirmed, betsCannotBePlaced, displayInfo, systemOptions} =
-        doBetSlipViewCalculations(this.props.betslip, this.props.data, this.props.user, this.props.currency, this.props.dispatch);
+    let {events, info, posWin, expOdds, expBonus, freeBetAvailable, priceChangeNeeds2bConfirmed, betsCannotBePlaced, displayInfo, systemOptions, insufficientBalance} =
+        doBetSlipViewCalculations(betSlip, this.props.data, this.props.user, this.props.currency, this.props.dispatch);
 
     return (
         <div onClick={(e) => {
             this.props.ui.showVirtualKeyBoard && !e.defaultPrevented && this.hideKeyboard();
         }} className={"betslip-m " + BetslipTypes[betSlip.type] + (loggedIn ? " logged-in" : " logged-out") + (betSlip.quickBet ? " quick" : "") + (this.props.ui.loading.bet ? " loading" : "")}>
-
-            <Swipeable className="betslip-balance-view-m" onClick={this.props.openBetslip()} onSwipingUp={this.props.openBetslip()}>
+            <Swipeable className="betslip-balance-view-m" onSwipingUp={this.props.openBetslip()}>
                 <ul>
+                    {Config.main.enableBetHistoryInFooter && this.props.user.profile ? <li><Link to="/history/open-bets">Bet History</Link></li> : null}
                     {betSlip.quickBet
                         ? <li>
                             {this.props.ui.loading.bet
@@ -35,7 +49,7 @@ module.exports = function betslipTemplate () {
                                 : <p>{t("Quick bet mode")}</p>
                             }
                         </li>
-                        : <li>
+                        : <li onClick={this.props.openBetslip()}>
                             <span className="betslip-title-mini">
                                 <i>{t("Betslip")}</i>
                                 <b>{events.length}</b>
@@ -43,8 +57,13 @@ module.exports = function betslipTemplate () {
                         </li>}
                     {this.props.user.profile ? <li>
                         {betSlip.quickBet
-                            ? <p className="balance-view-betslip">{t("Stake:")} <MoneyAmount onClick={this.openQuickBetStake} amount={parseFloat(betSlip.stake)}/></p>
-                            : <p className="balance-view-betslip"><MoneyAmount amount={this.props.user.profile.balance}/></p>
+                            ? <p className="balance-view-betslip">{t("Stake:")} <MoneyAmount onClick={this.openQuickBetStake} amount={parseFloat(betSlip.stake || 0)}/></p>
+                            : <p className="balance-view-betslip">
+                                {Config.main.disableProfileBalanceInFooter
+                                    ? null
+                                    : <MoneyAmount amount={this.props.user.profile.balance || 0}/>
+                                }
+                            </p>
                         }
                     </li> : null }
 
@@ -55,18 +74,25 @@ module.exports = function betslipTemplate () {
             <div className={"betslip-full-view" + (this.props.ui.opened.betslip ? " active" : "")}>
                 <Swipeable className="betslip-header-m" onSwipingDown={this.props.closeBetslip()}>
                     <div className="quick-bet-settings-view">
-                        <Swipeable className="switcher-box" onClick={this.toggleQuickBet}>
-                            <div className={"switcher-contain" + (betSlip.quickBet ? " on" : "")}>
-                                <div className="switcher-circle-b-m"/>
-                            </div>
-                        </Swipeable>
-
-                        <h3>{t("Quick Bet")}</h3>
-
+                        {
+                            Config.main.quickBet && Config.main.quickBet.hideQuickBet
+                                ? null
+                                : <Swipeable className="switcher-box" onClick={this.toggleQuickBet}>
+                                        <div className={"switcher-contain" + (betSlip.quickBet ? " on" : "")}>
+                                            <div className="switcher-circle-b-m"/>
+                                        </div>
+                                </Swipeable>
+                        }
+                        {Config.main.quickBet && Config.main.quickBet.hideQuickBet ? null : <h3>{t("Quick Bet")}</h3>}
                         <div className={"betslip-settings" + (this.props.ui.opened.betslipSettings ? " open" : "") } onClick={this.toggleBetslipSettings}/>
                         <div className="b-settings-view-b">
                             <ul>
                                 <li><p>{t("When price changes:")}</p></li>
+                                <li>
+                                    <div className="radio-form-item">
+                                        <label><input type="radio" name="odd-settings" value="1" defaultChecked={betSlip.acceptPriceChanges === 1} onClick={this.setAcceptOptions}/><span>{t("Accept higher odds")}</span></label>
+                                    </div>
+                                </li>
                                 <li>
                                     <div className="radio-form-item">
                                         <label>
@@ -76,12 +102,7 @@ module.exports = function betslipTemplate () {
                                 </li>
                                 <li>
                                     <div className="radio-form-item">
-                                        <label><input type="radio" name="odd-settings" value="1" defaultChecked={betSlip.acceptPriceChanges === 1} onClick={this.setAcceptOptions}/><span>{t("Accept higher odds")}</span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="radio-form-item">
-                                        <label><input type="radio" name="odd-settings" value="2" defaultChecked={betSlip.acceptPriceChanges === 2} onClick={this.setAcceptOptions}/><span>{t("Accept any odds")}</span></label>
+                                        <label><input type="radio" name="odd-settings" value="2" defaultChecked={Config.main.setDefaultBetSlipSettingType ? true : (betSlip.acceptPriceChanges === 2)} onClick={this.setAcceptOptions}/><span>{t("Accept any odds")}</span></label>
                                     </div>
                                 </li>
                              </ul>
@@ -154,31 +175,47 @@ module.exports = function betslipTemplate () {
                             <ul>
                                 {betSlip.eachWayMode ? <li>
                                     <div className="mini-table-b-m">
-                                        <ul><li><div className="single-form-item">
-                                            {/*<input type="number" step={step} pattern="[\d.]*" placeholder={t("Stake...")} value={bet.singleUnitStake} onChange={this.setUnitStake(bet)} onFocus={this.scrollBetSlipToElement}/>*/}
-                                            <span onClick={(e) => {
-                                                if (!this.props.ui.showVirtualKeyBoard) {
-                                                    this.scrollBetSlipToElement(e);
-                                                    this.openKeyBoard(bet.singleUnitStake, this.setUnitStake(bet), null, bet, e);
-                                                }
-                                            }}>{bet.singleUnitStake ? bet.singleUnitStake : t("Stake...")}</span>
-                                        </div></li></ul>
+                                        <ul>
+                                            <li>
+                                                <div className="single-form-item">
+                                                    {/*<input type="number" step={step} pattern="[\d.]*" placeholder={t("Stake...")} value={bet.singleUnitStake} onChange={this.setUnitStake(bet)} onFocus={this.scrollBetSlipToElement}/>*/}
+                                                    {
+                                                        betSlip.freeBet
+                                                            ? null
+                                                            : <span onClick={(e) => {
+                                                                if (!this.props.ui.showVirtualKeyBoard && !betSlip.freeBet) {
+                                                                    this.scrollBetSlipToElement(e);
+                                                                    this.openKeyBoard(bet.singleUnitStake, this.setUnitStake(bet), null, bet, e);
+                                                                }
+                                                            }}>{bet.singleUnitStake ? bet.singleUnitStake : t("Stake...")}</span>
+                                                    }
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </li> : null}
                                 <li>
                                     <div className="mini-table-b-m">
                                         <ul>
-                                            <li><div className="single-form-item">
-                                                {/*<input type="number" step={step} pattern="[\d.]*" placeholder={t("Stake...")} value={bet.singleStake} onChange={this.setStake(bet)} onFocus={this.scrollBetSlipToElement}/>*/}
-                                                <span onClick={(e) => {
-                                                    if (!this.props.ui.showVirtualKeyBoard) {
-                                                        this.scrollBetSlipToElement(e);
-                                                        this.openKeyBoard(bet.singleStake, this.setStake(bet), null, bet, e);
+                                            <li>
+                                                <div className="single-form-item">
+                                                    {/*<input type="number" step={step} pattern="[\d.]*" placeholder={t("Stake...")} value={bet.singleStake} onChange={this.setStake(bet)} onFocus={this.scrollBetSlipToElement}/>*/}
+                                                    {
+                                                        betSlip.freeBet
+                                                            ? null
+                                                            : <span onClick={(e) => {
+                                                                if (!this.props.ui.showVirtualKeyBoard && !betSlip.freeBet) {
+                                                                    this.scrollBetSlipToElement(e);
+                                                                    this.openKeyBoard(bet.singleStake, this.setStake(bet), null, bet, e);
+                                                                }
+                                                            }}>{bet.singleStake ? bet.singleStake : t("Stake...")}</span>
                                                     }
-                                                }}>{bet.singleStake ? bet.singleStake : t("Stake...")}</span>
-                                                </div></li>
-                                            {loggedIn && betSlip.type !== BETSLIP_TYPE_CHAIN ? (
-                                                <li className={this.props.ui.loading.getMaxBet ? "disabled" : ""} onClick={this.getMaxStake(bet)}>
+                                                </div>
+                                            </li>
+                                            {loggedIn && !betSlip.freeBet && betSlip.type !== BETSLIP_TYPE_CHAIN ? (
+                                                <li className={this.props.ui.loading.getMaxBet ? "disabled" : ""} onClick={ () => {
+                                                    !betSlip.freeBet && this.getMaxStake(bet)();
+                                                }}>
                                                     <div className="max-bet-b-m"><span>{t("Max")}</span></div>
                                                 </li>
                                                 ) : (null)
@@ -202,7 +239,7 @@ module.exports = function betslipTemplate () {
                     <div className="superbet-wrapper">
 
                         {/*superbet*/}
-                        {Config.betting.enableSuperBet && (Config.betting.allowSuperBetOnLive || !info.hasLiveEvents)
+                        {!betSlip.bookingBet && Config.betting.enableSuperBet && (Config.betting.allowSuperBetOnLive || !info.hasLiveEvents)
                             ? [
                                 <div className="bet-kind-container" key="allowSuperBetOnLive">
                                     <div className="kind-of-bet superbet-icon"/>
@@ -224,8 +261,31 @@ module.exports = function betslipTemplate () {
 
                         {/*superbet END*/}
 
+                        {/*booking bet*/}
+                        {Config.betting.enableBookingBet
+                            ? [
+                                <div className="bet-kind-container" key="allowSuperBetOnLive">
+                                    {/*<div className="kind-of-bet bookingbet-icon"/>*/}
+                                    <p className="booking-text">{t("Booking Bet")}</p>
+                                    <div className="info-i-switcher-b booking-s">
+                                        <Expandable className="info-icon-k-bet" uiKey="bookingBetInfo"/>
+                                        <div className="switcher-box" onClick={this.toggleBookingBet}>
+                                            <div className={"switcher-contain " + (betSlip.bookingBet ? "on" : "")}>
+                                                <div className="switcher-circle-b-m"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>,
+                                <div className={"text-info-kind-bet " + (this.props.persistentUI.expanded.bookingBetInfo ? "active" : "")} key="text-info-kind-bet">
+                                    <p>{t("Booking Bet is a new offer that allows booking bets and get booking id for selected sporting events.")}</p>
+                                </div>
+                            ]
+                            : null}
+
+                        {/*booking END*/}
+
                         {/*free bet*/}
-                        {freeBetAvailable ? <div className="bet-kind-container free-bet-container">
+                        {freeBetAvailable && !Config.main.disableFreeBet ? <div className="bet-kind-container free-bet-container">
                             <div className="kind-of-bet freebet-icon"/>
                             <p className="freebet-text">{t("Free Bet")}</p>
                             <div className="info-i-switcher-b freebet-s">
@@ -236,11 +296,12 @@ module.exports = function betslipTemplate () {
                                     </div>
                                 </div>
                             </div>
-                        </div> : null}
 
-                        <div className={"text-info-kind-bet " + (this.props.persistentUI.expanded.freeBetInfo ? "active" : "")}>
-                            <p>{t("FreeBet allows placing a free bet(using your bonus balance) for selected sporting events.")}</p>
+                            <div className={"text-info-kind-bet " + (this.props.persistentUI.expanded.freeBetInfo ? "active" : "")}>
+                                <p>{t("FreeBet allows placing a free bet(using your bonus balance) for selected sporting events.")}</p>
+                            </div>
                         </div>
+                        : null}
                         {freeBetAvailable && betSlip.freeBet
                             ? <div className="free-bet-open-view">
                                 <ul>
@@ -289,7 +350,7 @@ module.exports = function betslipTemplate () {
                                                                 <div className="single-form-item">
                                                                     {/*<input type="number" step={step} pattern="[\d.]*" placeholder={t("Unit Stake...")} value={betSlip.unitStake} onChange={this.setUnitStake()} onFocus={this.scrollBetSlipToElement}/>*/}
                                                                     <span onClick={(e) => {
-                                                                        if (!this.props.ui.showVirtualKeyBoard) {
+                                                                        if (!this.props.ui.showVirtualKeyBoard && !betSlip.freeBet) {
                                                                             this.scrollBetSlipToElement(e);
                                                                             this.openKeyBoard(betSlip.unitStake, this.setUnitStake(), null, betSlip, e);
                                                                         }
@@ -301,11 +362,11 @@ module.exports = function betslipTemplate () {
                                                             <div className="single-form-item">
                                                                 {/*<input type="number" step={step} pattern="[\d.]*" placeholder={t("Stake...")} value={betSlip.stake} onChange={this.setStake()} onFocus={this.scrollBetSlipToElement}/>*/}
                                                                 <span onClick={(e) => {
-                                                                    if (!this.props.ui.showVirtualKeyBoard) {
+                                                                    if (!this.props.ui.showVirtualKeyBoard && !betSlip.freeBet) {
                                                                         this.scrollBetSlipToElement(e);
                                                                         this.openKeyBoard(betSlip.stake, this.setStake(), null, betSlip, e);
                                                                     }
-                                                                }}>{betSlip.stake ? betSlip.stake: t("Stake...")}</span>
+                                                                }}>{betSlip.stake ? betSlip.stake : t("Stake...")}</span>
                                                             </div>
                                                         </li>
 
@@ -341,6 +402,15 @@ module.exports = function betslipTemplate () {
 
                     {["error", "warning", "info"].map(type => displayInfo[type].map(message => <div className={"text-info-bet-m " + type}><p>{message}</p></div>))}
 
+                    {
+                        insufficientBalance &&
+                        Config.main.betslipAdditionalMessages &&
+                        Config.main.betslipAdditionalMessages["insufficientBalance"] &&
+                        <div className={"text-info-bet-m warning"}>
+                            {getAdditionalMessage(Config.main.betslipAdditionalMessages["insufficientBalance"])}
+                        </div>
+                    }
+
                     {betSlip.betAccepted
                         ? <div className="text-info-bet-m accept">
                         <p>{t("Bet accepted.")}</p>
@@ -356,9 +426,17 @@ module.exports = function betslipTemplate () {
                     </div> : null}
 
                     {!this.props.ui.loading.bet ? <div className="bet-button-container">
-                        <div className="separator-box-buttons-m">
-                            <button className="button-view-normal-m" onClick={this.placeBet} disabled={betsCannotBePlaced}>{t("Place Bets")}</button>
-                        </div>
+
+                        {isPartnerIntegration && !this.props.user.profile
+                            ? null
+                            : !betSlip.bookingBet
+                                ? <div className="separator-box-buttons-m">
+                                    <button className="button-view-normal-m" onClick={this.placeBet} disabled={betsCannotBePlaced}>{t("Place Bets")}</button>
+                                </div>
+                                : <div className="separator-box-buttons-m">
+                                    <button className="button-view-normal-m" onClick={this.bookBet} disabled={this.props.ui.loading.getBookingBetId || !events.length}>{t("Get Booking Id")} {this.props.ui.loading.getBookingBetId}</button>
+                                </div>
+                        }
                     </div> : <Loader/>}
 
                 </div>
@@ -370,7 +448,7 @@ module.exports = function betslipTemplate () {
                                     <li><div className="single-form-item">
                                         {/*<input type="hidden" defaultValue={betSlip.stake} ref="quickBetStake" />*/}
                                         <span onClick={(e) => {
-                                            if (!this.props.ui.showVirtualKeyBoard) {
+                                            if (!this.props.ui.showVirtualKeyBoard && !betSlip.freeBet) {
                                                 this.openKeyBoard(betSlip.stake, this.setQuickBetStake, null, betSlip, e, this.saveQuickBetStake);
                                             }
                                         }}>{betSlip.stake || t("Stake...")}</span>

@@ -1,15 +1,24 @@
-import React, {PropTypes} from 'react';
+/**
+ * @name roundStake
+ * @description function rounding stake
+ * @param {number} stake
+ * @returns {number}
+ * */
+import React from 'react';
 import {connect} from 'react-redux';
 import {SwarmDataMixin} from '../../../mixins/swarmDataMixin';
 import {UIMixin} from '../../../mixins/uiMixin';
 import {UIOpen, UIClose} from "../../../actions/ui";
 import Helpers from "../../../helpers/helperFunctions";
 import {GetBetslipData} from "../../../helpers/selectors";
+import Config from "../../../config/main";
+import PropTypes from 'prop-types';
+import {PreferencesSet} from "../../../actions/";
 
 import {BetslipClear, BetslipRemove, BetslipSetType, BetslipToggleQuickBet, BetslipAcceptChanges,
     BetslipSetStake, BetslipSetUnitStake, BetslipPlaceBet, BetslipGetEventMaxBet, BetslipSetEachWayMode,
     BetslipSetSystemOpt, BetslipSetAcceptOpt, BetslipSetInclInSysCalc, BetslipResetStatus, BetslipToggleSuperBet,
-    BetslipToggleFreeBet, BetslipLoadFreeBets, BetslipSelectFreeBet
+    BetslipToggleFreeBet, BetslipLoadFreeBets, BetslipSelectFreeBet, BetslipToggleBookingBet, BetslipBookBet
 } from "../../../actions/betslip";
 
 import {TOGGLE_VIRTUAL_KEYBOARD} from "../../../actions/actionTypes";
@@ -59,7 +68,16 @@ const Betslip = React.createClass({
      * */
     placeBet () {
         let freeBet = this.props.user.profile && this.props.user.profile.has_free_bets && this.props.betslip.freeBet; //eslint-disable-line react/prop-types
-        this.props.dispatch(BetslipPlaceBet(this.props.betslip, this.props.currency, freeBet));            //eslint-disable-line react/prop-types
+        this.props.dispatch(BetslipPlaceBet(this.props.betslip, this.props.currency, freeBet, this.props.user.profile && this.props.user.profile));            //eslint-disable-line react/prop-types
+    },
+
+    /**
+     * @name bookBet
+     * @description booking bet function
+     * @returns {undefined}
+     * */
+    bookBet () {
+        this.props.dispatch(BetslipBookBet(this.props.betslip));  //eslint-disable-line react/prop-types
     },
 
     /**
@@ -308,6 +326,15 @@ const Betslip = React.createClass({
     },
 
     /**
+     * @name toggleBookingBet
+     * @description toggle function for booking bet option in betSlip
+     * @returns {undefined}
+     * */
+    toggleBookingBet () {
+        this.props.dispatch(BetslipToggleBookingBet(!this.props.betslip.bookingBet));            //eslint-disable-line react/prop-types
+    },
+
+    /**
      * @name toggleFreeBet
      * @description toggle function for free bet option in betSlip
      * @returns {undefined}
@@ -337,7 +364,6 @@ const Betslip = React.createClass({
             this.props.dispatch(BetslipRemove(eventId));
         };
     },
-
     /**
      * @name clearBetslip
      * @description remove all events from betSlip
@@ -347,6 +373,19 @@ const Betslip = React.createClass({
         this.props.dispatch(BetslipClear());
         this.props.dispatch(UIClose("betslip"));
     },
+
+    /**
+     * @name changeOddsFormat
+     * @description change betslip odds format
+     * @returns {undefined}
+     * */
+    changeOddsFormat () {
+        console.log("odds format changed to", this.refs.oddsFormatSelect.value);
+        if (this.refs.oddsFormatSelect.value !== this.props.preferences.lang) { //eslint-disable-line react/prop-types
+            this.props.dispatch(PreferencesSet("oddsFormat", this.refs.oddsFormatSelect.value)); //eslint-disable-line react/prop-types
+        }
+    },
+
     render () {
         return Template.apply(this); //eslint-disable-line no-undef
     },
@@ -354,18 +393,30 @@ const Betslip = React.createClass({
         //do a reset
         this.resetBetslipStatus();
         this.props.dispatch(BetslipToggleQuickBet(false));
-        if (window.screen.width > 980) {
+        this.props.dispatch(BetslipToggleBookingBet(false));
+        let orientation = screen.orientation || screen.mozOrientation || screen.msOrientation;
+        if (Config.main.enableTabletVersion && (Helpers.isPC() || (orientation && orientation.angle && orientation.angle === 90))) {
             this.props.dispatch(UIOpen("betslip"));
+        }
+    },
+    componentWillReceiveProps (nextProps) {
+        let eventsCount = Object.keys(nextProps.betslip.events);
+        if ((eventsCount > 1 && nextProps.betslip.type !== this.props.betslip.type && nextProps.betslip.freeBet) ||
+            (nextProps.betslip.quickBet && !this.props.betslip.quickBet) ||
+            nextProps.user && nextProps.user.profile && !nextProps.user.profile.has_free_bets && nextProps.betslip.freeBet ||
+            nextProps.betslip.eachWayMode !== this.props.betslip.eachWayMode && nextProps.betslip.eachWay
+        ) {
+            nextProps.dispatch(BetslipToggleFreeBet(false));
         }
     },
     shouldComponentUpdate (nextProps) {
         let currentProps = this.props;
-
         return nextProps.user !== currentProps.user ||
             nextProps.data !== currentProps.data ||
             nextProps.betslip !== currentProps.betslip ||
             nextProps.ui !== currentProps.ui ||
             nextProps.persistentUI !== currentProps.persistentUI ||
+            nextProps.preferences.oddsFormat !== currentProps.preferences.oddsFormat ||
             nextProps.currency !== currentProps.currency &&
             (
                 nextProps.currency &&
@@ -388,7 +439,6 @@ export default connect(mapStateToProps)(SwarmDataMixin(
         ComponentWillReceiveProps: function (nextProps) {
             // if (JSON.stringify(Object.keys(nextProps.betslip.events).sort()) !== JSON.stringify(Object.keys(this.props.betslip.events).sort())) {                   //eslint-disable-line react/prop-types
             rounding = nextProps.currency.rounding;
-            console.info("rounding = nextProps.currency.rounding;");
             // ------------------      handle adding/deleting event from betslip ---------------------------------------
             let nextCount = Object.keys(nextProps.betslip.events).length;
             let prevCount = Object.keys(this.props.betslip.events).length;
@@ -397,18 +447,19 @@ export default connect(mapStateToProps)(SwarmDataMixin(
                 this.swarmSubscriptionRequest.where.event.id["@in"] = Object.keys(nextProps.betslip.events).map(id => parseInt(id, 10));
                 this.resubscribe(true);
                 this.props.dispatch(BetslipSetSystemOpt(2));
-                if (prevCount === 1 && nextCount > 1 && nextProps.betslip.type !== BETSLIP_TYPE_EXPRESS) {
+                if (nextCount > 1 && nextProps.betslip.type !== BETSLIP_TYPE_EXPRESS) {
                     this.props.dispatch(BetslipSetType(BETSLIP_TYPE_EXPRESS));
-                } else if (prevCount > 1 && nextCount <= 1) {
+                } else if (nextCount <= 1 && nextProps.betslip.type !== BETSLIP_TYPE_SINGLE) {
                     this.props.dispatch(BetslipSetType(BETSLIP_TYPE_SINGLE));
                 }
-                // this.props.dispatch(BetslipResetStatus());
                 this.inited = true;
             }
 
-            if (!this.props.user.profile && nextProps.user.profile && nextProps.user.profile.has_free_bets ||
+            if ((!this.props.user.profile && nextProps.user.profile && nextProps.user.profile.has_free_bets ||
                 (!this.betslipLoadFreeBets && this.props.user.profile) ||
-                nextCount !== prevCount
+                nextProps.betslip.type !== this.props.betslip.type ||
+                nextCount !== prevCount) &&
+                ((nextProps.betslip.type === BETSLIP_TYPE_SINGLE && nextCount === 1) || nextProps.betslip.type !== BETSLIP_TYPE_SINGLE)
             ) {
                 if (this.timerId) {
                     clearTimeout(this.timerId);
@@ -440,7 +491,11 @@ export default connect(mapStateToProps)(SwarmDataMixin(
             this.processedSuperBetIds = {};
             this.swarmSubscriptionRequest = {
                 "source": "betting",
-                "what": {"event": ["price", "base", "type"]},
+
+                "what": {
+                    // "market": ["name", "type", "id", "market_type", "order", "col_count", "express_id", "cashout", "base", "group_id", "group_name","display_key", "home_score", "away_score"], // "group_id", "group_name"
+                    "event": ["price", "base", "type"]
+                },
                 "where": {
                     "event": {"id": {"@in": Object.keys(this.props.betslip.events).map(id => parseInt(id, 10))}}
                 }

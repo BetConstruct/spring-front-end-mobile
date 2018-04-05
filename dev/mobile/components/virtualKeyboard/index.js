@@ -1,12 +1,15 @@
-import React, {PropTypes} from "react";
+import React from "react";
 import {keyboardNumbers} from "../../../constants/keyboardNumbers";
 import {t} from "../../../helpers/translator";
+import PropTypes from 'prop-types';
+import Config from '../../../config/main';
 
 class Keyboard extends React.Component {
     handleNumberFieldClick (num) {
         return (event) => {
             event.preventDefault();
-            this.applyChange(this.updateValue([this.currentValue, num].join("")));
+            ((this.currentValue || "").length < 10) && this.applyChange(this.updateValue([this.currentValue, num].join("")));
+
         };
     }
     updateValue (value = "") {
@@ -30,10 +33,13 @@ class Keyboard extends React.Component {
                 }
                 case ".":
                     event.preventDefault();
-                    this.currentValue.indexOf(".") === -1 && this.applyChange(this.updateValue([this.currentValue || 0, "."].join("")));
+                    ((this.currentValue || "").length < 10) && this.currentValue.indexOf(".") === -1 && this.applyChange(this.updateValue([this.currentValue || 0, "."].join("")));
                     break;
                 case true:
-                    this.props.settings.onCloseCallback && this.props.settings.onCloseCallback();
+                    if (!this.props.settings) {
+                        return false;
+                    }
+                    this.props.settings.onCloseCallback && typeof this.props.settings.onCloseCallback === "function" ? this.props.settings.onCloseCallback() : this.props.settings.onCloseCallback;
                     break;
             }
         };
@@ -43,16 +49,16 @@ class Keyboard extends React.Component {
     }
     componentWillMount () {
         document.body.setAttribute("virtual-keyboard", "opened");
-        this.currentValue = this.props.settings.currentValue;
+        this.currentValue = this.props.settings && this.props.settings.currentValue;
         setTimeout(() => {
-            this.props.settings.onOpenCallback && this.props.settings.onOpenCallback(this.props.settings.e);
+            this.props.settings && this.props.settings.onOpenCallback && this.props.settings.onOpenCallback(this.props.settings.e);
         });
     }
     componentWillUnmount () {
         document.body.removeAttribute("virtual-keyboard");
     }
     fillNumbers () {
-        return keyboardNumbers.map((num) => (<li ket={num} onClick={this.handleNumberFieldClick(num)}><span>{num}</span></li>));
+        return keyboardNumbers.map((num) => (<li key={num} onClick={this.handleNumberFieldClick(num)}><span>{num}</span></li>));
     }
     render () {
         if (this.props.bindToElement) {
@@ -65,8 +71,8 @@ class Keyboard extends React.Component {
                         {this.fillNumbers()}
                     </ul>
                     <ul className="key-simbols-m">
-                        <li onClick={this.handleClick(".")}><span>.</span></li>
-                        <li onClick={this.handleClick()}><span></span></li>
+                        {!Config.main.removeDotFromVirtualKeyBoard && <li onClick={this.handleClick(".")}><span>.</span></li>}
+                        <li onClick={this.handleClick()}><span/></li>
                         <li onClick={this.handleClick(true)}><span>{t("Done")}</span></li>
                     </ul>
                 </div>

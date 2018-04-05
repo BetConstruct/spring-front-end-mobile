@@ -51,7 +51,7 @@ module.exports = function betDetailsTemplate () {
                     </p>
                     <p className="bet-info-text-r">
                         <i>{t("Odd")}</i>
-                        <span className="odd-count-m">{OddConverter(bet.k, this.props.preferences.oddsFormat)}</span>
+                        <span className="odd-count-m">{ OddConverter(bet.k, this.props.preferences.oddsFormat)}</span>
                     </p>
                 </div>
                 {bet.outcome === parseInt(BET_OUTCOME_WON, 10)
@@ -66,17 +66,26 @@ module.exports = function betDetailsTemplate () {
                             </span>
                         </p>
                     </div>
-                    : <div className="bet-won-info-m">
-                        <p className="bet-info-text-r">
-                            <i>{t("Possible win")}</i>
-                            <span className="won-count-m">
-                                {bet.bonus
-                                    ? <span className="win-b-result"><MoneyAmount amount={bet.possible_win - bet.bonus}/> + <b className="bonus-amount">{bet.bonus}</b></span>
-                                    : <MoneyAmount amount={bet.possible_win}/>
-                                }
-                            </span>
-                        </p>
-                    </div>}
+                    : bet.outcome === parseInt(BET_OUTCOME_CASHEDOUT, 10)
+                        ? <div className="bet-won-info-m">
+                            <p className="bet-info-text-r">
+                                <i>{t("Payout")}</i>
+                                <span className="won-count-m">
+                                    <MoneyAmount amount={bet.payout}/>
+                                </span>
+                            </p>
+                        </div>
+                        : <div className="bet-won-info-m">
+                            <p className="bet-info-text-r">
+                                <i>{t("Possible win")}</i>
+                                <span className="won-count-m">
+                                    {bet.bonus
+                                        ? <span className="win-b-result"><MoneyAmount amount={bet.possible_win - bet.bonus}/> + <b className="bonus-amount">{bet.bonus}</b></span>
+                                        : <MoneyAmount amount={bet.possible_win}/>
+                                    }
+                                </span>
+                            </p>
+                        </div>}
             </div>
 
             <div className="bet-id-details">
@@ -108,17 +117,16 @@ module.exports = function betDetailsTemplate () {
                         </span>
                         </p>
                     </div>
-
                     <div className="market-n-pick-info">
                         <h4>{event.market_name}</h4>
                         <p>
-                        <span className="pick-title-info-m">
-                            <b>{t("Pick:")}</b> <i>{event.event_name}</i>
-                        </span>
-                            <span className="odd-info-game">{event.coeficient}</span>
+                            <span className="pick-title-info-m">
+                                <b>{t("Pick:")}</b> <i>{event.event_name}</i>
+                            </span>
+                            <span className="odd-info-game">{ OddConverter(event.coeficient, this.props.preferences.oddsFormat)}</span>
+
                         </p>
                     </div>
-
                 </div>
             )}
         </div>

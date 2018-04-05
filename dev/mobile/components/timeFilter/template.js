@@ -13,7 +13,7 @@ module.exports = function timeFilterTemplate () {
                 {Config.main.prematchTimeFilterValues.map(interval =>
                     <li key={interval} onClick={this.setTimeFilter(interval)}
                         className={this.props.prematchTimeFilter === interval ? "active" : ""}>
-                        <p>{interval} {t("hrs")}</p>
+                        <p>{interval !== 'today' ? interval : ''} {interval !== 'today' ? t("hrs") : t("Today's Bets")}</p>
                     </li>
                 )}
             </ul>

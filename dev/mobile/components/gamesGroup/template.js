@@ -12,7 +12,9 @@ import {t} from "../../../helpers/translator";
 module.exports = function gamesGroupTemplate () {
     var Games = Helpers.objectToArray(this.props.gamesObj).sort(Helpers.byStartTsSortingFunc).map(
         (game) => {
-            let isLive = (this.props.gamesType === "live");
+            let isLive = (this.props.gamesType === "live"),
+                conf = Config.main,
+                gameTime = conf.changeTimeZoneByUTC ? moment.unix(game.start_ts).utcOffset(conf.changeTimeZoneByUTC).format(conf.timeFormat) : moment.unix(game.start_ts).format(conf.timeFormat);
             // let gameHasXMarket = hasXMarket(game);
             // let gameHasP1P2Market = hasP1P2Market(game);
             return <div key={game.id} className="single-game-list-item-m">
@@ -20,20 +22,40 @@ module.exports = function gamesGroupTemplate () {
                     <ul className={game.is_blocked ? "blocked" : ""}>
                         <li className={"teams-name-info-m" + (game.team2_name ? "" : " single-team")}>
                             <Link className={"game-info-mini-m " + (isLive ? "live" : "")} to={ `/${this.props.gamesType}/game/${game.id}` }>
-                                <p><span className="team-name-m-box"><i>{game.team1_name}</i></span><span className="game-score-live-m">{isLive ? <i>{game.info && game.info.score1}</i> : null}</span></p>
+                                <p>
+                                    <span className="team-name-m-box">
+                                        {conf.enablePlayerNationality && game.team1_reg_name
+                                            ? <i>{game.team1_name + " " + "(" + game.team1_reg_name + ")"}</i>
+                                            : <i>{game.team1_name}</i>
+                                        }
+                                    </span>
+                                    <span className="game-score-live-m">
+                                        {isLive ? <i>{game.info && game.info.score1}</i> : null}
+                                    </span>
+                                </p>
                                 {game.team2_name
-                                    ? <p><span className="team-name-m-box"><i>{game.team2_name}</i></span><span className="game-score-live-m">{isLive ? <i>{game.info && game.info.score2}</i> : null}</span></p>
+                                    ? <p>
+                                        <span className="team-name-m-box">
+                                            {conf.enablePlayerNationality && game.team2_reg_name
+                                                ? <i>{game.team2_name + " " + "(" + game.team2_reg_name + ")"}</i>
+                                                : <i>{game.team2_name}</i>
+                                            }
+                                        </span>
+                                        <span className="game-score-live-m">
+                                            {isLive ? <i>{game.info && game.info.score2}</i> : null}
+                                        </span>
+                                    </p>
                                     : null
                                 }
-                                    <span className="time-markets-count-m">
+                                <span className="time-markets-count-m">
                                             { isLive
                                                 ? <span className="time-view-game-m">
                                                     <b className="b-row-view-m">{t(convertGameStateName(game.info && game.info.current_game_state, this.props.sportAlias))} {game.info && game.info.current_game_time}</b>
                                                     </span>
-                                                : <i className="time-view-game-m">{moment.unix(game.start_ts).format(Config.main.timeFormat)}</i>
+                                                : <i className="time-view-game-m">{gameTime}</i>
                                             }
 
-                                            <i className="markets-count-view-m">{additionalMarketsCount(game)}</i>
+                                    <i className="markets-count-view-m">{additionalMarketsCount(game)}</i>
                                             <span className="icons-game-info-m">
                                             {hasVideo(game) && game.is_started ? <i className="icon-separator-m video-icon" key="videoicon"/> : null}
                                             </span>

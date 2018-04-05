@@ -3,10 +3,11 @@ import {connect} from 'react-redux';
 import {HandleOpenGameClick} from '../../../helpers/casino/helpers';
 import {OpenPopup} from "../../../actions/ui";
 import {GetLoginState} from "../../../helpers/selectors";
+import PropTypes from 'prop-types';
 
 const CasinoSearchResults = React.createClass({
     propTypes: {
-        clearSearch: React.PropTypes.func.isRequired
+        clearSearch: PropTypes.func.isRequired
     },
 
     /**

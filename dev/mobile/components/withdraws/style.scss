@@ -1,0 +1,73 @@
+@import 'skin';
+.transaction-l-v{
+  height: auto;
+}
+.transaction-date-id{
+  float: left;
+  width: 100%;
+  font-size: 10px;
+  line-height: 14px;
+}
+.transaction-date-id > p{
+  float: left;
+  width: 100%;
+  color: $text-palette-4;
+}
+.transaction-date-id > span{
+  float: left;
+  width: 100%;
+  color: $text-palette-3;
+}
+
+.transaction-name-am-row{
+  float: left;
+  display: table;
+}
+
+.transaction-amount-v{
+  //float: left;
+  //width: 100%;
+  display: table-cell;
+  vertical-align: top;
+  padding: 0 5px;
+}
+.transaction-amount-v > p{
+  float: left;
+  width: 100%;
+  font-size: 12px;
+  line-height: 14px;
+  color: $favorite-color;
+}
+.transaction-amount-v.title-v > p{
+  color: $text-palette-3;
+}
+.transaction-payment-n{
+  //float: left;
+  width: 100%;
+  display: table-cell;
+  vertical-align: top;
+  padding: 0 5px;
+}
+.transaction-payment-n > p{
+  float: left;
+  width: 100%;
+  font-size: 12px;
+  line-height: 14px;
+  color: $text-palette-4;
+  padding: 0 10px 0 0;
+  position: relative;
+}
+.transaction-payment-n > p > i{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+  font-style: normal;
+}
+.transaction-l-v .name-d-method{
+  text-align: right;
+}

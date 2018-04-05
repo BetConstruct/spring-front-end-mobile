@@ -20,7 +20,14 @@
 	height: 40px;
 	position: relative;
 	padding: 0 40px;
-	box-shadow: 0 1px 0 rgba(123, 129, 145, 0.15) inset;
+	box-shadow: 0 1px 0 rgba(123, 129, 145, 0.15) inset, 0 -1px 0 rgba(123, 129, 145, 0.03) inset;
+	top: 98px;
+	position: -webkit-sticky;
+	position: sticky;
+	z-index: 555;
+}
+.integration-view .sport-region-info-m{
+	top: 0;
 }
 .sport-region-info-m.active{
 	background: $skin-palette-9;
@@ -229,5 +236,35 @@
 }
 .competition-list-view-m > ul > li > a.active > p{
 	color: $text-palette-3;
+}
+.sports-navigation-scroll-buttons{
+	position: absolute;
+	height: 65px;
+	width: 40px;
+	z-index: 10;
+	font: 20px/36px icomoon;
+	cursor: pointer;
+	color: $text-palette-6;
+	background:  rgba(darken( saturate( adjust-hue( $skin-palette-7, 3deg ), 8 ), 21 ), 0.6);
+	box-shadow: -1px 0 0 $skin-palette-12 inset;
+	border: none;
+	&.left-button{
+		left: 0;
+		&:before{
+			content: "\E66f";
+		}
+	}
+	&.right-button{
+		right: 0;
+		&:before{
+			content: "\E672";
+		}
+	}
+	&:active{
+		background: $skin-palette-9;
+	}
+}
+.sports-navigation-scroll-buttons.right-button{
+	box-shadow: 1px 0 0 $skin-palette-12 inset;
 }
 //competition END

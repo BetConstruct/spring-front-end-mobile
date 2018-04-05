@@ -1,4 +1,4 @@
-import React, {PropTypes} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import {t} from "../../../../helpers/translator";
 import {betHistoryItemSelector} from "../../../../helpers/selectors";
@@ -23,6 +23,7 @@ import OddConverter from "../../../../helpers/sport/oddConverter";
 import MoneyAmount from "../../../components/moneyAmount/";
 import Config from "../../../../config/main";
 import {UIMixin} from "../../../../mixins/uiMixin";
+import PropTypes from 'prop-types';
 
 class HistoryBetItem extends React.Component {
     shouldComponentUpdate (nextProps) {
@@ -30,7 +31,9 @@ class HistoryBetItem extends React.Component {
         return bet.cash_out !== nextBet.cash_out || bet.calculatedCashout !== nextBet.calculatedCashout || bet.cashoutSuspended !== nextBet.cashoutSuspended || this.props.preferences.oddsFormat !== nextProps.preferences.oddsFormat;
     }
     render () {
-        let bet = this.props.bet;
+        let bet = this.props.bet,
+            betTime = moment.unix(bet.date_time).format(Config.main.shortDateTimeFormat);
+
         const betTypeCssClass = {
             [BETSLIP_TYPE_SINGLE]: "single",
             [BETSLIP_TYPE_EXPRESS]: "multiple",
@@ -58,7 +61,7 @@ class HistoryBetItem extends React.Component {
                         </p>
                         <p className="date-id-info-bet">
                             <span className="id-info-view">{t("ID:")} <b>{bet.id}</b></span>
-                            <i>{moment.unix(bet.date_time).format(Config.main.shortDateTimeFormat)}</i>
+                            <i>{betTime}</i>
                         </p>
                         <span className="arrow-view-bet-info"/>
                     </Link>
@@ -79,32 +82,41 @@ class HistoryBetItem extends React.Component {
                 </div>
                 {bet.outcome === parseInt(BET_OUTCOME_WON, 10)
                     ? <div className="possible-win-coupon">
-                    <p>{t("Won")}</p>
-                    <span>
-                                {bet.bonus
-                                    ? <span className="win-b-result"><MoneyAmount amount={bet.payout - bet.bonus}/> + <b className="bonus-amount">{bet.bonus}</b></span>
-                                    : <MoneyAmount amount={bet.payout}/>
-                                }
+                        <p>{t("Won")}</p>
+                        <span>
+                            {bet.bonus
+                                ? <span className="win-b-result"><MoneyAmount amount={bet.payout - bet.bonus}/> + <b className="bonus-amount">{bet.bonus}</b></span>
+                                : <MoneyAmount amount={bet.payout}/>
+                            }
+                        </span>
+                    </div>
+                    : bet.outcome === parseInt(BET_OUTCOME_CASHEDOUT, 10)
+                        ? <div className="possible-win-coupon">
+                            <p>{t("Payout")}</p>
+                            <span>
+                                <MoneyAmount amount={bet.payout}/>
                             </span>
-                </div>
-                    : <div className="possible-win-coupon">
-                    <p>{t("Possible win")}</p>
-                    <span>
+                        </div>
+                        : <div className="possible-win-coupon">
+                            <p>{t("Possible win")}</p>
+                            <span>
                                 {bet.bonus
                                     ? <span className="win-b-result"><MoneyAmount amount={bet.possible_win - bet.bonus}/> + <b className="bonus-amount">{bet.bonus}</b></span>
                                     : <MoneyAmount amount={bet.possible_win}/>
                                 }
                             </span>
-                </div>
+                        </div>
                 }
-
-                {bet.cash_out && !bet.cashoutSuspended ? <div className="cash-out-button">
-                    <button className="button-view-normal-m trans-m" onClick={this.props.openPopup("CashOutDialog", {betId: bet.id, price: bet.calculatedCashout || bet.cash_out})}>
-                        <i>{t("Cashout")}</i>
-                        <b><MoneyAmount amount={bet.calculatedCashout || bet.cash_out}/></b>
-                    </button>
-                </div> : null}
-
+                {
+                    bet.cash_out && !bet.cashoutSuspended
+                        ? <div className="cash-out-button">
+                            <button className="button-view-normal-m trans-m" onClick={this.props.openPopup("CashOutDialog", {betId: bet.id, price: bet.cash_out})}>
+                                <i>{t("Cashout")}</i>
+                                <b>{bet.cash_out}</b>
+                            </button>
+                        </div>
+                        : null
+                }
             </div>
         );
     }

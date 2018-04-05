@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {HandleOpenGameClick} from '../../../helpers/casino/helpers';
+import PropTypes from 'prop-types';
 
 const GamePopup = React.createClass({
     propTypes: {
-        uiState: React.PropTypes.object,
-        user: React.PropTypes.object
+        uiState: PropTypes.object,
+        user: PropTypes.object
     },
     closeDialog (type) {
         let game = this.props.uiState.popupParams.game,

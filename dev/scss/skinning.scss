@@ -10,6 +10,7 @@ $disable-brand-color-1-sc: false, white !default;
 $disable-button-bg-sc: false, white !default;
 $disable-brand-color-2-sc: false, white !default;
 $favorite-color: #c3953c !default;
+$mobile-app-casino: url(../../../images/get-app-casino.png) no-repeat 50% 50%/contain !default;
 
 $skin-palette-1: #ffffff !default;                                                            //#ffffff;
 $skin-palette-2: lighten( desaturate( adjust-hue( $skin-color, 15deg ), 8 ), 77 ) !default;   //#f3f3f5;

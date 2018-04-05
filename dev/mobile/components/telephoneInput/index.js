@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactTelephoneInput from 'react-telephone-input';
+import PropTypes from 'prop-types';
 
 class TelephoneInput extends React.Component {
     constructor (props) {
@@ -18,6 +19,10 @@ class TelephoneInput extends React.Component {
     }
 
     handleChange (val, selectedCountry) {
+        let customFormat = this.props.customFormat;
+        if (customFormat instanceof Object && selectedCountry.format !== customFormat.format && selectedCountry.iso2 === customFormat.iso2) {
+            selectedCountry.format = customFormat.format;
+        }
         val !== undefined && this.props.onChange({fullNumber: val, code: selectedCountry.dialCode, pattern: this.renderPatternFromFormat(selectedCountry.format)});
     }
 
@@ -34,7 +39,10 @@ class TelephoneInput extends React.Component {
                                      onFocus={ this.handleFocus }
                                      defaultCountry={ defaultCountry }
                                      onBlur={ this.handleBlur }
-                                     onChange={ this.handleChange }/>
+                                     onChange={ (evt) => {
+                                         this.handleFocus(evt);
+                                         this.handleChange(evt);
+                                     } }/>
                 {error && touched && <p className="error-message">{error}</p>}
             </div>
         );
@@ -42,16 +50,17 @@ class TelephoneInput extends React.Component {
 }
 
 TelephoneInput.propTypes = {
-    input: React.PropTypes.object,
-    value: React.PropTypes.object,
-    onChange: React.PropTypes.func,
-    onBlur: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    touched: React.PropTypes.bool,
-    error: React.PropTypes.string,
-    className: React.PropTypes.string,
-    defaultCountry: React.PropTypes.string,
-    key: React.PropTypes.string
+    input: PropTypes.object,
+    value: PropTypes.object,
+    onChange: PropTypes.func,
+    onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
+    touched: PropTypes.bool,
+    error: PropTypes.string,
+    className: PropTypes.string,
+    defaultCountry: PropTypes.string,
+    key: PropTypes.string,
+    customFormat: PropTypes.object
 };
 
 export default TelephoneInput;

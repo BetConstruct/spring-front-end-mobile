@@ -6,7 +6,8 @@ import {t} from "../../../helpers/translator";
 import {Link} from 'react-router';
 
 module.exports = function paymentsTemplate () {
-    let disableCasinoBonus = !!Config.casino && !Config.casino.disableCasinoBonus;
+    let sportsbook = !!(Config.main.mainMenuItemsOrder && (Config.main.mainMenuItemsOrder.indexOf('prematch') !== -1 || Config.main.mainMenuItemsOrder.indexOf('live') !== -1)),
+        casino = !!(Config.main.mainMenuItemsOrder && Config.main.mainMenuItemsOrder.indexOf('casino') !== -1);
 
     return (
         <div className="profile-view-wrapper">
@@ -15,14 +16,20 @@ module.exports = function paymentsTemplate () {
             </div>
             <div className="page-menu-contain">
                 <ul>
-                    {!Config.disableSportsbook
-                    ? <li>
-                        <Link activeClassName="active" to="/bonus/sport"><span>{t("Sport Bonus")}</span></Link>
-                      </li>
-                    : null}
-                    {disableCasinoBonus ? <li>
-                        <Link activeClassName="active" to="/bonus/casino"><span>{t("Casino Bonus")}</span></Link>
-                    </li> : null}
+                    {
+                        sportsbook
+                            ? <li>
+                            <Link activeClassName="active" to="/bonus/sport"><span>{t("Sport Bonus")}</span></Link>
+                        </li>
+                            : null
+                    }
+                    {
+                        casino
+                        ? <li>
+                            <Link activeClassName="active" to="/bonus/casino"><span>{t("Casino Bonus")}</span></Link>
+                          </li>
+                        : null
+                    }
                 </ul>
             </div>
 

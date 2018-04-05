@@ -40,7 +40,7 @@ export function LoadPartnerConfig () {
  * @description Load partner currency configs
  * @returns {Function} async action dispatcher
  */
-export function LoadCurrencyConfig () {
+export function LoadCurrencyConfig (currencyName) {
     return function (dispatch) {
         let updateCurrencyConfig = (data) => {
             console.log("currency config:", data);
@@ -52,7 +52,7 @@ export function LoadCurrencyConfig () {
             .subscribe({
                 'source': 'config.currency',
                 'what': {'currency': []},
-                'where': {'currency': {'name': {"@in": Config.main.availableCurrencies}}
+                'where': {'currency': {'name': {"@in": currencyName ? Config.main.availableCurrencies.indexOf(currencyName) !== -1 ? Config.main.availableCurrencies.concat([currencyName]) : Config.main.availableCurrencies : Config.main.availableCurrencies}}
                 }
             }, updateCurrencyConfig)
             .then(response => updateCurrencyConfig(response.data))

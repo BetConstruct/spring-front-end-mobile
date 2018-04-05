@@ -1,10 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {PreferencesSet} from "../../../actions/";
+import PropTypes from 'prop-types';
 
 const LanguageSwitcher = React.createClass({
     propTypes: {
-        mode: React.PropTypes.string
+        mode: PropTypes.string
     },
     render () {
         return Template.apply(this); //eslint-disable-line no-undef

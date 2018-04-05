@@ -55,7 +55,7 @@ module.exports = function liveGamesListTemplate () {
                         </span>
                     </div>
                 </div>
-                {!totalGames ? <p>{t("No games matching your criteria in the selected sport")}</p> : null}
+                {!totalGames ? <p className="empty-text-wrapper-m">{t("No games matching your criteria in the selected sport")}</p> : null}
                 {Regions}
             </div>
         );

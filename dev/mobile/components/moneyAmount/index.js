@@ -1,12 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Config from "../../../config/main";
+import PropTypes from 'prop-types';
 
 const MoneyAmount = React.createClass({
     propTypes: {
-        amount: React.PropTypes.number,
-        currency: React.PropTypes.string,
-        onClick: React.PropTypes.func
+        amount: PropTypes.number,
+        currency: PropTypes.string,
+        onClick: PropTypes.func
     },
     render () {
         if (this.props.amount === undefined) {

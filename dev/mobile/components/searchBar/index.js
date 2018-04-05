@@ -3,10 +3,12 @@ import {connect} from 'react-redux';
 import {SwarmClearData} from "../../../actions/swarm";
 import {DoSportSearch, DoCasinoSearch} from "../../../actions/search";
 import {GetSearchBarData} from "../../../helpers/selectors";
+import PropTypes from 'prop-types';
 
 const SearchBar = React.createClass({
     propTypes: {
-        type: React.PropTypes.string // casino or sport
+        type: PropTypes.string, // casino or sport
+        lang: PropTypes.string // casino or sport
     },
     render () {
         return Template.apply(this); //eslint-disable-line no-undef
@@ -18,12 +20,22 @@ const SearchBar = React.createClass({
      * @returns {undefined}
      * */
     search () {
-        if (this.refs.searchInput.value.length < 4) { //don't perform search unless term is at least 4 characters long
+        let minChar = this.props.lang !== "kor" ? 4 : 1,
+            swarmData = this.props.swarmData,
+            searchQuery = this.refs && this.refs.searchInput && this.refs.searchInput.value && this.refs.searchInput.value.replace(/ /g, "") || "",
+            searchKey = (this.refs && this.refs.searchInput && this.refs.searchInput.value || "").trim();
+
+        if (searchQuery.length < minChar) { //don't perform search unless term is at least 4 characters long
+            this.hideResults = true;
+            if (swarmData && (swarmData.loaded.searchResults || swarmData.loaded.casinoSearchResults)) {
+                this.forceUpdate();
+            }
             return;
         }
+        this.hideResults = false;
         this.props.type === "casino"
-            ? this.props.dispatch(DoCasinoSearch(this.refs.searchInput.value))
-            : this.props.dispatch(DoSportSearch(this.refs.searchInput.value)); //eslint-disable-line react/prop-types
+            ? this.props.dispatch(DoCasinoSearch(searchKey))
+            : this.props.dispatch(DoSportSearch(searchKey)); //eslint-disable-line react/prop-types
     },
 
     /**
@@ -50,6 +62,7 @@ const SearchBar = React.createClass({
 function mapStateToProps (state, ownParams) {
     return {
         swarmData: GetSearchBarData(state),
+        lang: state.preferences.lang,
         ownParams
     };
 }

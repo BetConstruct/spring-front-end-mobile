@@ -3,10 +3,11 @@ import {connect} from 'react-redux';
 import {checkIfUserIsLoggedIn} from "../../../mixins/checkAuthentication";
 import {LoadBonusData, ClaimBonus, CancelBonus} from "../../../actions/bonus";
 import {UIMixin} from "../../../mixins/uiMixin";
+import PropTypes from 'prop-types';
 
 const Bonus = React.createClass({
     propTypes: {
-        type: React.PropTypes.string
+        type: PropTypes.string
     },
     render () {
         //eslint-disable-next-line react/prop-types

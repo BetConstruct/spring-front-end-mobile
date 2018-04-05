@@ -1,6 +1,7 @@
 import React from 'react';
 import {t} from "../../helpers/translator";
 import Config from "../../config/main";
+import PropTypes from 'prop-types';
 
 function repeatOptions () {
     let availableCurrencies = Config.main.availableCurrencies || [];
@@ -11,14 +12,14 @@ function repeatOptions () {
 }
 
 function AvailableCurrencies ({selected, onChange}) {
-    return <select defaultValue={selected} onChange={onChange}>
+    return <select value={selected} onChange={onChange}>
         { repeatOptions() }
     </select>;
 }
 
 AvailableCurrencies.propTypes = {
-    selected: React.PropTypes.string,
-    onChange: React.PropTypes.func
+    selected: PropTypes.string,
+    onChange: PropTypes.func
 };
 
 export default AvailableCurrencies;

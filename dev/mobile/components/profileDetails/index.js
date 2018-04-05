@@ -1,4 +1,4 @@
-import React from 'react';
+import {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm} from 'redux-form';
 import moment from 'moment';
@@ -7,13 +7,12 @@ import {GetProfile} from "../../../helpers/selectors";
 import {UpdateProfile} from "../../../actions/user";
 import Validate from "../../../helpers/validate";
 import formsNames from '../../../constants/formsNames';
-
-const formName = "profileDetails";
+import {createSelector} from 'reselect';
+import {UILoadingReset} from "../../../actions/ui";
 
 let regFieldsAttrs = Object.keys(Config.main.regConfig.fields).reduce((acc, k) => { acc[Config.main.regConfig.fields[k].name] = Config.main.regConfig.fields[k].customAttrs; return acc; }, {});
 let regFieldsValidationMessages = Object.keys(Config.main.regConfig.fields).reduce((acc, k) => { acc[Config.main.regConfig.fields[k].name] = Config.main.regConfig.fields[k].validationMessages; return acc; }, {});
 let allFields = Config.main.personalDetails.editableFields.concat(Config.main.personalDetails.readOnlyFields).concat(Config.main.personalDetails.requiredFields).reduce((acc, f) => { acc[f] = null; return acc; }, {});
-
 
 /**
  * @name getFieldProperties
@@ -40,8 +39,6 @@ let getFieldProperties = (props) => {
     });
     return fieldProperties;
 };
-
-
 
 /**
  * @name validate
@@ -84,12 +81,15 @@ let getProfileDetails = (profile) => {
     if (!profile) {
         return profile;
     }
-    let ret = Object.keys(allFields).reduce((acc, f) => { (allFields[f] !== undefined) && (acc[f] = profile[f]); return acc;}, {});
+    let ret = Object.keys(allFields).reduce((acc, f) => { (allFields[f] !== undefined) && (acc[f] = profile[f]); return acc; }, {});
     ret.birth_date && (ret.birth_date = moment(ret.birth_date).format("YYYY-MM-DD"));
     return ret;
 };
 
-const ProfileDetails = React.createClass({
+class ProfileDetails extends Component {
+    componentWillUnmount () {
+        this.props.dispatch(UILoadingReset(formsNames.profileDetailsForm));
+    }
 
     /**
      * @name save
@@ -103,7 +103,7 @@ const ProfileDetails = React.createClass({
             first_name: values.first_name,
             last_name: values.last_name,
             email: values.email,
-            birth_date: moment(values.birth_date).format("YYYY-MM-DD"),
+            birth_date: values.birth_date && moment(values.birth_date).locale("en").format("YYYY-MM-DD"),
             country_code: values.country_code,
             gender: values.gender,
             password: values.password,
@@ -113,22 +113,25 @@ const ProfileDetails = React.createClass({
             address: values.address
         };
         console.log("data to send", data);
-        this.props.dispatch(UpdateProfile(data, formName)); //eslint-disable-line react/prop-types
-    },
+        this.props.dispatch(UpdateProfile(data, formsNames.profileDetailsForm)); //eslint-disable-line react/prop-types
+    }
     render () {
         this.fieldFroperties = getFieldProperties(this.props);
         return Template.apply(this); //eslint-disable-line no-undef
     }
-});
-
-function mapStateToProps (state) {
-    return {
-        preferences: state.preferences,
-        profile: GetProfile(state),
-        initialValues: getProfileDetails(GetProfile(state)),
-        ui: state.uiState,
-        forms: state.form
-    };
 }
+
+const mapStateToProps = () => {
+    return createSelector(
+        [
+            state => state.preferences,
+            state => GetProfile(state),
+            state => getProfileDetails(GetProfile(state)),
+            state => state.uiState,
+            state => state.form
+        ],
+        (preferences, profile, initialValues, ui, forms) => ({preferences, profile, initialValues, ui, forms})
+    );
+};
 
 export default connect(mapStateToProps)(reduxForm({form: formsNames.profileDetailsForm, validate})(ProfileDetails));

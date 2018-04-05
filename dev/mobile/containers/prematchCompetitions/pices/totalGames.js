@@ -1,6 +1,7 @@
-import React, {Component, PropTypes} from "react";
+import React, {Component} from "react";
 import {connect} from 'react-redux';
 import {t} from '../../../../helpers/translator';
+import PropTypes from 'prop-types';
 
 class TotalGames extends Component {
     render () {

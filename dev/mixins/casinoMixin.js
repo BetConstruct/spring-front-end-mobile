@@ -3,6 +3,7 @@ import {CmsLoadData, SelectCategory, SelectProvider} from '../actions/casino';
 import {UICollapseElement, UIExpandElement, OpenPopup} from "../actions/ui"; //,
 import Config from "../config/main";
 import {HandleProviderClick, HandleOpenGameClick} from '../helpers/casino/helpers';
+import PropTypes from 'prop-types';
 
 /**
  * @name CasinoMixin
@@ -182,9 +183,9 @@ var CasinoMixin = ComposedComponent => class CasinoMixin extends React.Component
 };
 
 CasinoMixin.propTypes = {
-    favorites: React.PropTypes.object,
-    casino: React.PropTypes.object,
-    loggedIn: React.PropTypes.Boolean
+    favorites: PropTypes.object,
+    casino: PropTypes.object,
+    loggedIn: PropTypes.Boolean
 };
 
 export default CasinoMixin;

@@ -41,3 +41,21 @@ export function getPageBySLug (rootPage, slug) {
     }
     return page;
 }
+
+/**
+ * Recursively checks pages for content(to have non-empty "content" field or children with that field)
+ * and marks them with hasContent field
+ * @param {Object} page
+ * @returns {boolean|*}
+ */
+export function checkForContent (page) {
+    if (page.content) {
+        page.hasContent = true;
+        page.children.map(checkForContent);
+    } else if (!page.children.length) {
+        page.hasContent = false;
+    } else {
+        page.hasContent = page.children.reduce((final, page) => (checkForContent(page) || final), false);
+    }
+    return page.hasContent;
+}

@@ -5,7 +5,10 @@ import {
     LIVE_VIDEO_FILTER,
     PREMATCH_TIME_FILTER,
     PREMATCH_WIDGET_TIME_FILTER,
-    HIDE_ANDROID_APP_DOWNLOAD_POPUP
+    HIDE_ANDROID_APP_DOWNLOAD_POPUP,
+    RESET_HASH_PARAMS,
+    STORE_HASH_PARAMS,
+    UPDATE_HASH_PARAMS
 } from "../actions/actionTypes/";
 import Config from "../config/main";
 
@@ -14,7 +17,8 @@ const UIStateReducer = (state = {
     liveVideoFilter: 'all',
     hideDownloadAppPopup: false,
     prematchWidgetTimeFilter: Config.main.prematchWidgetTimeFilterValues[0],
-    expanded: {}
+    expanded: {},
+    hashParams: {}
 }, action = {}) => {
     let ret = _.cloneDeep(state);
     switch (action.type) {
@@ -36,6 +40,24 @@ const UIStateReducer = (state = {
         case UI_EXPAND_ELEMENT:
             ret.expanded[action.payload] = true;
             return ret;
+        case STORE_HASH_PARAMS:
+            return {
+                ...ret,
+                hashParams: action.payload
+            };
+        case RESET_HASH_PARAMS:
+            return {
+                ...ret,
+                hashParams: {}
+            };
+        case UPDATE_HASH_PARAMS:
+            return {
+                ...ret,
+                hashParams: {
+                    ...ret.hashParams,
+                    ...action.payload
+                }
+            };
         default :
             return state;
     }

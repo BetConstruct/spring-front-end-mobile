@@ -4,6 +4,7 @@ import {t} from "../translator";
 import {niceEventName} from "./eventNames";
 import {BetslipSetSystemOpt, GetSuperBetInfo} from "../../actions/betslip";
 import {OpenPopup} from "../../actions/ui";
+import {mathCuttingFunction} from "../filters";
 
 export const BETSLIP_TYPE_SINGLE = 1;
 export const BETSLIP_TYPE_EXPRESS = 2;
@@ -33,9 +34,12 @@ export const createBetslipEventObject = (game, market, event, oddType = "odd") =
     return {
         oddType: oddType,
         gameId: game.id,
-        blocked: game.is_blocked || event.price === 1,
+        blocked: game.is_blocked || event.price === 1 || ((Config.main.blockedPrices && Config.main.blockedPrices.minPrice && Config.main.blockedPrices.maxPrice) && (event.price >= Config.main.blockedPrices.minPrice && event.price <= Config.main.blockedPrices.maxPrice)),
         marketName: market.name,
         marketType: market.type,
+        marketDisplayKey: market.display_key,
+        homeScore: market.home_score,
+        awayScore: market.away_score,
         expressId: market.express_id,
         excludeIds: game.exclude_ids,
         eventId: event.id,
@@ -133,12 +137,13 @@ export function getBetslipData (swarmEventData, storeBetSlipData) {
                 info.hasLockedEvents = bet.blocked ? true : info.hasLockedEvents;
                 info.hasSpOddTypes = bet.oddType !== "odd" ? true : info.hasSpOddTypes;
                 info.hasWrongStakes = info.hasWrongStakes || (isNaN(parseFloat(bet.singleStake)) && bet.singleStake !== "") || parseFloat(bet.singleStake) < 0;
-                info.hasEmptyStakes = storeBetSlipData.type === BETSLIP_TYPE_SINGLE && (info.hasEmptyStakes || isNaN(parseFloat(bet.singleStake)) || parseFloat(bet.singleStake) === 0);
+                info.hasEmptyStakes = (!storeBetSlipData.freeBet || storeBetSlipData.freeBet && !storeBetSlipData.selectedFreeBetAmount) && storeBetSlipData.type === BETSLIP_TYPE_SINGLE && (info.hasEmptyStakes || isNaN(parseFloat(bet.singleStake)) || parseFloat(bet.singleStake) === 0);
             } else {
                 bet.available = false;
                 info.hasDeletedEvents = true;
             }
             events.push(bet);
+
         });
     }
     return {events, info, totalStake};
@@ -222,8 +227,10 @@ export function calculateSystemPossibleWin (allBets, sysBetSelectedValue, stake,
                     tempEwOdd = 0;
                 }
             }
-            tempPosWin += tempOdd;
-            tempPosEwWin += tempEwOdd;
+            tempPosWin = tempPosWin + mathCuttingFunction(tempOdd * 100) / 100;
+            tempPosEwWin = tempPosEwWin + mathCuttingFunction(tempEwOdd * 100) / 100;
+            // tempPosWin += tempOdd;
+            // tempPosEwWin += tempEwOdd;
             indexArray[tempIterator]++;
         } else {
             tempIterator--;
@@ -281,19 +288,21 @@ export function calculatePossibleWin (allBets, unitStake, loggedIn, currency, be
         return parseFloat(value);
     }
     allBets.map(function (bet) {
+        let singleStake = betslip.freeBet ? Number.parseFloat(betslip.selectedFreeBetAmount) || 0 : bet.singleStake;
         switch (betslip.type) {
             case BETSLIP_TYPE_SINGLE:
                 if (allBets.length === 1 && !Config.betting.alternativeBetSlip) {
                     bet.singleUnitStake = unitStake;
                     bet.eachWay = betslip.eachWayMode;
                 }
-                if (!isNaN(parseFloat(bet.singleStake)) && parseFloat(bet.singleStake) > 0 && !bet.deleted && bet.oddType !== 'sp' && !bet.blocked) {
+                if (!isNaN(parseFloat(singleStake)) && parseFloat(singleStake) > 0 && !bet.deleted && bet.oddType !== 'sp' && !bet.blocked) {
                     var realPrice = betslip.betterOddSelectionMode ? bet.betterPrice : bet.price;
                     if (bet.eachWay && bet.ewAllowed && bet.ewCoeff) {
                         bet.singlePosWin = setMaxWinLimit(Math.round(((((realPrice - 1) / bet.ewCoeff + 1) + realPrice) * bet.singleUnitStake) * 100 || 0) / 100);
                     } else {
-                        bet.singlePosWin = setMaxWinLimit(Math.round((realPrice * bet.singleStake) * 100 || 0) / 100);
+                        bet.singlePosWin = setMaxWinLimit(Math.round((realPrice * singleStake) * 100 || 0) / 100);
                     }
+                    betslip.freeBet && betslip.selectedFreeBetAmount && (bet.singlePosWin -= betslip.selectedFreeBetAmount);
                     possibleWin += bet.singlePosWin;
                 } else {
                     bet.singlePosWin = 0;
@@ -333,27 +342,31 @@ export function calculatePossibleWin (allBets, unitStake, loggedIn, currency, be
             } else {
                 oddLimitExceededFlag = false;
             }
+            Config.main.mathCuttingFunctionForExpOdds && (totalOdd = mathCuttingFunction(totalOdd * 100) / 100);
             var expOdds = Math.round(totalOdd * 100) / 100;
             expBonus = calculateExpressBonus(allBets.length, expOdds, betslip.stake);
             if (betslip.eachWayMode && ewOdd > 1 && unitStake) {
                 posWin = setMaxWinLimit(Math.round(((totalOdd + ewOdd) * unitStake) * 100 || 0) / 100);
                 break;
             }
-            if (betslip.stake && (betslip.freeBet || betslip.bonusBet)) {
-                posWin = setMaxWinLimit(Math.round((totalOdd * betslip.stake - betslip.stake) * 100 || 0) / 100);
+            if (betslip.stake && (betslip.freeBet || betslip.bonusBet) || betslip.freeBet && betslip.selectedFreeBetAmount) {
+                let stake = betslip.freeBet && betslip.selectedFreeBetAmount || betslip.stake;
+                posWin = setMaxWinLimit(Math.round((totalOdd * stake - stake) * 100 || 0) / 100);
                 break;
             }
-            posWin = setMaxWinLimit(Math.round((totalOdd * betslip.stake) * 100 || 0) / 100);
+
+            posWin = setMaxWinLimit(Math.floor((totalOdd * (betslip.freeBet && betslip.selectedFreeBetAmount || betslip.stake)) * 100 || 0) / 100);
             break;
         case BETSLIP_TYPE_SYSTEM:
             if (allBets.length > 2) {
-                var tempResult = calculateSystemPossibleWin(allBets, betslip.sysOptionValue, betslip.stake, betslip.bankersBetsCount, betslip.eachWayMode);
+                let stake = betslip.freeBet && betslip.selectedFreeBetAmount || betslip.stake;
+                var tempResult = calculateSystemPossibleWin(allBets, betslip.sysOptionValue, stake, betslip.bankersBetsCount, betslip.eachWayMode);
                 if (betslip.eachWayMode) {
                     posWin = setMaxWinLimit(Math.round((tempResult.win + tempResult.ewWin) * 1000 || 0) / 1000);
                     break;
                 }
-                if (betslip.stake && betslip.bonusBet) {
-                    posWin = setMaxWinLimit(Math.round((bankerTotalPrice * tempResult.win - betslip.stake) * 1000 || 0) / 1000);
+                if (betslip.stake && (betslip.freeBet || betslip.bonusBet) || betslip.freeBet && betslip.selectedFreeBetAmount) {
+                    posWin = setMaxWinLimit(Math.round((bankerTotalPrice * tempResult.win - stake) * 1000 || 0) / 1000);
                     break;
                 }
                 posWin = setMaxWinLimit(Math.round((bankerTotalPrice * tempResult.win) * 1000 || 0) / 1000);
@@ -523,7 +536,7 @@ export const createBetRequests = (betSlipData, currency, forFreeBet = false) => 
                     }]
                 };
                 setCommonFields(data);
-                data.amount = forFreeBet ? undefined : parseFloat(bet.singleStake);
+                !forFreeBet && (data.amount = parseFloat(bet.singleStake));
                 requests.push(data);
             });
             break;
@@ -531,7 +544,7 @@ export const createBetRequests = (betSlipData, currency, forFreeBet = false) => 
             currentBets = [];
             Object.keys(betSlipData.events).map(id => {
                 let bet = betSlipData.events[id];
-                currentBets.push({'event_id': bet.eventId, 'price': bet.oddType === 'sp' ? -1 : bet.price});
+                currentBets.push({'event_id': bet.eventId, 'price': bet.oddType === 'sp' ? -1 : bet.price || bet.initialPrice});
             });
             data = {'bets': currentBets};
             setCommonFields(data);
@@ -558,7 +571,7 @@ export const createBetRequests = (betSlipData, currency, forFreeBet = false) => 
             currentBets = [];
             Object.keys(betSlipData.events).map(id => {
                 let bet = betSlipData.events[id];
-                currentBets.push({'event_id': bet.eventId, 'price': bet.oddType === 'sp' ? -1 : bet.price});
+                currentBets.push({'event_id': bet.eventId, 'price': bet.oddType === 'sp' ? -1 : bet.price || bet.initialPrice});
             });
             data = {'bets': currentBets};
             setCommonFields(data);
@@ -594,7 +607,10 @@ export function doBetSlipViewCalculations (betSlip, data, user, currency, dispat
     }
     let totalBonus = user.profile ? (user.profile.bonus_balance || 0) + (user.profile.bonus_win_balance || 0) + (user.profile.frozen_balance || 0) : 0,
         insufficientBalance = user.profile && (totalStake > user.profile.balance && totalStake > totalBonus),
-        freeBetAvailable = user.profile && user.profile.has_free_bets && betSlip.freeBetsList && betSlip.freeBetsList.length && !betSlip.freeBetLoading && !!Object.keys(betSlip.events).length,
+        eventsCount = Object.keys(betSlip.events).length,
+        freeBetAvailable = user.profile && user.profile.has_free_bets && betSlip.freeBetsList && betSlip.freeBetsList.length && !betSlip.freeBetLoading && !!eventsCount &&
+        ((betSlip.type === BETSLIP_TYPE_SINGLE && eventsCount === 1) || betSlip.type !== BETSLIP_TYPE_SINGLE) &&
+        !betSlip.eachWayMode,
         priceChangeNeeds2bConfirmed = (info.priceWentDown && betSlip.acceptPriceChanges !== 2) ||     // price went down and user is not accepting "any" changes
         (info.priceChange && betSlip.acceptPriceChanges === 0),
         betsCannotBePlaced =
@@ -617,14 +633,14 @@ export function doBetSlipViewCalculations (betSlip, data, user, currency, dispat
     info.hasConflicts && betSlip.type !== BETSLIP_TYPE_SINGLE && displayInfo.warning.push(t("Some events in betslip conflict with others."));
     (info.hasEmptyStakes || info.hasWrongStakes || (!betSlip.stake && betSlip.type !== BETSLIP_TYPE_SINGLE)) && !(freeBetAvailable && betSlip.freeBet && betSlip.selectedFreeBetId) &&
     displayInfo.info.push(t("Set stake to place a bet."));
-    insufficientBalance && displayInfo.warning.push(t("Insufficient balance."));
+    insufficientBalance && !(Config.main.betslipAdditionalMessages && Config.main.betslipAdditionalMessages["insufficientBalance"]) && displayInfo.warning.push(t("Insufficient balance."));
     oddLimitExceededFlag && displayInfo.warning.push(t("Odds limit exceeded."));
     !loggedIn && displayInfo.warning.push(t("You need to login to be able to place a bet."));
     ((betSlip.type === BETSLIP_TYPE_SYSTEM && events.length && events.length < 3) ||
     (betSlip.type === BETSLIP_TYPE_EXPRESS && events.length && events.length < 2) ||
     (betSlip.type === BETSLIP_TYPE_CHAIN && events.length && events.length < 2)) &&
     displayInfo.info.push(t("Add more events to place a bet."));
-    return {events, info, posWin, expOdds, expBonus, freeBetAvailable, priceChangeNeeds2bConfirmed, betsCannotBePlaced, displayInfo, systemOptions};
+    return {events, info, posWin, expOdds, expBonus, freeBetAvailable, priceChangeNeeds2bConfirmed, betsCannotBePlaced, displayInfo, systemOptions, insufficientBalance};
 }
 
 /**

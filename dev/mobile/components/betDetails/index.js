@@ -1,5 +1,6 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 const BetDetails = React.createClass({
     propTypes: {
@@ -44,7 +45,7 @@ const BetDetails = React.createClass({
 });
 
 BetDetails.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state) {

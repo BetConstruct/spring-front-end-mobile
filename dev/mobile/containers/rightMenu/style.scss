@@ -9,7 +9,7 @@
   z-index: 9999;
   transform: translate3d(0, 0, 0);
   overflow: hidden;
-  transition: left 300ms;
+  transition: left 240ms;
   -webkit-overflow-scrolling: touch;
 }
 .left-trans-box-m{
@@ -28,8 +28,7 @@
   position: absolute;
   height: 200%;
   width: 100%;
-  background: rgba(0, 0, 0, 0);
-  transition: background 300ms;
+  transition: background 240ms;
 }
 .right-nav-container-m.open:before{
   transition-delay: 200ms;
@@ -82,7 +81,7 @@
   line-height: 16px;
   margin: 0 0 7px;
 }
-.button-view-normal-m{
+.button-view-normal-m, .separator-box-buttons-m > a{
   float: left;
   width: 100%;
   background: $button-bg;
@@ -90,13 +89,13 @@
   box-sizing: border-box;
   padding: 0 20px;
   text-align: center;
-  height: 38px;
   font-family: $font-f;
   font-size: 14px;
   line-height: 38px;
   color: set-color($button-bg);
   text-transform: uppercase;
   box-shadow: 0 0 0 1px $button-bg inset;
+  text-decoration: none;
 }
 .button-view-normal-m:disabled{
   background: $skin-palette-6;
@@ -107,7 +106,7 @@
   background: #c3953c;
   box-shadow: 0 0 0 1px #c3953c inset;
 }
-.button-view-normal-m.trans-m{
+.button-view-normal-m.trans-m, .sign-in-m > a, .button-view-normal-m.trans-m > a{
   background: none;
   color: $text-palette-5;
 }
@@ -161,11 +160,15 @@
 .title-row-u-m{
   float: left;
   width: 100%;
-  position: relative;
+  //position: relative;
   height: 38px;
   background: $skin-palette-9;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
   padding: 0 38px;
+  top: 0;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 555;
 }
 .title-row-u-m.active{background: $skin-palette-11;}
 .icon-view-u-m{
@@ -242,11 +245,11 @@
   max-height: 0;
   height: auto;
   overflow: hidden;
-  animation: closed-animate-u-menu 180ms ease;
+  animation: closed-animate-u-menu 60ms ease;
 }
 .title-row-u-m.active + .open-view-single-u-m{
   max-height: 9999px;
-  animation: open-animate-u-menu 400ms ease-in-out;
+  animation: open-animate-u-menu 240ms ease-in-out;
 }
 @keyframes open-animate-u-menu{
   0% {max-height: 0;}

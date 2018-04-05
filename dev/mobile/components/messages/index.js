@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, reset} from 'redux-form';
 import Validate from "../../../helpers/validate";
@@ -8,6 +8,8 @@ import {LoadUserMessages, ReadUserMessage, DeleteUserMessage, SendUserMessage, D
 import {UILoadingReset, OpenPopup, ConfirmationDialogReset} from "../../../actions/ui";
 import {MSG_TYPE_INCOMING, MSG_TYPE_OUTGOING} from "../../../constants/messages";
 import {t} from "../../../helpers/translator";
+import PropTypes from 'prop-types';
+import {UpdateMessagesUnreadCount} from "../../../actions/user";
 
 const Messages = React.createClass({
     propTypes: {
@@ -22,11 +24,16 @@ const Messages = React.createClass({
     /**
      * @name readMessage
      * @description read selected message
-     * @param {number} id
+     * @param {object} message
      * @returns {Function}
      * */
-    readMessage (id) {
-        return () => this.props.dispatch(ReadUserMessage(id));
+    readMessage (message) {
+        return () => {
+            if (!message.checked) {
+                this.props.dispatch(ReadUserMessage(message.id));
+                message.checked === 0 && this.props.dispatch(UpdateMessagesUnreadCount(-1));
+            }
+        };
     },
 
     /**

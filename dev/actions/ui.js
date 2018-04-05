@@ -1,7 +1,7 @@
 import {
     PREMATCH_TIME_FILTER, PREMATCH_WIDGET_TIME_FILTER, UI_COLLAPSE_ELEMENT, UI_EXPAND_ELEMENT,
     UI_OPEN, UI_CLOSE, OPEN_POPUP, CLOSE_POPUP, UI_LAST_ROUTE_TYPE, UI_CURRENT_ROUTE_TYPE, UI_PREVIOUS_PATH, CONFIRMATION_DIALOG_ANSWER,
-    CONFIRMATION_DIALOG_RESET, UI_LOADING, UI_LOADING_DONE, UI_LOADING_FAILED, UI_LOADING_RESET, LIVE_VIDEO_FILTER, HIDE_ANDROID_APP_DOWNLOAD_POPUP
+    CONFIRMATION_DIALOG_RESET, UI_LOADING, UI_LOADING_DONE, UI_LOADING_FAILED, UI_LOADING_RESET, LIVE_VIDEO_FILTER, HIDE_ANDROID_APP_DOWNLOAD_POPUP, SET_MARKET_GROUP_FILTER
 } from './actionTypes/';
 
 /**
@@ -46,6 +46,22 @@ export const LiveVideoFilter = (payload) => {
      * */
     return {
         type: LIVE_VIDEO_FILTER,
+        payload
+    };
+};
+
+/**
+ * @name LiveVideoFilter
+ * @description sync action creator function.
+ * @param {object} payload
+ * @returns {Object}
+ */
+export const MarketFilter = (payload) => {
+    /**
+     * @event changeLiveVideoFilter
+     * */
+    return {
+        type: SET_MARKET_GROUP_FILTER,
         payload
     };
 };
@@ -231,12 +247,13 @@ export const OpenPopup = (key, payload) => {
  * It's impossible to open multiple popups at the same time.
  * @returns {Object}
  */
-export const ClosePopup = () => {
+export const ClosePopup = (locationChanged) => {
     /**
      * @event closePopup
      */
     return {
-        type: CLOSE_POPUP
+        type: CLOSE_POPUP,
+        locationChanged
     };
 };
 

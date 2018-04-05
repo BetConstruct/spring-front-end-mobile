@@ -1,5 +1,7 @@
 import React from "react";
 import Config from '../../../config/main';
+import PropTypes from 'prop-types';
+
 let attempt = 0;
 
 /**
@@ -80,14 +82,14 @@ const AnimationsContainer = React.createClass({
 });
 
 AnimationsContainer.propTypes = {
-    hasVideo: React.PropTypes.bool.isRequired,
-    videoLoadStarted: React.PropTypes.bool.isRequired,
-    loggedIn: React.PropTypes.bool.isRequired,
-    balance: React.PropTypes.number.isRequired,
-    hasAnimation: React.PropTypes.bool.isRequired,
-    streamURL: React.PropTypes.string.isRequired,
-    game: React.PropTypes.object.isRequired,
-    sport: React.PropTypes.string.isRequired
+    hasVideo: PropTypes.bool.isRequired,
+    videoLoadStarted: PropTypes.bool.isRequired,
+    loggedIn: PropTypes.bool.isRequired,
+    balance: PropTypes.number.isRequired,
+    hasAnimation: PropTypes.bool.isRequired,
+    streamURL: PropTypes.string.isRequired,
+    game: PropTypes.object.isRequired,
+    sport: PropTypes.string.isRequired
 };
 
 export default AnimationsContainer;

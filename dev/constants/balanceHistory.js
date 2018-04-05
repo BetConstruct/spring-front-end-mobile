@@ -34,7 +34,8 @@ export const mainTransactionTypes = {
     // "40": t("Bet cashout"), //doesn't exist in spring
     "19": t("Fair"),
     "20": t("Fair Win"),
-    "21": t("Fair Commission")
+    "21": t("Fair Commission"),
+    "310": t("Buddy to Buddy Transfer")
 };
 
 export const casinoTransactionTypes = {

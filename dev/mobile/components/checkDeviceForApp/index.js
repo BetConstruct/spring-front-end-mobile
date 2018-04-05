@@ -1,6 +1,7 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import Config from "../../../config/main";
 import Helpers from "../../../helpers/helperFunctions";
+import PropTypes from 'prop-types';
 
 export default function SuitableApp ({ title }) {
 
@@ -12,10 +13,10 @@ export default function SuitableApp ({ title }) {
     function clickHandler () {
         let winAppStoreLink;
         switch (true) {
-            case !!(Helpers.isAndroid() && Config.main.androidAppSettings && Config.main.androidAppSettings.downloadLink):
+            case !!(Helpers.isAndroid() && Helpers.CheckIfPathExists(Config, "main.androidAppSettings.downloadLink")):
                 window.location.href = Config.main.androidAppSettings.downloadLink;
                 break;
-            case !!(Helpers.isIos() && Config.main.iosAppSettings && Config.main.iosAppSettings.appStoreLink):
+            case !!(Helpers.isIos() && Helpers.CheckIfPathExists(Config, "main.iosAppSettings.appStoreLink")):
                 winAppStoreLink = window.open(Config.main.iosAppSettings.appStoreLink, "_blank");
                 winAppStoreLink.focus();
                 break;
@@ -24,10 +25,11 @@ export default function SuitableApp ({ title }) {
         }
     }
 
-    return ((Helpers.isAndroid() && Config.main.androidAppSettings && Config.main.androidAppSettings.showAndroidAppDownloadPopup) || (Helpers.isIos() && Config.main.iosAppSettings && Config.main.iosAppSettings.showIOSAppDownloadPopup)) ? <a href="javascript:;" onClick={ () => { clickHandler(); } }>{ title }</a> : null;
+    return ((Helpers.isAndroid() && Helpers.CheckIfPathExists(Config, "main.androidAppSettings.downloadLink")) ||
+    (Helpers.isIos() && Helpers.CheckIfPathExists(Config, "main.iosAppSettings.appStoreLink")))
+        ? <a href="javascript:;" onClick={clickHandler}>{ title }</a>
+        : null;
 }
-
-
 
 SuitableApp.propTypes = {
     title: PropTypes.string.isRequired

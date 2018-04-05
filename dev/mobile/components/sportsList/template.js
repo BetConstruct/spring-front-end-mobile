@@ -2,8 +2,9 @@ import React from 'react';
 import {Link} from 'react-router';
 import Loader from "../loader/";
 import {t} from "../../../helpers/translator";
+import Helpers from "../../../helpers/helperFunctions";
 
-module.exports = function sportsListTemplate() {
+module.exports = function sportsListTemplate () {
 
     let Sports = [];
     // let key = "sportsList" + this.props.gameType + this.props.timeFilter;
@@ -27,8 +28,15 @@ module.exports = function sportsListTemplate() {
                 </li>
         );
         return (
-            <div className={"sports-navigation" + (loading ? " loading" : "")}>
-                <div className="sport-nav-container-m">
+            <div className={"sports-navigation" + (loading ? " loading" : "") + (Helpers.isPC() ? " isPC" : "")}>
+                {Helpers.isPC()
+                    ? <button className="sports-navigation-scroll-buttons left-button" onMouseDown={() => {
+                        this.handleMouseUp();
+                        this.scroll(this.refs.scroller, -3, 17);
+                    }}/>
+                    : null
+                }
+                <div className="sport-nav-container-m" ref="scroller">
                     <ul>
                         <li key="favorites">
                             <Link to={ `/${this.props.gameType}/Favorites` } activeClassName="active">
@@ -41,6 +49,13 @@ module.exports = function sportsListTemplate() {
                         {Sports}
                     </ul>
                 </div>
+                {Helpers.isPC()
+                    ? <button className="sports-navigation-scroll-buttons right-button cms-jcon-lc-right" onMouseDown={() => {
+                        this.handleMouseUp();
+                        this.scroll(this.refs.scroller, 3, 17);
+                    }}/>
+                    : null
+                }
             </div>
         );
     }

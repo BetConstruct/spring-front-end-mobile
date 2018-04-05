@@ -1,6 +1,21 @@
 import Zergling from '../helpers/zergling';
 import {SwarmLoadingStart, SwarmLoadingDone, SwarmReceiveData, SwarmClearData} from './swarm';
-import {SET_BET_HISTORY_FILTERS, RESET_BET_HISTORY_FILTERS, DESTROY_LOADED_BET_HISTORY} from "../actions/actionTypes/";
+import {SET_BET_HISTORY_FILTERS, RESET_BET_HISTORY_FILTERS, DESTROY_LOADED_BET_HISTORY, SET_CASH_OUT_VALUE} from "../actions/actionTypes/";
+
+export function UpdateHistoryBets (bets, betTypes, type) {
+    /**
+     * @event UpdateHistoryBets
+     */
+    return {
+        type,
+        payload: {
+            bets
+        },
+        meta: {
+            betTypes
+        }
+    };
+}
 
 /**
  * @name LoadBetHistory
@@ -51,6 +66,19 @@ export function SetBetHistoryFilters (payload) {
 }
 
 /**
+ * @name SetBetHistoryFilters
+ * @description Append Bet History filters data;
+ * @param {Object} payload
+ * @returns {Object}
+ */
+export function SetCashOutValue (payload) {
+    return {
+        type: SET_CASH_OUT_VALUE,
+        payload
+    };
+}
+
+/**
  * @name ResetBetHistoryFiltersToDefault
  * @description Reset bet history filters to default
  * @returns {Object}
@@ -77,16 +105,17 @@ export function ResetLoadedBetHistory () {
  * @description Do cash out for given betId and price
  * @param {Number} betId
  * @param {Number} price
+ * @param {Number} partialPrice
  * @returns {Function} async action dispatcher
  */
-export function DoCashOut (betId, price) {
+export function DoCashOut (betId, price, partialPrice = null) {
     var swarmDataKey = "cashOut";
 
     return function (dispatch) {
         dispatch(SwarmClearData(swarmDataKey));
         dispatch(SwarmLoadingStart(swarmDataKey));
         Zergling
-            .get({bet_id: betId, price}, 'cashout')
+            .get({bet_id: betId, price, partial_price: partialPrice}, 'cashout')
             .then(response => {
                 dispatch(SwarmReceiveData(response, swarmDataKey));
             })

@@ -7,13 +7,16 @@ import {t} from "../../../helpers/translator";
 import Config from "../../../config/main";
 
 module.exports = function balanceTemplate () {
-    if (this.props.user.loggedIn && this.props.user.profile) {
-        var balance = this.props.user.profile.balance - this.props.user.profile.frozen_balance;
-        var bonus = this.props.user.profile.bonus_balance + this.props.user.profile.bonus_win_balance + this.props.user.profile.frozen_balance;
-        var totalBalance = balance + bonus;
-    }
-    let disableCasinoBonus = !!Config.casino && !Config.casino.disableCasinoBonus
+    let balance, bonus, totalBalance, casinoBalance,
+        sportsbook = !!(Config.main.mainMenuItemsOrder && (Config.main.mainMenuItemsOrder.indexOf('prematch') !== -1 || Config.main.mainMenuItemsOrder.indexOf('live') !== -1)),
+        casino = !!(Config.main.mainMenuItemsOrder && Config.main.mainMenuItemsOrder.indexOf('casino') !== -1);
 
+    if (this.props.user.loggedIn && this.props.user.profile) {
+        balance = this.props.user.profile.balance - this.props.user.profile.frozen_balance;
+        bonus = this.props.user.profile.bonus_balance + this.props.user.profile.bonus_win_balance + this.props.user.profile.frozen_balance;
+        totalBalance = balance + bonus;
+    }
+    casinoBalance = this.props.lastRouteType === "casino" && this.props.user.profile && this.props.user.profile.hasOwnProperty("casino_balance") && this.props.user.profile.casino_balance;
     return (
         this.props.user.loggedIn && this.props.user.profile
             ? <div className="user-balance-info-contain">
@@ -23,10 +26,10 @@ module.exports = function balanceTemplate () {
                         <ul>
                             <li>
                                 <p>
-                                    <span className="total-balance-m">{t("Total Balance")}</span>
+                                    <span className="total-balance-m">{t(casinoBalance ? "Casino Balance" : "Total Balance")}</span>
                                     <span className="balance-c-m">
                                         <MoneyAmount
-                                            amount={totalBalance}
+                                            amount={casinoBalance || totalBalance}
                                             currency={this.props.user.profile.currency_name}/>
                                     </span>
                                 </p>
@@ -51,7 +54,6 @@ module.exports = function balanceTemplate () {
                             </li>
                         </ul>
                     </div>
-
                     <div className="bonus-view-m withdraw-m">
                         <ul>
                             <li>
@@ -117,17 +119,33 @@ module.exports = function balanceTemplate () {
                                         </p>
                                     </Link>
                                 </li>
+                                <li>
+                                    <Link to="/balance/withdraws" onClick={this.props.closeRightMenu()}>
+                                        <p className="name-sub-u-m-title">
+                                            <i className="arrow-u-m"/>
+                                            <span>{t("Withdraws")}</span>
+                                        </p>
+                                    </Link>
+                                </li>
 
                             </ul>
                         </div>
 
                     </div>
                     <div className="single-universal-menu-contain">
-                        <Expandable className="title-row-u-m" uiKey="rm_bonuses">
-                            <div className="icon-view-u-m bonuses-view-m"></div>
-                            <p><span>{t("Bonuses")}</span></p>
-                            <i className="arrow-u-m"/>
-                        </Expandable>
+                        {!Config.main.disableBonuses
+                            ? <Expandable className="title-row-u-m" uiKey="rm_promo">
+                                <div className="icon-view-u-m promo-view-m"/>
+                                <p>
+                                    <span>
+                                        {t("Bonuses")}
+                                        {Config.disableCasinoAndSportsBonusesToShow && !!(this.props.bonusData) && <i>{this.props.bonusData}</i>}
+                                    </span>
+                                </p>
+                                <i className="arrow-u-m"/>
+                              </Expandable>
+                            : null
+                        }
                         <div className="open-view-single-u-m">
                             <ul>
                                 {Config.main.enableLoyaltyPoints ? <li>
@@ -138,7 +156,7 @@ module.exports = function balanceTemplate () {
                                         </p>
                                     </Link>
                                 </li> : null}
-                                {!Config.disableSportsbook ? <li>
+                                {sportsbook ? <li>
                                     <Link to="/bonus/sport" onClick={this.props.closeRightMenu()}>
                                         <p className="name-sub-u-m-title">
                                             <i className="arrow-u-m"/>
@@ -146,7 +164,7 @@ module.exports = function balanceTemplate () {
                                         </p>
                                     </Link>
                                 </li> : null}
-                                {disableCasinoBonus ? <li>
+                                {casino ? <li>
                                     <Link to="/bonus/casino" onClick={this.props.closeRightMenu()}>
                                         <p className="name-sub-u-m-title">
                                             <i className="arrow-u-m"/>

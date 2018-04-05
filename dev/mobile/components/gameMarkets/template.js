@@ -4,6 +4,7 @@ import {niceEventName} from "../../../helpers/sport/eventNames";
 import Event from "../../components/event/";
 import Expandable from "../../containers/expandable/";
 import {t} from "../../../helpers/translator";
+import Config from "../../../config/main";
 
 module.exports = function gameMarketsTemplate () {
 
@@ -55,25 +56,29 @@ module.exports = function gameMarketsTemplate () {
                         <span className={"fav-star-m" + (this.props.isMarketFavorite(marketObj.type) ? " active" : "")}
                               onClick={(ev) => { this.props.toggleMarketFavorite(marketObj.type)(); ev.stopPropagation(); ev.preventDefault(); }}/>
                         <h4>
-                            <span className="name-market-contain-cell-m"><i>{marketObj.markets[0].name}</i></span>
+                            <span className="name-market-contain-cell-m"><i>{niceEventName(marketObj.markets[0].name, this.props.game)}</i></span>
                             <span className="market-icons-cell-m">
                                 {marketObj.markets[0].cashout && isCashOutEnabledForPartner ? <i className="cash-out-icon-view-m"/> : null}
                                 {marketObj.markets[0].express_id ? <i className="chain-icon-view-m">{marketObj.markets[0].express_id }</i> : null}
                             </span>
                         </h4>
-                        <div className="markets-closed-open-arrow-m"></div>
+                        <div className="markets-closed-open-arrow-m" />
                     </Expandable>
                     <div className="coefficient-game-view">
                     {marketObj.markets.map(
                         market => {
-                            var events = Helpers.objectToArray(market.event).sort(Helpers.byOrderSortingFunc);
-                            var colCount = market.col_count ? (market.col_count > 3 ? 1 : market.col_count) : 1;
-                            var rows = [];
+                            let events,
+                                colCount = market.col_count ? (market.col_count > 3 ? 1 : market.col_count) : 1,
+                                rows = [];
+                            Config.main.orderEventsByPrice && this.props.game.show_type && this.props.game.show_type === "OUTRIGHT"
+                                ? events = Helpers.objectToArray(market.event).sort(Helpers.orderByPrice)
+                                : events = Helpers.objectToArray(market.event).sort(Helpers.byOrderSortingFunc);
+                            colCount === 3 && market.type === "OutcomeandBothTeamToScore" && (colCount = 2);
                             while (events.length) {
                                 rows.push(events.splice(0, colCount));
                             }
                             return rows.map((row, i) =>
-                                    <ul key={i}>
+                                    <ul key={i} className={Config.main.addClassNameForMarketEvents && Config.main.addClassNameForMarketEvents[market.type] ? Config.main.addClassNameForMarketEvents[market.type] : ''}>
                                         {row.map(event =>
                                                 <li key={event.id}>
                                                     <Event event={event} name={niceEventName(event.name, this.props.game)} price={event.price} game={this.props.game} market={market}/>
@@ -95,7 +100,7 @@ module.exports = function gameMarketsTemplate () {
             ? <div className={"markets-list-wrapper" + (this.props.game.is_blocked ? " blocked" : "")}>
             <Expandable className="market-group-title-m" uiKey={"g" + this.props.game.id + "m_parent"} childrenKeys={marketKeys} initiallyExpanded={true}>
                 <h3>{t("Markets")}</h3>
-                <div className="markets-closed-open-arrow-m"></div>
+                <div className="markets-closed-open-arrow-m" />
             </Expandable>
             <div className="all-markets-view-m">
                 {Markets}

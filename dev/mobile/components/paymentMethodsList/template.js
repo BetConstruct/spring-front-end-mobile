@@ -1,13 +1,12 @@
 import React from 'react';
-// import Helpers from "../../../helpers/helperFunctions";
-// import Config from "../../../config/main";
 import {t} from "../../../helpers/translator";
 import PaymentsNavigationMenu from "../../components/paymentsNavigationMenu";
 import Loader from "../loader";
+import PropTypes from 'prop-types';
 
 MethodsListTemplate.propTypes = {
-    selectMethod: React.PropTypes.func,
-    methods: React.PropTypes.array
+    selectMethod: PropTypes.func,
+    methods: PropTypes.array
 };
 
 function MethodsListTemplate () {
@@ -30,7 +29,7 @@ function MethodsListTemplate () {
             <div className="deposits-wrapper">
                 {
                     this.props.payments.availableMethods.length
-                        ? this.props.getFilteredMethods().map((method, index) => {
+                        ? this.props.payments.availableMethods.map((method, index) => {
                             return <div className="deposit-methods" key={index}>
                                 <div className="single-method-deposit">
                                     <ul>

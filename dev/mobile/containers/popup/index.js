@@ -1,8 +1,3 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {ClosePopup, ConfirmationDialogAnswer} from "../../../actions/ui";
-import {UIMixin} from '../../../mixins/uiMixin';
-
 /**
  * Popup component.
  * Opens a popup when corresponding data exists in store.uiState.popup
@@ -39,12 +34,30 @@ import {UIMixin} from '../../../mixins/uiMixin';
  *   the answer value is in ui.confirmation[<confirmation id>].answer
  *   IMPORTANT: after executing corresponding action, component must reset the confirmation state by calling dispatch(ConfirmationDialogReset(<confirmation id>));
  */
+import {Component} from 'react';
+import {connect} from 'react-redux';
+import {ClosePopup, ConfirmationDialogAnswer} from "../../../actions/ui";
+import {UIMixin} from '../../../mixins/uiMixin';
+import {CmsLoadPage} from "../../../actions/cms";
+import Config from "../../../config/main";
+import {GetPopupsData} from "../../../helpers/selectors";
+import cookie from 'react-cookie';
+import {getPopupPayload} from "../../../helpers/cmsPopupsHelper";
 
-const Popup = React.createClass({
+class Popup extends Component {
+
+    componentDidMount () {
+        let exclude = "&exclude=author,excerpt,comments,comment_status,comment_count,tags,attachments" +
+            (this.props.preferences.geoData && this.props.preferences.geoData.countryCode ? `&country=${this.props.preferences.geoData.countryCode}` : "") +
+            "&is_mobile=1";
+        Config.main.enableRuntimePopup &&
+        this.props.dispatch(CmsLoadPage("popups", Config.env.lang, "popup", exclude));
+    }
 
     componentWillReceiveProps (nextProps) {
         //ADDING CLASS TO BODY FOR CORRECT POPUP BEHAVIOR ON IPHONE 7
         let bodyElement = document.body;
+
         switch (nextProps.popup) {
             case "CounterOfferDialog":
             case "CashOutDialog":
@@ -67,8 +80,50 @@ const Popup = React.createClass({
         if (this.props.popup === "LoginForm" && nextProps.user.loggedIn) { //eslint-disable-line react/prop-types
             this.props.dispatch(ClosePopup());
         }
-    },
 
+        if (!this.props.shouldOpen && nextProps.shouldOpen) {
+            this.showRuntimePopup(nextProps.shouldOpen);
+        }
+    }
+    showRuntimePopup (popup) {
+        let loginStatus = parseInt(popup.login || 0),
+            userTime = Date.now(),
+            repeatType = popup.repeat_type || (popup.custom_fields && popup.custom_fields.repeat_type),
+            customRepeat = popup.custom_repeat || (popup.custom_fields && popup.custom_fields.custom_repeat),
+            lastShow = parseInt(((cookie.load('popup' + (popup.id || '')) || {}).showedTime), 10),
+            expiryTime = 1;
+
+        switch (repeatType) {
+            case 'never':
+                expiryTime = false;
+                break;
+            case 'once_a_day':
+                expiryTime = 86400;
+                break;
+            case 'once_a_week':
+                expiryTime = 604800;
+                break;
+            case 'once_a_month':
+                expiryTime = 2592000;
+                break;
+            case 'custom':
+                expiryTime = parseInt(customRepeat, 10) * 60;
+                break;
+        }
+
+        if ((loginStatus === 0 && !Config.env.authorized) || (loginStatus === 1 && Config.env.authorized) || loginStatus === 2) {
+
+            if (lastShow && expiryTime === false) {
+                return;
+            }
+
+            if (!lastShow || userTime > lastShow + expiryTime || popup.slug === 'registration-popup') {
+                this.props.openPopup("confirm", getPopupPayload(popup))();
+                cookie.save('popup' + (popup.id || ''), {showedTime: userTime}, {path: '/', expires: new Date(userTime + Number(expiryTime))});
+            }
+        }
+
+    }
     /**
      * @name answerDialog
      * @description Helper function which is preparing to answer dialog
@@ -83,18 +138,10 @@ const Popup = React.createClass({
             this.props.dispatch(ConfirmationDialogAnswer(dialogId, answer, payload));
             this.props.dispatch(ClosePopup());
         };
-    },
+    }
     render () {
         return Template.apply(this); //eslint-disable-line no-undef
     }
-});
-
-function mapStateToProps (state) {
-    return {
-        popup: state.uiState.popup,
-        popupParams: state.uiState.popupParams,
-        user: state.user
-    };
 }
 
-export default connect(mapStateToProps)(UIMixin({Component: Popup}));
+export default connect(GetPopupsData)(UIMixin({Component: Popup}));

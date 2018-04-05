@@ -1,6 +1,7 @@
-import React, {PropTypes} from "react";
+import React from "react";
 import HistoryBetItem from "./historyBetItem";
 import {t} from "../../../../helpers/translator";
+import PropTypes from 'prop-types';
 
 class BetsList extends React.Component {
     componentWillUnmount () {

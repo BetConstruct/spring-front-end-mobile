@@ -1,6 +1,7 @@
 import React from 'react';
-import {LoadBetShops, LoadFilters} from '../actions/payments';
+import {filtersLoadingDone, LoadBetShops, LoadFilters} from '../actions/payments';
 import Config from '../config/main';
+import {connect} from "react-redux";
 
 /**
  * @name PaymentsMixin
@@ -8,82 +9,57 @@ import Config from '../config/main';
  * @param {React.Component} ComposedComponent
  * @constructor
  */
-export var PaymentsMixin = ComposedComponent => class PaymentsMixin extends React.Component {
+export var PaymentsMixin = ComposedComponent => {
+    class PaymentsMixin extends React.Component {
 
-    constructor (props) {
-        super(props);
-        this.getFilteredMethods = this.getFilteredMethods.bind(this);
-    }
-
-    /**
-     * @name filterEnabledMethods
-     * @description Helper method to filter payments method dependant on transaction type and externally loaded filters
-     * @param {string} transactionType
-     * @returns {array}
-     */
-    filterEnabledMethods (transactionType) {
-        let payments = this.props.payments, //eslint-disable-line react/prop-types
-            methods = payments.availableMethods,
-            loadedFilters,
-            enabledKey = `can${transactionType.charAt(0).toUpperCase()}${transactionType.slice(1)}`;
-
-        if (!Config.main.showAllAvailablePaymentSystems) {
-            loadedFilters = payments.filters.data[transactionType];
-
-            loadedFilters && (methods = methods.filter((method) => {
-                return loadedFilters.includes(method.name);
-            }));
-        }
-
-        return methods.filter((method) => {
-            return method[enabledKey];
-        });
-    }
-
-    /**
-     * @name init
-     * @description initializing method maybe there are some specifications to load
-     * @param {object} props
-     * @fire event:loadFilters
-     * @fire event:loadBetShops
-     */
-    init (props) {
-        if (props.user.loggedIn) {
-            if (!Config.main.showAllAvailablePaymentSystems && !props.payments.filters.loaded) {
-                this.props.dispatch(LoadFilters());
+        /**
+         * @name init
+         * @description initializing method maybe there are some specifications to load
+         * @param {object} props
+         * @fire event:loadFilters
+         * @fire event:loadBetShops
+         */
+        init (props) {
+            if (props.user.loggedIn) {
+                if (!Config.main.showAllAvailablePaymentSystems && !props.payments.filters.loaded && !Config.main.paymentByCurrency) {
+                    this.props.dispatch(LoadFilters());
+                } else if (Config.main.paymentByCurrency) {
+                    Config.main.paymentByCurrency.deposit = Config.main.paymentByCurrency.deposit || {};
+                    Config.main.paymentByCurrency.withdraw = Config.main.paymentByCurrency.withdraw || {};
+                    try {
+                        this.props.dispatch(filtersLoadingDone({
+                            deposit: Config.main.paymentByCurrency.deposit[(props.profile.currency_name || props.profile.currency_id)],
+                            withdraw: Config.main.paymentByCurrency.withdraw[(props.profile.currency_name || props.profile.currency_id)]
+                        }));
+                        Config.main.showAllAvailablePaymentSystems = false;
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }
+                if (Config.main.payments && !(props.payments.data.loaded || props.payments.data.loading || props.payments.data.failed)) {
+                    let hasBetShops;
+                    Config.main.payments.forEach(payment => { !hasBetShops && (hasBetShops = payment.hasBetShops); });
+                    hasBetShops && this.props.dispatch(LoadBetShops());
+                }
+                this.inited = true;
             }
-            if (!(props.payments.data.loaded || props.payments.data.loading || props.payments.data.failed)) {
-                this.props.dispatch(LoadBetShops());
+        }
+
+        componentDidMount () {
+            if (!this.inited && this.props.profile) {
+                this.init(this.props);
             }
-            this.inited = true;
+        }
+
+        componentWillReceiveProps (nextProps) {
+            if (!this.inited && nextProps.profile) {
+                this.init(nextProps);
+            }
+        }
+
+        render () {
+            return <ComposedComponent.Component {...this.props} {...this.state} />;
         }
     }
-
-    componentDidMount () {
-        if (!this.inited) {
-            this.init(this.props);
-        }
-    }
-
-    componentWillReceiveProps (nextProps) {
-        if (!this.inited) {
-            this.init(nextProps);
-        }
-    }
-
-    /**
-     * @name getFilteredMethods
-     * @description Helper method to filter enabled methods
-     * @returns {Array}
-     */
-    getFilteredMethods () {
-        let props = this.props;
-        return this.filterEnabledMethods(props.route.forAction);
-    }
-
-    render () {
-        return <ComposedComponent.Component {...this.props} {...this.state}
-                getFilteredMethods={this.getFilteredMethods}
-            />;
-    }
-};
+    return connect((state) => ({profile: state.user.profile}))(PaymentsMixin);
+}

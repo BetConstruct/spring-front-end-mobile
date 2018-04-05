@@ -53,7 +53,7 @@ export function ClaimBonus (bonusId, casino = false) {
                     dispatch(OpenPopup("message", {
                         title: t("Error"),
                         type: "error",
-                        body: t("Cannot claim bonus.") + getErrorMessageByCode(response.result)
+                        body: t("Cannot claim bonus") + " ( " + getErrorMessageByCode(response.result) + " ) "
                     }));
                 }
             })

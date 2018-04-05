@@ -76,9 +76,7 @@ module.exports = function gameAnimationTemplate () {
                 {lastEventName === 'RedCard' || lastEventName === 'YellowCard' ? <div className=" rotator"><div className="card"></div></div> : null}
                 {lastEventName === 'Substitution' ? <div className=" sub-cont"></div> : null}
                 {lastEventName === 'GoalkeeperSave' ? <div></div> : null}
-
                 {lastEventName !== 'BallSafe' ? <p title={t(lastEventName)}>{t(lastEventName)}</p> : null}
-
                 {lastEventName === 'Goal' ? <p className="team">{this.props.game['team' + side + '_name']}</p> : null}
                 {lastEventName === 'ThrowIn' ? <div><div className="ball"></div></div> : null}
             </div>,
@@ -96,9 +94,7 @@ module.exports = function gameAnimationTemplate () {
                 {lastEventName === 'Attack' ? <div className="attack-div"><div className="attack-dir"></div></div> : null}
                 {lastEventName === 'OnePoint' || lastEventName === 'TwoPoints' || lastEventName === 'ThreePoints'
                     ? [<div className="basket"></div>, <div className="ball_container"><div className="b_ball"></div></div>] : null}
-
                 {lastEventName !== 'Foul' ? <div className="text-event" title={t(lastEventName)}>{t(lastEventName)}</div> : null}
-
                 {lastEventName === 'Foul'
                     ? <div className="timeout-container"><div title={t(lastEventName)}>{t(lastEventName)}</div><div>{this.props.game.last_event.team_name}</div></div> : null}
             </div>
@@ -126,7 +122,7 @@ module.exports = function gameAnimationTemplate () {
             </div>
             <div className="game-animation-container">
                 <div className="playing-field-contain">
-
+                {this.props.game.is_neutral_venue ? <span className="is_neutral_venue"></span> : null}
                     <div className="animation-container">
                         <div className="field-container">
                             <div className={"field field-" + this.props.game.info.field}>

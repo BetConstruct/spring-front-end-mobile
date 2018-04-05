@@ -17,7 +17,7 @@ module.exports = function profileChangePasswordTemplate () {
     function displayFailReason (response) {
         console.log("change password failreason", response);
         let reason;
-        if ((response.data && response.data.match("1006")) || (response && response.code === 12)) {
+        if ((response.data && response.data.match("1006")) || (response && response.code === 12) || response && response.result === 1005) {
             reason = t("Invalid current password.");
         } else {
             reason = t("Password cannot be changed, please try again later or contact support.") + (response && response.msg);
@@ -30,22 +30,22 @@ module.exports = function profileChangePasswordTemplate () {
             <div className={"change-password-form-item-m" + (errors.password ? " error" : "")}>
                 <label>{t("New password")}</label>
                 <div className="single-form-item">
-                    <Field component="input" type="password" name="password" />
-                    {errors.password ? <p className="error-message">{errors.password}</p> : null}
+                    <Field component="input" type="password" name="password" className="password1"/>
+                    {errors.password ? <p className="error-message">{t(errors.password)}</p> : null}
                 </div>
             </div>
             <div className={"change-password-form-item-m" + (errors.password2 ? " error" : "")}>
                 <label>{t("Repeat new password")}</label>
                 <div className="single-form-item">
-                    <Field component="input" type="password" name="password2" />
-                    {errors.password2 ? <p className="error-message">{errors.password2}</p> : null}
+                    <Field component="input" type="password" name="password2" className="password2"/>
+                    {errors.password2 ? <p className="error-message">{t(errors.password2)}</p> : null}
                 </div>
             </div>
             <div className={"change-password-form-item-m" + (errors.oldpassword ? " error" : "")}>
                 <label>{t("Current password")}</label>
                 <div className="single-form-item">
                     <Field component="input" type="password" name="oldpassword" />
-                    {errors.oldpassword ? <p className="error-message">{errors.oldpassword}</p> : null}
+                    {errors.oldpassword ? <p className="error-message">{t(errors.oldpassword)}</p> : null}
                 </div>
             </div>
 

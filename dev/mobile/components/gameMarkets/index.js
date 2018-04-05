@@ -1,10 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import FavoritesMixin from "../../../mixins/favoritesMixin";
+import PropTypes from 'prop-types';
 
 const GameMarkets = React.createClass({
     propTypes: {
-        game: React.PropTypes.object.isRequired
+        game: PropTypes.object.isRequired
     },
     render () {
         return Template.apply(this); //eslint-disable-line no-undef

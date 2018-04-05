@@ -1,5 +1,6 @@
 import Config from "../config/main";
 import ReactGA from 'react-ga';
+import {ym} from 'react-ym';
 import * as actions from "../actions/actionTypes/";
 
 /**
@@ -48,6 +49,7 @@ const actionsObj = Object.keys(ACTIONS_TO_LOG).reduce((acc, category) => {
 }, {});
 
 let googlePageView = () => {};
+let yandexMetricaView = () => {};
 
 if (Config.main.googleAnalyticsId) {
     ReactGA.initialize(Config.main.googleAnalyticsId, {gaOptions: {}});
@@ -55,6 +57,10 @@ if (Config.main.googleAnalyticsId) {
         ReactGA.set({ page: window.location.pathname });
         ReactGA.pageview(window.location.pathname);
     };
+}
+
+if (Config.main.yandexMetricaId) {
+    ym.initialize(Config.main.yandexMetricaId, {ymOptions: {}});
 }
 
 /**
@@ -65,6 +71,7 @@ if (Config.main.googleAnalyticsId) {
 export function getPageViewLogger () {
     return () => {
         googlePageView();
+        yandexMetricaView();
         // other analytics can be added here later if needed (e.g. yandex metrika)
     };
 }

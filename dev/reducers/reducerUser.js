@@ -6,12 +6,11 @@ import {REALLY_LOGGED_IN,
     USER_PROFILE_UPDATE_RECEIVED,
     CAPTCH_LOAD_SUCCESS,
     CAPTCH_LOAD_FAILURE,
-    UPDATE_HASH_PARAMS,
-    RESET_HASH_PARAMS,
-    STORE_HASH_PARAMS
+    UPDATE_USER_PROFILE,
+    UPDATE_MESSAGES_UNREAD_COUNT
 } from "../actions/actionTypes/";
 
-const UserReducer = (state = {captcha: {data: {}}, hashParams: {}}, action = {}) => {
+const UserReducer = (state = {captcha: {data: {}}}, action = {}) => {
 
     switch (action.type) {
         case REALLY_LOGGED_IN:
@@ -37,15 +36,22 @@ const UserReducer = (state = {captcha: {data: {}}, hashParams: {}}, action = {})
             return Object.assign({}, state, {captcha: {loaded: true, data: action.payload}});
         case CAPTCH_LOAD_FAILURE:
             return Object.assign({}, state, {captcha: {loaded: false, data: action.payload}});
-        case STORE_HASH_PARAMS:
-            return Object.assign({}, state, {hashParams: action.payload});
-        case RESET_HASH_PARAMS:
-            return Object.assign({}, state, {hashParams: {}});
-        case UPDATE_HASH_PARAMS:
-            return Object.assign({}, state, {hashParams: {
-                ...state.hashParams,
-                ...action.payload
-            }});
+        case UPDATE_MESSAGES_UNREAD_COUNT:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    unread_count: state.profile.unread_count + action.payload > 0 ? state.profile.unread_count + action.payload : 0 //TODO remove condition after backend fix
+                }
+            };
+        case UPDATE_USER_PROFILE:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    ...action.payload
+                }
+            };
         default :
             return state;
     }

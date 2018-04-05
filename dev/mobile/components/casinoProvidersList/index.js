@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {UIMixin} from '../../../mixins/uiMixin';
+import PropTypes from 'prop-types';
 
 class CasinoProvidersList extends React.PureComponent {
     render () {
@@ -9,7 +10,7 @@ class CasinoProvidersList extends React.PureComponent {
 }
 
 CasinoProvidersList.propTypes = {
-    casino: React.PropTypes.object
+    casino: PropTypes.object
 };
 
 function mapStateToProps (state) {

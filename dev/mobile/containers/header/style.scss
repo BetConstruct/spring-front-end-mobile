@@ -79,6 +79,7 @@
   display: inline-block;
   vertical-align: top;
   padding: 0 0 0 4px;
+  transform: translate3d(0,0,0);
 }
 .right-top-nav > span{
   font: 16px/48px icomoon;
@@ -92,4 +93,25 @@
 }
 .logged-in .right-top-nav > span:before{
   color: lighten( saturate( adjust-hue( $text-color, -185deg ), 36 ), 31 );
+}
+.right-top-nav > .new_message_icon:after{
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 7px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  color: $text-palette-2;
+  left: 5px;
+  content: "\E904";
+  display: block;
+  animation: 1000ms new-message-v ease-in-out 10;
+}
+@keyframes new-message-v{
+  0%{transform: rotate(0deg);}
+  20%, 60%{transform: rotate(25deg);}
+  40%, 80% {transform: rotate(-25deg);}
+  100%{transform: rotate(0deg);}
 }

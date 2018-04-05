@@ -2,7 +2,7 @@ import _ from "lodash";
 import Config from "../config/main";
 import {PREFERENCES_SET, PREFERENCES_RESET} from "../actions/actionTypes/";
 
-const PreferencesReducer = (state = {oddsFormat: Config.env.oddFormat, lang: Config.env.lang}, action) => {
+const PreferencesReducer = (state = {oddsFormat: Config.env.oddFormat, lang: ""}, action) => {
     var ret = _.cloneDeep(state);
     switch (action.type) {
         case PREFERENCES_SET:

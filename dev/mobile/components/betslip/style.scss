@@ -71,6 +71,10 @@
   min-width: 22px;
   color: set-color($hero-color);
 }
+.betslip-balance-view-m ul > li > a{
+  color: $skin-palette-3;
+  text-decoration: none;
+}
 .balance-view-betslip{
   color: $brand-color-1;
 }
@@ -92,7 +96,7 @@
 }
 .betslip-full-view{
   position: fixed;
-  top: 150vh;
+  top: 150%;
   height: 0;
   width: 100%;
   background: $skin-palette-12;
@@ -375,6 +379,9 @@
 .freebet-text{
   color: $text-palette-3;
 }
+.booking-text{
+  color: $text-palette-3;
+}
 .kind-of-bet{
   position: absolute;
   left: 0;
@@ -429,6 +436,9 @@
   background: #ac8336;
 }
 .freebet-s > .switcher-box > .switcher-contain.on{
+  background: $hero-color;
+}
+.booking-s > .switcher-box > .switcher-contain.on{
   background: $hero-color;
 }
 .text-info-kind-bet{
@@ -868,6 +878,7 @@
   line-height: 38px;
   color: $text-palette-2;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 .stake-form-b-m .single-form-item{
   margin: 0;

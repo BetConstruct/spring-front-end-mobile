@@ -1,4 +1,19 @@
 @import 'skin';
+.bet-history-back-v{
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  position: absolute;
+  font: 20px/40px icomoon;
+  cursor: pointer;
+  background: $skin-palette-8;
+  color: set-color($skin-palette-8);
+}
+.bet-history-back-v:before{
+  content: '\e66f';
+}
 .bet-details{
   float: left;
   width: 100%;

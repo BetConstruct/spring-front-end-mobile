@@ -10,6 +10,7 @@
   height: 40px;
   background: $skin-palette-10;
   margin: 0 0 1px;
+  position: relative;
 }
 .title-separator-contain-b > h1{
   float: left;
@@ -18,8 +19,10 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 40px;
+  padding: 0 40px;
   text-transform: uppercase;
   color: $text-palette-4;
+  position: relative;
 }
 //title END
 

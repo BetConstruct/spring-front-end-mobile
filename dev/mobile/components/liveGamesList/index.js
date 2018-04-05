@@ -5,11 +5,12 @@ import {SwarmDataMixin, getSwarmDataKeyForRequest} from '../../../mixins/swarmDa
 import {CreateComponentSwarmDataSelector, CreateComponentSwarmLoadedStateSelector} from "../../../helpers/selectors";
 import {P1XP2MarketTypes} from "../../../helpers/sport/sportData";
 import {getVideoFilterRequest} from "../../../helpers/sport/videoFilter";
+import PropTypes from 'prop-types';
 
 const LiveGamesList = React.createClass({
     propTypes: {
-        selectedSportAlias: React.PropTypes.string,
-        videoFilter: React.PropTypes.string
+        selectedSportAlias: PropTypes.string,
+        videoFilter: PropTypes.string
     },
     render () {
         return Template.apply(this); //eslint-disable-line no-undef
@@ -32,8 +33,8 @@ function getSwarmSubscriptionRequest (selectedSportAlias, videoFilter) {
             "sport": [["name", "alias"]],
             "region": ["name", "alias", "order"],
             "competition": ["name", "id", "order"],
-            "game": [["id", "type", "is_started", "team1_name", "team2_name", "order", "start_ts", "markets_count", "is_blocked", "info", "video_id", "tv_type", "exclude_ids"]],
-            "market": ["name", "type", "id", "base", "express_id"],
+            "game": [["id", "type", "is_started", "team1_name", "team2_name", "order", "start_ts", "markets_count", "is_blocked", "info", "video_id", "tv_type", "exclude_ids", "stats", "team1_reg_name", "team2_reg_name"]],
+            "market": ["name", "type", "id", "base", "express_id", "display_key", "home_score", "away_score"],
             "event": ["name", "type", "id", "price", "order", "base"]
         },
         "where": {

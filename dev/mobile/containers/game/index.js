@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {createSelector} from 'reselect';
 import 'whatwg-fetch';
 import {
-    CreateComponentSwarmDataSelector,
+    GetFilteredMarkets,
     CreateComponentSwarmLoadedStateSelector,
     GetBalance
 } from "../../../helpers/selectors";
@@ -117,7 +117,7 @@ function getSwarmSubscriptionRequest (gameId) {
             "competition": ["name", "id"],
             "game": [],     // TODO: request only needed properties
             // "id", "team1_name", "team2_name", "order", "start_ts", "markets_count", "is_blocked", "exclude_ids"
-            "market": ["name", "type", "id", "market_type", "order", "col_count", "express_id", "cashout", "base"], // "group_id", "group_name"
+            "market": ["name", "type", "id", "market_type", "order", "col_count", "express_id", "cashout", "base", "group_id", "group_name","display_key", "home_score", "away_score"], // "group_id", "group_name"
             "event": ["id", "order", "name", "price", "type", "base"]
         },
         "where": {
@@ -130,7 +130,7 @@ function mapStateToProps (state, ownParams) {
     return {
         user: state.user,
         balance: GetBalance(state),
-        swarmData: CreateComponentSwarmDataSelector(getSwarmDataKey)(state, ownParams),
+        swarmData: GetFilteredMarkets(getSwarmDataKey)(state, ownParams),
         swarmDataLoaded: CreateComponentSwarmLoadedStateSelector(getSwarmDataKey)(state, ownParams),
         favorites: state.favorites,
         preferences: state.preferences,

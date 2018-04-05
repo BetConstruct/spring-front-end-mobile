@@ -9,11 +9,10 @@ import CasinoSearchResult from "../casinoSearchResult";
 
 module.exports = function searchBarTemplate () {
     // console.log("search props:", this.props);
-    let self = this;
 
     /**
      * @name totalResults
-     * @description get search total results 
+     * @description get search total results
      * @param {Object} results
      * @returns {Object}
      * */
@@ -28,6 +27,7 @@ module.exports = function searchBarTemplate () {
         <div className="search-wrapper-m">
             <div className="contain-search-view">
                 <input type="search" ref="searchInput"
+                       pattern=".{3,}"
                        placeholder={this.props.type === "casino"
                        ? t("Search for a game")
                        : t("Search a competition or a team")
@@ -39,23 +39,24 @@ module.exports = function searchBarTemplate () {
             {/*Search result*/}
 
             {
-                (function () {
-                    if (self.props.swarmData.loaded.casinoSearchResults) {
+                (() => {
+                    if (this.props.swarmData.loaded.casinoSearchResults && !this.hideResults) {
                         return (
-                            <CasinoSearchResult clearSearch={self.clearSearch.bind(self)} />
+                            <CasinoSearchResult clearSearch={this.clearSearch.bind(this)} />
                         );
                     } else {
                         return (null);
                     }
+
                 })()
             }
-            {this.props.swarmData.loaded.searchResults !== undefined
+            {this.props.swarmData.loaded.searchResults !== undefined && !this.hideResults
                 ? <div className="search-result-wrapper-m">
                     { this.props.swarmData.loaded.searchResults
                     ? <div className="search-result-view-contain">
                         <div className="search-result-title">
                         <h3>{t("Search results")} ({totalResults(this.props.swarmData.data.searchResults)})</h3>
-                        <div className="closed-search-icon-m" onClick={this.clearSearch}></div>
+                        <div className="closed-search-icon-m" onClick={this.clearSearch} />
                     </div>
                         <div className="search-all-info-contain">
                         <div className="search-result-box">
@@ -66,7 +67,7 @@ module.exports = function searchBarTemplate () {
                                         let sport = this.props.swarmData.data.searchResults[sportId];
                                         return <div className="separator-search-result" key={sportId}>
                                             <div className={"sport-title-result-m " + sport.alias}>
-                                                <div className={"result-sport-icon " + sport.alias}></div>
+                                                <div className={"result-sport-icon " + sport.alias} />
                                                 <h4>{sport.name}</h4>
                                             </div>
                                             {sport.results.sort(Helpers.byOrderSortingFunc).map(

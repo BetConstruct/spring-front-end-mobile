@@ -1,3 +1,5 @@
+import {t} from "../helpers/translator";
+
 var Helpers = (function () {
 
     return {
@@ -24,6 +26,10 @@ var Helpers = (function () {
 
             return variants[index];
         },
+
+        cloneDeep: function (data) {
+            return JSON.parse(JSON.stringify(data));
+        },
         /**
          * @name byOrderSortingFunc
          * @description Function to be used by sort(), to sort by object's "order" property
@@ -33,6 +39,33 @@ var Helpers = (function () {
          */
         byOrderSortingFunc: function byOrderSortingFunc (a, b) {
             return a.order - b.order;
+        },
+        /**
+         * @name orderByPrice
+         * @description Function to be used by sort(), to sort by object's "price" property
+         * @param a {Object}
+         * @param b {Object}
+         * @returns {number}
+         */
+        orderByPrice: function orderByPrice (a, b) {
+            return a.price - b.price;
+        },
+        /**
+         * @name orderByName
+         * @description Function to be used by sort(), to sort by object's "name" property
+         * @param a {Object}
+         * @param b {Object}
+         * @returns {number}
+         */
+        orderByName: function orderByName (a, b) {
+            let nameA = t(a.name),
+                nameB = t(b.name);
+            if (nameA > nameB) {
+                return 1;
+            } else if (nameA < nameB){
+                return -1
+            }
+            return 0
         },
         /**
          * @name byStartTsSortingFunc
@@ -82,7 +115,7 @@ var Helpers = (function () {
          * @param {boolean|function} sortFunc function to sort object keys (false for no sorting). if not provided, will be sorted by
          * @returns {*}
          */
-        firstElement: function firstElement (obj, sortFunc = null) {
+        firstElement: function firstElement (obj, sortFunc = null, key = null) {
             if (typeof obj !== "object") {
                 return null;
             }
@@ -94,7 +127,7 @@ var Helpers = (function () {
                 return obj[keys[0]];
             }
             sortFunc = sortFunc || this.byOrderSortingFunc;
-            return this.objectToArray(obj).sort(sortFunc)[0];
+            return this.objectToArray(obj, key).sort(sortFunc)[0];
         },
         /**
          * @ngdoc method
@@ -179,7 +212,23 @@ var Helpers = (function () {
          * @returns {boolean}
          */
         isIos: function () {
-            return Helpers.getMobileOperatingSystem() === 'ios';
+            return Helpers.getMobileOperatingSystem() === 'iphone';
+        },
+        /**
+         * @name windows phone
+         * @description Checks if operating system of device is windows phone
+         * @returns {boolean}
+         */
+        isWindowsPhone: function () {
+            return Helpers.getMobileOperatingSystem() === 'windows';
+        },
+        /**
+         * @name isPC
+         * @description Checks if operating system of device is PC
+         * @returns {boolean}
+         */
+        isPC: function () {
+            return !Helpers.isIos() && !Helpers.isAndroid() && !Helpers.isWindowsPhone() && window.innerWidth > 980;
         },
         /**
          * @name getMobileOperatingSystem
@@ -200,9 +249,11 @@ var Helpers = (function () {
 
             // iOS detection from: http://stackoverflow.com/a/9039885/177710
             if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                return "ios";
+                return "iphone";
             }
-
+            // if (/android/i.test(userAgent)) {
+            //     return "android";
+            // }
             return "unknown";
         },
         /**
@@ -243,6 +294,15 @@ var Helpers = (function () {
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         },
         /**
+         * @name getUriParam
+         * @description Returns hash or query param from location
+         * @param {string} key
+         * @returns {*}
+         */
+        getUriParam: function (key) {
+            return Helpers.getQueryStringValue(key, null) || (Helpers.getHashParams() || {})[key];
+        },
+        /**
          * @name GetObjectByStringPath
          * @description Returns part of the object o identified by path s
          * @param {Object} o source object
@@ -264,6 +324,61 @@ var Helpers = (function () {
             return o;
         },
         /**
+         * @name CheckIfPathExists
+         * @description Returns part of the object o identified by path s
+         * @param {Object} o source object
+         * @param {String} path (e.g. "data.messages")
+         * @returns {boolean}
+         */
+        CheckIfPathExists (o, path) {
+            try {
+                return Boolean(Helpers.GetObjectByStringPath(o, path));
+            } catch (e) {
+                return false;
+            }
+        },
+        /**
+         * @name AssignValueToPropName
+         * @description recursive assigning values to object from string path
+         * @param {object} obj
+         * @param {*} prop
+         * @param {*} value
+         */
+        AssignValueToPropName: function (obj, prop, value) {
+            if (typeof prop === "string") {
+                prop = prop.split(".");
+            }
+            if (prop.length > 1) {
+                let e = prop.shift();
+                this.AssignValueToPropName(obj[e] =
+                        Object.prototype.toString.call(obj[e]) === "[object Object]"
+                            ? obj[e]
+                            : {},
+                    prop,
+                    value);
+            } else {
+                obj[prop[0]] = value;
+            }
+        },
+        /**
+         * @name generateQueryParamsFromObject
+         * @description Returns uri encoded url
+         * @param {object} obj
+         * @param {string} url
+         * @param {string} separator
+         * @param {string} switchQueryToHash
+         * @returns {string}
+         */
+        generateQueryParamsFromObject (obj, url = "", separator, switchQueryToHash) {
+            return Object.keys(obj).reduce((str, key) => {
+                if (str !== "") {
+                    str += str.indexOf(switchQueryToHash || "?") === -1 ? switchQueryToHash || '?' : separator || "&";
+                }
+                str += key + "=" + encodeURIComponent(obj[key]);
+                return str;
+            }, url);
+        },
+        /**
          * @name removeMatchingPartFromObject
          * @description Removes object defined by path, field name and value from the object
          * @param {Object} obj the source object
@@ -280,6 +395,33 @@ var Helpers = (function () {
                 let key = Object.keys(container).reduce((acc, curr) => (container[curr][field] === value ? curr : acc ), null);
                 (key !== null) && delete container[key];
             }
+        },
+
+        /**
+         * @name checkStatus
+         * @description helper function to check request status and throw exception when something is wrong
+         * @param {Object} response
+         * @returns {Object | Undefined}
+         */
+        checkStatus: function (response) {
+            if (response.status >= 200 && response.status < 300) {
+                return response;
+            } else {
+                let error = new Error(response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+
+        /**
+         * @name convertBalance
+         * @description helper function remove numbers ,if after dot numbers lenght > 2
+         * @param {number} value
+         * @returns {number}
+         */
+        convertBalance: function (value) {
+            value = Math.floor(value * 100) / 100;
+            return value;
         }
 
     };

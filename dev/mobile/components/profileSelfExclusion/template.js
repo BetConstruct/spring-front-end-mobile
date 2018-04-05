@@ -4,6 +4,8 @@ import Loader from "../../components/loader/";
 import {t} from "../../../helpers/translator";
 import formsNames from '../../../constants/formsNames';
 import {getErrorMessageByCode} from '../../../constants/errorCodes';
+import Config from '../../../config/main';
+import Helpers from "../../../helpers/helperFunctions";
 
 module.exports = function profileSelfExclusionTemplate () {
     console.log("profileSelfExclusionTemplate props", this.props);
@@ -21,13 +23,26 @@ module.exports = function profileSelfExclusionTemplate () {
     }
     return <form onSubmit={this.props.handleSubmit(this.submit)}>
                 <div className="self-exclusion-container-m">
-                    <p>{t("You can exclude online for a minimum period of six months, once the six months has expired your account will be reactivated again.")}</p>
-                    <p>{t("Please note that you'll be able to decrease the self-exclusion period only after seven days from your 1st request.")}</p>
+
+                    {
+                        t("self-exclusion-text") !== "self-exclusion-text"
+                            ? <div dangerouslySetInnerHTML={{__html: t("self-exclusion-text")}} />
+                            : (
+                                <div>
+                                    <p>{t("We will close your account, preventing access to your online account for the time period specified (between 6 months and 5 years).")}</p>
+                                    <p>{t("Your account will only be re-opened if you contact us to request it after the Self-Exclusion period has expired.")}</p>
+                                    <p>{t("Please note that you will be able to decrease your self-exclusion period or revoke it completely, only after seven days from your 1st request.")}</p>
+                                    <p>{t("For further details please contact our support and refer to the Terms and Conditions and Responsible Gambling pages.")}</p>
+                                </div>
+                        )
+                    }
+
                     <div className="self-exclusion-form-item-m">
                         <div className="radio-form-item">
-                            <label><Field component="input" type="radio" name="period" value="6-month"/><span>{t("Self exclusion of six month period")}</span></label>
-                            <label><Field component="input" type="radio" name="period" value="1-year"/><span>{t("Self exclusion of a one year period")}</span></label>
-                            <label><Field component="input" type="radio" name="period" value="forever"/><span>{t("Forever")}</span></label>
+                            {Helpers.CheckIfPathExists(Config, "main.userSelfExclusion.options") && Config.main.userSelfExclusion.options.map((option) => {
+                                return <label><Field component="input" type="radio" name="period" value={option.limit.value}/><span>{t(option.name)}</span></label>;
+                            })
+                            }
                         </div>
                     </div>
 

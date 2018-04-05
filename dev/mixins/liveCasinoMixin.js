@@ -3,6 +3,7 @@ import {CmsLoadData, SelectLiveCasinoProvider} from '../actions/casino';
 import {HandleOpenGameClick} from '../helpers/casino/helpers';
 import {OpenPopup} from "../actions/ui";
 import Config from "../config/main";
+import PropTypes from 'prop-types';
 
 /**
  * @name LiveCasinoMixin
@@ -130,8 +131,8 @@ const LiveCasinoMixin = ComposedComponent => class LiveCasinoMixin extends React
 };
 
 LiveCasinoMixin.propTypes = {
-    casino: React.PropTypes.object.isRequired,
-    reallyLoggedIn: React.PropTypes.bool
+    casino: PropTypes.object.isRequired,
+    reallyLoggedIn: PropTypes.bool
 };
 
 export default LiveCasinoMixin;

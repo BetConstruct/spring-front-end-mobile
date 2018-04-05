@@ -1,7 +1,7 @@
-import _ from "lodash";
+import Helpers from "../helpers/helperFunctions";
 import {OPEN_POPUP, CLOSE_POPUP, UI_OPEN, UI_CLOSE, UI_LAST_ROUTE_TYPE, UI_CURRENT_ROUTE_TYPE, UI_PREVIOUS_PATH,
     CONFIRMATION_DIALOG_ANSWER, CONFIRMATION_DIALOG_RESET, UI_LOADING, UI_LOADING_DONE,
-    UI_LOADING_RESET, UI_LOADING_FAILED, SCROLLED_TO_SPORT_ALIAS, SCROLL_TO_SPORT_ALIAS, TOGGLE_VIRTUAL_KEYBOARD} from "../actions/actionTypes/";
+    UI_LOADING_RESET, UI_LOADING_FAILED, SCROLLED_TO_SPORT_ALIAS, SCROLL_TO_SPORT_ALIAS, TOGGLE_VIRTUAL_KEYBOARD, SET_REGISTRATION_ACTIVE_STEP} from "../actions/actionTypes/";
 
 const UIStateReducer = (
     state = {
@@ -17,7 +17,7 @@ const UIStateReducer = (
     },
     action = {}
     ) => {
-    let ret = _.cloneDeep(state);
+    let ret = Helpers.cloneDeep(state);
 
     switch (action.type) {
         case UI_OPEN:

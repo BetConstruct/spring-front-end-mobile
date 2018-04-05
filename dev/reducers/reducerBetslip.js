@@ -5,7 +5,8 @@ import {
     BETSLIP_ACCEPT_CHANGES, BETSLIP_SET_STAKE, BETSLIP_SET_UNIT_STAKE, BETSLIP_SET_SYSTEM_OPT, BETSLIP_SET_ACCEPT_OPT,
     BETSLIP_SET_INCLUDE_IN_SYSTEM_CALC, BETSLIP_BET_ACCEPTED, BETSLIP_BET_FAILED, BETSLIP_RESET_STATUS,
     BETSLIP_BET_PROCESSING, BETSLIP_QUICK_BET_NOTIFY, BETSLIP_QUICK_BET_NOTIFY_DISMISS, BETSLIP_TOGGLE_FREEBET,
-    BETSLIP_TOGGLE_SUPERBET, BETSLIP_SET_FREE_BETS, BETSLIP_SELECT_FREE_BET, BETSLIP_TOGGLE_FREEBET_LOADING_STATE
+    BETSLIP_TOGGLE_SUPERBET, BETSLIP_SET_FREE_BETS, BETSLIP_SELECT_FREE_BET, BETSLIP_TOGGLE_FREEBET_LOADING_STATE,
+    BETSLIP_TOGGLE_BOOKINGBET
 } from "../actions/actionTypes/";
 
 const filterNonNumeric = str => str.toString().replace(/[^0-9.,]/, "");
@@ -30,8 +31,9 @@ const BetslipReducer = (
         betFailed: null,
         quickBet: false,
         superBet: false,
+        bookingBet: false,
         quickBetNotifications: {},
-        acceptPriceChanges: 0 //  0  ask , 1 - higher , 2 - any, -1 - superbet
+        acceptPriceChanges: 1 //  0  ask , 1 - higher , 2 - any, -1 - superbet
     },
     action
 ) => {
@@ -84,6 +86,9 @@ const BetslipReducer = (
             return ret;
         case BETSLIP_TOGGLE_SUPERBET:
             ret.superBet = action.enabled;
+            return ret;
+        case BETSLIP_TOGGLE_BOOKINGBET:
+            ret.bookingBet = action.enabled;
             return ret;
         case BETSLIP_TOGGLE_FREEBET:
             ret.freeBet = action.enabled;

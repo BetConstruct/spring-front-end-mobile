@@ -1,9 +1,12 @@
 import React from 'react';
 import {t} from "../../../helpers/translator";
 import Loader from "../../components/loader";
-import {Link} from "react-router";
 import PaymentsNavigationMenu from "../../components/paymentsNavigationMenu";
 import Config from "../../../config/main";
+import StandardForm from "../paymentsGenericForms/standardForm";
+import ExternalForm from "../paymentsGenericForms/externalForm";
+import BetShopsForm from "./pices/betshopsForm";
+import EuroPaymentFrom from "../paymentsGenericForms/euroPaymentForm";
 
 const defaultValuesForPartner = Config.main.buttonsDefaultValues;
 
@@ -26,7 +29,7 @@ module.exports = function depositFormTemplate () {
      * */
     const getDefaultValues = () => {
         let defaults = paymentMethodInfoByCurrency.default || (defaultValuesForPartner || {})[currencyCode];
-        if (defaults && defaults.deposit && defaults.deposit.length) {
+        if (defaults && defaults.deposit && defaults.deposit.length && !(method.hideDepositButton || method.onlyInfoTextOnDeposit)) {
             return defaults.deposit;
         }
     };
@@ -51,148 +54,80 @@ module.exports = function depositFormTemplate () {
 
             {
                 (() => {
-                    let depositInfoText = t(method.depositInfoTextKey) || "",
-                        defaultValues = getDefaultValues();
+                    let depositInfoText = (method.depositInfoText && method.depositInfoText[this.props.language]) ||
+                        (method.depositInfoTextKey && t(method.depositInfoTextKey)) ||
+                        (method.depositInfoText && method.depositInfoText[Config.env.lang]) ||
+                        "";
 
                     depositInfoText = depositInfoText.split(" ").length > 1 ? depositInfoText : null;
                     switch (true) {
                         case !!this.props.payments.iframe:
-                            return (
-                                <div className="iframe-wrapper">
-                                    <iframe src={this.props.payments.iframe.src} frameBorder="0"></iframe>
-                                </div>
-                            );
-                        case !!method && !this.props.payments.nextStep && !method.hasBetShops: {
-                            let fields = method.depositFormFields.map((field, index) => {
-                                return (
-                                    <div className="details-form-item-m" key={index}>
-                                        <label>{t(field.label)}</label>
-                                        {
-                                            this.props.getFormItem(field, index)
-                                        }
-                                    </div>
-                                );
-                            });
-                            return (
-                                <div className="payments-form-wrapper animate-from-right-to-left">
-                                    <div className="bread-crumbs-view-m">
-                                        <Link to={`/balance/deposit`}>
-                                            <span className="back-arrow-crumbs"/>
-                                        </Link>
-                                        <p>
-                                            <span>{t(method.displayName || method.name)}</span>
-                                        </p>
-                                    </div>
-
-                                    <div className="single-payment-title">
-                                        <ul>
-                                            <li><div className="deposit-m-icon" style={inlineStyle(method)}/></li>
-                                            <li>
-                                                <div className="payment-text-container" dangerouslySetInnerHTML={{__html: depositInfoText}}/>
-                                                <p><i>{t("Service Fee:")} {paymentMethodInfoByCurrency.depositFee && paymentMethodInfoByCurrency.hasOwnProperty("depositFee") !== 0 ? `${paymentMethodInfoByCurrency.depositFee} ${currencyCode}` : t("free")}</i></p>
-                                                {
-                                                    (limits ? (<p><i>{limits}</i></p>) : (null))
-                                                }
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <form className="deposit-form-container">
-                                        {defaultValues && !method.hideDepositButton ? (
-                                            <div className="details-form-item-m amount-b">
-                                                <label>{t("Choose or enter deposit amount")}</label>
-                                                <div className="deposit-amount-buttons">
-                                                    <ul>
-                                                        {
-                                                            defaultValues
-                                                                .filter(value => (value <= this.props.payments.method.info[this.props.user.profile.currency_name].maxDeposit && value >= this.props.payments.method.info[this.props.user.profile.currency_name].minDeposit))
-                                                                .map((value, index) =>
-                                                                    <li key={index}>
-                                                                        <button type="button"
-                                                                                onClick={() => { this.props.handleDefaultAmountClick('' + value); }}
-                                                                                className={(this.props.forms.depositForm && this.props.forms.depositForm.values && this.props.forms.depositForm.values.amount === ('' + value)) ? 'button-view-normal-m' : 'button-view-normal-m trans-m'}>
-                                                                            {value} {currencyCode}
-                                                                        </button>
-                                                                    </li>
-                                                                )
-                                                        }
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        ) : (null)}
-                                        {
-                                            fields
-                                        }
-                                        {
-                                            !method.hideDepositButton && (
-                                                <div className="separator-box-buttons-m">
-                                                    <button onClick={this.props.handleSubmit(this.props.submitHandler)} disabled={this.props.submitting || this.props.invalid} className="button-view-normal-m">{t("deposit")}</button>
-                                                </div>
-                                            )
-                                        }
-
-                                    </form>
-
-                                    { this.props.error
-                                        ? <div className="login-error"><span>{this.props.error}</span></div>
-                                        : null
-                                    }
-                                </div>
-                            );
-                        }
-
+                            return <ExternalForm src={this.props.payments.iframe.src} method={method} transactionType={"deposit"}/>;
+                        case !!method && !this.props.payments.nextStep && !method.hasBetShops && !(Config.main.euroPaymentIdes && Config.main.euroPaymentIdes.includes(method.paymentID)):
+                        case !!this.props.payments.nextStep:
+                            return <StandardForm
+                                defaultValues={getDefaultValues()}
+                                formFields={!this.props.payments.nextStep ? method.depositFormFields || [] : this.props.payments.nextStep.fields.map((field) => {
+                                    return {name: field.name, ...field.value};
+                                })}
+                                getFormItem={this.props.getFormItem}
+                                inlineStyle={inlineStyle}
+                                t={t}
+                                infoText={depositInfoText}
+                                currencyCode={currencyCode}
+                                limits={limits}
+                                method={method}
+                                hideButton={method.hideDepositButton || method.onlyInfoTextOnDeposit}
+                                handleDefaultAmountClick={this.props.handleDefaultAmountClick}
+                                user={this.props.user}
+                                paymentForm={this.props.forms.depositForm}
+                                handleSubmit={this.props.handleSubmit}
+                                submitHandler={this.props.submitHandler}
+                                invalid={this.props.invalid}
+                                submitting={this.props.submitting}
+                                error={this.props.error}
+                                transactionType={"deposit"}
+                                paymentMethodInfoByCurrency={paymentMethodInfoByCurrency}
+                            />;
+                        case !!method && !this.props.payments.nextStep && !method.hasBetShops && (Config.main.euroPaymentIdes && Config.main.euroPaymentIdes.includes(method.paymentID)):
+                            return <EuroPaymentFrom
+                                defaultValues={getDefaultValues()}
+                                formFields={method.depositFormFields}
+                                getFormItem={this.props.getFormItem}
+                                inlineStyle={inlineStyle}
+                                transactionType={"deposit"}
+                                t={t}
+                                infoText={depositInfoText}
+                                currencyCode={currencyCode}
+                                limits={limits}
+                                method={method}
+                                handleDefaultAmountClick={this.props.handleDefaultAmountClick}
+                                user={this.props.user}
+                                paymentForm={this.props.forms.depositForm}
+                                handleSubmit={this.props.handleSubmit}
+                                submitHandler={this.props.submitHandler}
+                                invalid={this.props.invalid}
+                                submitting={this.props.submitting}
+                                error={this.props.error}
+                                paymentMethodInfoByCurrency={paymentMethodInfoByCurrency}
+                            />;
                         case !!method && !this.props.payments.nextStep && method.hasBetShops && this.props.payments.data.loaded:
-                            return (
-                                <div className="payments-form-wrapper animate-from-right-to-left">
-                                    <div className="bread-crumbs-view-m">
-                                        <Link to={`/balance/deposit`}>
-                                            <span className="back-arrow-crumbs"/>
-                                        </Link>
-                                        <p>
-                                            <span>{t(method.displayName || method.name)}</span>
-                                        </p>
-                                    </div>
-
-                                    <div className="single-payment-title">
-                                        <ul>
-                                            <li><div className="deposit-m-icon" /></li>
-                                            <li>
-                                                <div dangerouslySetInnerHTML={{__html: depositInfoText}}/>
-                                                <p><i>{t("Service Fee:")} {paymentMethodInfoByCurrency.depositFee === 0 && paymentMethodInfoByCurrency.hasOwnProperty("depositFee") ? t("free") : `${paymentMethodInfoByCurrency.depositFee} ${currencyCode}`}</i></p>
-                                                {
-                                                    (limits ? (<p><i>{limits}</i></p>) : (null))
-                                                }
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    {
-                                        this.props.payments.data.cities.map((region, index) => {
-                                            let offices = region.betshops.map((office, officeIndex) => {
-                                                return this.props.getFormItem(office, officeIndex, true);
-                                            });
-                                            return (
-                                                <div className="details-form-item-m" key={index}>
-                                                    <div className="betshop-list-v-m">
-                                                        <label>{t(region.name)}</label>
-                                                        {offices}
-                                                    </div>
-                                                </div>
-                                            );
-                                        })
-                                    }
-
-                                    { this.props.error
-                                        ? <div className="login-error"><span>{this.props.error}</span></div>
-                                        : null
-                                    }
-                                </div>
-                            );
-
+                            return <BetShopsForm
+                                t={t}
+                                method={method}
+                                infoText={depositInfoText}
+                                paymentMethodInfoByCurrency={paymentMethodInfoByCurrency}
+                                limits={limits}
+                                transactionType={"deposit"}
+                                submitting={this.props.submitting}
+                                getFormItem={this.props.getFormItem}
+                                error={this.props.error}
+                                cities={this.props.payments.data.cities}
+                                currencyCode={currencyCode}
+                            />;
                     }
                 })()
             }
         </div>
     );
 };
-

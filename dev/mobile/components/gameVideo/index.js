@@ -1,13 +1,13 @@
-import React from "react";
+import PropTypes from 'prop-types';
 
 function GameVideo (props) {
     return Template.apply({props}); //eslint-disable-line no-undef
 }
 
 GameVideo.propTypes = {
-    streamURL: React.PropTypes.string.isRequired,
-    loggedIn: React.PropTypes.bool.isRequired,
-    balance: React.PropTypes.number.isRequired
+    streamURL: PropTypes.string.isRequired,
+    loggedIn: PropTypes.bool.isRequired,
+    balance: PropTypes.number.isRequired
 };
 
 export default GameVideo;

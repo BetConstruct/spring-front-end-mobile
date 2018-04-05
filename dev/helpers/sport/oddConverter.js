@@ -1,4 +1,5 @@
 import Config from "../../config/main";
+import {mathCuttingFunction} from "../filters";
 
 /**
  * Odd converter
@@ -91,13 +92,33 @@ const OddConverter = (function (Config) {
 
         switch (format) {
             case 'decimal':
-                return (value !== undefined && value !== '') ? (iValue !== fValue && value.toString().split('.')[1].length > 2 && !Config.main.decimalFormatRemove3Digit) ? (Math.round(value * Math.pow(10, Config.main.roundDecimalCoefficients)) / Math.pow(10, Config.main.roundDecimalCoefficients)) : fValue.toFixed(2) : value;
+                if (value === undefined || value === '') {
+                    return value;
+                }
+                if (Config.main.decimalFormatRemove3Digit) {
+                    return (mathCuttingFunction(fValue * 10 * 10) / 100).toFixed(2); // 10 * 10 because javascript have bug 8.2 * 100 = 819.9999999999999
+                }
+                return (iValue !== fValue && value.toString().split('.')[1] && value.toString().split('.')[1].length > 2) ? (Math.round(value * Math.pow(10, Config.main.roundDecimalCoefficients)) / Math.pow(10, Config.main.roundDecimalCoefficients)) : fValue.toFixed(2);
             case 'fractional':
                 return value ? (Config.main.useLadderForFractionalFormat ? dec2fracFromLadder(fValue) : dec2frac(rValue)) : value;
             case 'american':
                 return value ? rValue > 2 ? '+' + (100 * (rValue - 1)).toString().split('.')[0] : rValue !== 1 ? (-100 / (rValue - 1)).toString().split('.')[0] : '-' : rValue;
-            case 'hongkong':
-                return (value !== undefined && value !== '') ? (iValue !== fValue && value.toString().split('.')[1].length > 2) ? (Math.round((value - 1) * Math.pow(10, Config.main.roundDecimalCoefficients)) / Math.pow(10, Config.main.roundDecimalCoefficients)) : (fValue - 1.0).toFixed(2) : value;
+            case 'hongkong': {
+                let hValue;
+                if (value !== undefined && value !== '') {
+                    if (iValue !== fValue && value.toString().split('.')[1].length > 2) {
+                        hValue = Math.round((value - 1) * Math.pow(10, Config.main.roundDecimalCoefficients)) / Math.pow(10, Config.main.roundDecimalCoefficients);
+                    } else {
+                        hValue = (fValue - 1).toFixed(2);
+                    }
+                } else {
+                    hValue = value;
+                }
+                if (Config.main.decimalFormatRemove3Digit) {
+                    hValue = (mathCuttingFunction(hValue * 10 * 10) / 100).toFixed(2);
+                }
+                return hValue;
+            }
             case 'malay':
                 if (fValue === 2) {
                     return '0.000';
@@ -119,17 +140,20 @@ const OddConverter = (function (Config) {
         }
     }
 
-    return function (value, format, type = null) {
+    return function (value, format, type = null, displayKey) {
+        format = format || Config.env.oddFormat;
         if (value === null || value === undefined || isNaN(value)) {
             return value;
         }
         if (value === 1) {
             return null;
         }
+        if (Config.main.specialOddFormat && Config.main.specialOddFormat[format]) {
+            format = Config.main.specialOddFormat[format].displayKey[displayKey] || Config.main.specialOddFormat[format].default;
+        }
 
-        var cacheKey = format.concat(value);
+        let cacheKey = (format || Config.env.oddFormat).concat(value);
         if (cache[cacheKey] === undefined) {
-
             if (possibleFormats.indexOf(format) === -1) { //select default format if current one is invalid
                 format = possibleFormats[0];
             }

@@ -25,6 +25,10 @@ export default function PaymentsNavigationMenu () {
                     <Link activeClassName="active"
                           to="/balance/history"><span>{t("History")}</span></Link>
                 </li>
+                <li>
+                    <Link activeClassName="active"
+                          to="/balance/withdraws"><span>{t("Withdraws")}</span></Link>
+                </li>
             </ul>
         </div>
     );

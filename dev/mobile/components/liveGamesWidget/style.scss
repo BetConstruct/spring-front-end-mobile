@@ -76,13 +76,13 @@
   overflow: hidden;
   height: auto;
   max-height: 0;
-  animation: closed-animate-menu 180ms ease;
+  //animation: closed-animate-menu 180ms ease;
   transform: translate3d(0,0,0);
 }
 //competition
 .single-sport-title-dashboard-m.active + .single-sport-game-list-d{
   max-height: 99999px;
-  animation: open-animate-menu 500ms ease-in-out;
+  animation: open-animate-menu 240ms ease-in-out;
 }
 @keyframes open-animate-menu{
   0% {max-height: 0;}

@@ -1,12 +1,13 @@
 import React from 'react';
 import {t} from "../../../helpers/translator";
+import Config from "../../../config/main";
 
 module.exports = function depositFormTemplate () {
     return (
         <div className="cashout-dialog">
             <div className="cashout-column-view">
                 {
-                    (this.props.uiState.popupParams.game.types.funMode === 1) && (
+                    (!Config.casino.disableCasinoPlayForFunMode && this.props.uiState.popupParams.game.types.funMode === 1) && (
                         <div className="play-game-buttons-view">
                         <button className="button-view-normal-m trans-m" onClick={() => {
                             this.closeDialog("fun");

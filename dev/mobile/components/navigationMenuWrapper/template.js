@@ -4,7 +4,7 @@ import SearchBar from "../../components/searchBar/";
 
 module.exports = function NavigationMenuWrapperTemplate () {
     return (
-       <div className="import-view-container">
+       <div className="top-navigation-menu-w">
            <div className="navigation-container-m">
                <NavMenu/>
                <SearchBar type={this.props.routeType}/>

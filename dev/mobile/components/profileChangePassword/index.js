@@ -6,8 +6,6 @@ import Config from "../../../config/main";
 import Validate from "../../../helpers/validate";
 import formsNames from "../../../constants/formsNames";
 import {t} from "../../../helpers/translator";
-
-
 /**
  * @name validate
  * @description user register password field valitade from config

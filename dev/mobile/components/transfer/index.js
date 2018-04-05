@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {checkIfUserIsLoggedIn} from '../../../mixins/checkAuthentication';
 import {connect} from 'react-redux';
 import {reduxForm, SubmissionError, reset} from 'redux-form';
@@ -11,6 +11,7 @@ import {types, alias} from '../../../constants/productTypes';
 import {getErrorMessageByCode} from '../../../constants/errorCodes';
 import {OpenPopup} from '../../../actions/ui';
 import Config from '../../../config/main';
+import PropTypes from 'prop-types';
 
 /**
  * @name validate

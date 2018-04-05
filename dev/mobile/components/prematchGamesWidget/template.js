@@ -11,10 +11,10 @@ import Expandable from "../../containers/expandable/";
 import {t} from "../../../helpers/translator";
 
 module.exports = function prematchGamesWidgetTemplate () {
-
     console.debug("prematchGamesWidgetTemplate:", this.props);
-    let sportsGames;
-    let sportsRowKeys = [];
+    let sportsGames,
+        sportsRowKeys = [],
+        conf = Config.main;
     if (this.props.swarmData && this.props.swarmData.sport) {
         let Sports = Helpers.objectToArray(this.props.swarmData.sport).sort(Helpers.byOrderSortingFunc);
         sportsGames = Sports.map(
@@ -41,7 +41,10 @@ module.exports = function prematchGamesWidgetTemplate () {
                                             <div className="game-title-info-row-m">
                                                 <ul>
                                                     <li className="time-column-m">
-                                                        <p>{moment.unix(game.start_ts).format(Config.main.timeFormat)}</p>
+                                                        { conf.changeTimeZoneByUTC
+                                                            ? <p>{moment.unix(game.start_ts).utcOffset(conf.changeTimeZoneByUTC).format(conf.timeFormat)}</p>
+                                                            : <p>{moment.unix(game.start_ts).format(conf.timeFormat)}</p>
+                                                        }
                                                     </li>
                                                     <li className="teams-name-column-m">
                                                         <div className="names-mini-row-m">

@@ -1,9 +1,10 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {t} from '../../../helpers/translator';
 import PaymentsNavigationMenu from '../paymentsNavigationMenu/';
 import {Field} from 'redux-form';
 import {types} from '../../../constants/productTypes';
 import Config from '../../../config/main';
+import PropTypes from 'prop-types';
 
 const RenderSelectField = ({input, className, options, selected, handler}) => {
     return (

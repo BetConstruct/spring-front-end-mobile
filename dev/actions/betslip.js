@@ -4,21 +4,23 @@ import {BETSLIP_ADD, BETSLIP_REMOVE, BETSLIP_CLEAR, BETSLIP_SET_TYPE, BETSLIP_TO
     BETSLIP_BET_ACCEPTED, BETSLIP_BET_FAILED, BETSLIP_SET_STAKE, BETSLIP_SET_UNIT_STAKE, BETSLIP_SET_EACH_WAY_MODE,
     BETSLIP_SET_SYSTEM_OPT, BETSLIP_SET_ACCEPT_OPT, BETSLIP_SET_INCLUDE_IN_SYSTEM_CALC, BETSLIP_RESET_STATUS,
     BETSLIP_BET_PROCESSING, BETSLIP_QUICK_BET_NOTIFY, BETSLIP_QUICK_BET_NOTIFY_DISMISS, BETSLIP_TOGGLE_FREEBET,
-    BETSLIP_TOGGLE_SUPERBET, BETSLIP_SET_FREE_BETS, BETSLIP_SELECT_FREE_BET, BETSLIP_TOGGLE_FREEBET_LOADING_STATE
+    BETSLIP_TOGGLE_SUPERBET, BETSLIP_SET_FREE_BETS, BETSLIP_SELECT_FREE_BET, BETSLIP_TOGGLE_FREEBET_LOADING_STATE,
+    BETSLIP_TOGGLE_BOOKINGBET
 } from './actionTypes/';
 
 import Helpers from "../helpers/helperFunctions";
 import {t} from "../helpers/translator";
 import {getErrorMessageByCode, errorCodes} from "../constants/errorCodes";
 
-import {createBetRequests} from "../helpers/sport/betslip";
+import {BETSLIP_TYPE_SYSTEM, createBetRequests} from "../helpers/sport/betslip";
 
-import {UILoading, UILoadingDone, UILoadingFailed, OpenPopup, ClosePopup} from "./ui";
+import {UILoading, UILoadingDone, UILoadingFailed, OpenPopup, ClosePopup, UIClose} from "./ui";
 import {FavoriteAdd} from "./favorites";
+import {GetUserBalance} from "./balance";
 
 /**
  * @name BetslipAdd
- * @description  Add
+ * @description Add
  * @param {Object} payload bet event info
  * @returns {Function} async action dispatcher
  */
@@ -142,6 +144,22 @@ export const BetslipToggleQuickBet = (enabled) => {
      */
     return {
         type: BETSLIP_TOGGLE_QUICKBET,
+        enabled
+    };
+};
+
+/**
+ * @name BetslipToggleBookingBet
+ * @description  Toggle booking bet switcher
+ * @param {Boolean} enabled
+ * @returns {Object} New state
+ */
+export const BetslipToggleBookingBet = (enabled) => {
+    /**
+     * @event betslipToggleBookingBet
+     */
+    return {
+        type: BETSLIP_TOGGLE_BOOKINGBET,
         enabled
     };
 };
@@ -553,10 +571,11 @@ export const BetslipLoadFreeBets = () => {
  * @param {Object} betSlipData betslip data from store
  * @param {Object} currency currency object, needed for calculating superbet limits
  * @param {bool} freeBet
+ * @param {Object} profile
  * @returns {Function} async action dispatcher
  * @constructor
  */
-export const BetslipPlaceBet = (betSlipData, currency = null, freeBet = false) => {
+export const BetslipPlaceBet = (betSlipData, currency = null, freeBet = false, profile) => {
     /**
      * @name getBetSlipError
      * @description generating betslip error
@@ -597,8 +616,8 @@ export const BetslipPlaceBet = (betSlipData, currency = null, freeBet = false) =
             console.log("bet result", data);
             dispatch(UILoadingDone("bet"));
             if (data.result === "OK") {
-
                 //add to favorites
+                Config.isPartnerIntegration && (Config.isPartnerIntegration.mode.iframe || Config.isPartnerIntegration.needToLoginFromUrl) && dispatch(GetUserBalance(profile));
                 data.details.events.map(event => { dispatch(FavoriteAdd("game", betSlipData.events[event.selection_id].gameId)); });
 
                 Config.betting.resetAmountAfterBet && !betSlipData.quickBet && dispatch(BetslipSetStake(null));
@@ -610,6 +629,9 @@ export const BetslipPlaceBet = (betSlipData, currency = null, freeBet = false) =
                 Config.betting.enableRetainSelectionAfterPlacment || dispatch(BetslipClear(true));
                 console.log("removing status info in ", Config.betting.betAcceptedMessageTime);
                 Config.betting.betAcceptedMessageTime && setTimeout(() => { dispatch(BetslipResetStatus()); }, Config.betting.betAcceptedMessageTime);
+                Config.main.closeBetslipAfterBetTime && setTimeout(() => {
+                    dispatch(UIClose("betslip"));
+                }, Config.betting.closeBetslipAfterBetTime);
             } else {
                 let generalBetResult;
                 if (data.result === -1) {
@@ -650,7 +672,7 @@ export const BetslipPlaceBet = (betSlipData, currency = null, freeBet = false) =
                             processBetResults(reason);
                         }
                     })
-                    .then(() => {
+                    .then((data) => {
                         // refresh bonus for integration skins
                         // if (Config.partner.balanceRefreshPeriod || Config.main.rfid.balanceRefreshPeriod) {
                         //     dispatch(); //TODO
@@ -661,5 +683,39 @@ export const BetslipPlaceBet = (betSlipData, currency = null, freeBet = false) =
         Promise.all(betPromises).then(() => {
             dispatch(UILoadingDone("bet"));
         });
+    };
+};
+
+/**
+ * @name BetslipBookBet
+ * @description Book a bet
+ * @param {Object} betSlipData betslip data from store
+ * @returns {Function} async action dispatcher
+ * @constructor
+ */
+export const BetslipBookBet = (betSlipData) => {
+    /**
+     * @event betslipGetEventMaxBet
+     */
+
+    let betEvents = betSlipData.events;
+    return function (dispatch) {
+        dispatch(UILoading("getBookingBetId"));
+        let request = {type: betSlipData.type, amount: parseFloat(betSlipData.unitStake)};
+        if (betSlipData.type === BETSLIP_TYPE_SYSTEM) {
+            request.sys_bet = betSlipData.sysOptionValue;
+        }
+        request.bets = Object.keys(betEvents).reduce((acc, key) => acc.concat({event_id: betEvents[key].eventId, amount: betSlipData.unitStake}), []);
+        Zergling.get(request, 'book_bet')
+            .then(result => {
+                dispatch(UILoadingDone("getBookingBetId"));
+                if (result.result === 0 && result.details && result.details.number) {
+                    dispatch(OpenPopup("message", {title: t("Booking Bet"), type: "info", body: t("Your booking number is: ") + result.details.number}));
+                }
+
+            })
+            .catch((reason) => {
+                dispatch(UILoadingFailed("getBookingBetId", reason));
+            });
     };
 };

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?lhfxbd');
-  src:  url('fonts/icomoon.eot?lhfxbd#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?lhfxbd') format('truetype'),
-    url('fonts/icomoon.woff?lhfxbd') format('woff'),
-    url('fonts/icomoon.svg?lhfxbd#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?164ogm');
+  src:  url('fonts/icomoon.eot?164ogm#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?164ogm') format('truetype'),
+    url('fonts/icomoon.woff?164ogm') format('woff'),
+    url('fonts/icomoon.svg?164ogm#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,43 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-facebook:before {
+  content: "\e91f";
+  color: #3f4553;
+}
+.icon-google-plus:before {
+  content: "\e920";
+  color: #3f4553;
+}
+.icon-instagram:before {
+  content: "\e921";
+  color: #3f4553;
+}
+.icon-twitter:before {
+  content: "\e922";
+  color: #3f4553;
+}
+.icon-vbet-brend:before {
+  content: "\e706";
+}
+.icon-vbet-brend-outline:before {
+  content: "\e707";
+}
+.icon-icon_web_2-86:before {
+  content: "\e91e";
+}
+.icon-chat-vbet:before {
+  content: "\e6c9";
+}
+.icon-customer-support:before {
+  content: "\e6be";
+}
+.icon-show_hide_pass:before {
+  content: "\e91d";
+}
+.icon-neutral_venue_icon:before {
+  content: "\e959";
+}
 .icon-back:before {
   content: "\e91c";
 }
@@ -216,6 +253,9 @@
 .icon-search:before {
   content: "\e900";
 }
+.icon-chat:before {
+  content: "\e60f";
+}
 .icon-arrow-down4:before {
   content: "\e66c";
 }
@@ -243,4 +283,3 @@
 .icon-star-big-outline:before {
   content: "\f006";
 }
-
